@@ -5,7 +5,6 @@
  */
 package me.kisoft.covid19.domain.event;
 
-import java.util.HashMap;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,11 +15,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 public class DomainEvent {
 
   private String eventName;
   private Object eventData;
+
+    public DomainEvent(String eventName, Object eventData) {
+        this.eventName = eventName;
+        this.eventData = eventData;
+    }
+  
+  
 
   public <T> T getAsClass(Class<T> clazz) {
     return clazz.cast(eventData);
