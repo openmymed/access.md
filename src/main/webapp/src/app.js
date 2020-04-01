@@ -1,0 +1,5 @@
+import { router, mount, el, text} from 'redom'
+import './style/app.css'
+import './style/bootstrap.min.css'
+import '@fortawesome/fontawesome-free/js/all'
+import {App, goto} from 'redom-app'
