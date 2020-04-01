@@ -8,3 +8,7 @@ PutObjectStoreDirHere/
 /src/main/webapp/node_modules/
 /src/main/webapp/node/
 /src/main/webapp/docs/
+nbactions.xml
+.idea/
+.workspace/
+.project/
