@@ -19,6 +19,7 @@
     "@babel/register": "^7.4.4",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-transform-redom-jsx": "^3.0.0",
     "clean-webpack-plugin": "^2.0.1",
     "copy-webpack-plugin": "^5.0.1",
     "css-loader": "^2.1.1",
@@ -43,6 +44,8 @@
   },
   "main": "webpack.config.js",
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.9.4",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "bootstrap": "^4.4.1",
     "eventbusjs": "^0.2.0",
     "jquery": "^3.4.1",

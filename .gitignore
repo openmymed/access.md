@@ -12,3 +12,4 @@ nbactions.xml
 .idea/
 .workspace/
 .project/
+/app_db_dev/

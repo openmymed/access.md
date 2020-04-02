@@ -1,0 +1,8 @@
+{
+    "plugins": [
+        "babel-plugin-transform-redom-jsx",
+        ["@babel/transform-react-jsx", {
+            "pragma": "el"
+        }]
+    ]
+}
