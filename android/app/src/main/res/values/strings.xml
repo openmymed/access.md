@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">covid19</string>
+    <!--  Sign up page  -->
+    <string name="sign_up_first_name">First Name<font color="#FF0000">*</font></string>
+    <string name="sign_up_last_name">Last Name<font fgcolor="red">*</font></string>
+    <string name="sign_up_phone">Phone<font fgcolor="red">*</font></string>
+    <string name="sign_up_password">Password<font fgcolor="red">*</font></string>
+    <string name="sign_up_confirm_password">Confirm Password<font fgcolor="red">*</font></string>
+
 </resources>
