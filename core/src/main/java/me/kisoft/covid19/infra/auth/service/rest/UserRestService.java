@@ -34,16 +34,6 @@ public class UserRestService {
         }
     }
     
-    public void signUp(Context ctx) throws Exception {
-        try ( UserRepository repo = UserRepositoryFactory.getInstance().get()) {
-            User toCreate = ctx.bodyAsClass(User.class);
-            if (repo.getUserByUsername(toCreate.getUsername()) == null) {
-                userService.signUp(toCreate);
-                ctx.res.setStatus(200);
-            } else {
-                ctx.res.setStatus(400);
-            }
-        }
-    }
+    
     
 }
