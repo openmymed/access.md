@@ -37,7 +37,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         String question = questions.get(position).getQuestion();
         QuestionType type = questions.get(position).getType();
         holder.setData(question, type);
-
+        //todo get binary answers...
         holder.btnTextAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,10 +87,5 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
                 llScaleAnswer.setVisibility(View.VISIBLE);
             }
         }
-
-        public void onClick(View view) {
-            //Answer the
-        }
     }
-
 }
