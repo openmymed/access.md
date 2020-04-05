@@ -1,24 +1,29 @@
 package me.kisoft.covid19.models;
 
 public class Patient {
-    private String username;
+    private String phone;
     private String password;
     private String firstName;
     private String lastName;
+    private Sex sex;
 
-    public Patient(String username, String password, String firstName, String lastName) {
-        this.username = username;
+    public Patient() {
+    }
+
+    public Patient(String phone, String password, String firstName, String lastName, Sex sex) {
+        this.phone = phone;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.sex = sex;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -32,7 +37,7 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" +
-                "username='" + username + '\'' +
+                "phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

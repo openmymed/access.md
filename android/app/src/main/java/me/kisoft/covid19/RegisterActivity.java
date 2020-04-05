@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.kisoft.covid19.models.Patient;
+import me.kisoft.covid19.models.Sex;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceMock;
 
@@ -21,13 +23,16 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtConfirmPassword;
     private Button btnSignUp;
     private TextView tvGoToSignIn;
+    private RadioButton rbMale;
+    private RadioButton rbFemale;
     private PatientService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        getSupportActionBar().hide();
+        //init screen components
         edtFirstName = findViewById(R.id.edt_first_name);
         edtLastName = findViewById(R.id.edt_last_name);
         edtPhone = findViewById(R.id.edt_phone);
@@ -35,6 +40,9 @@ public class RegisterActivity extends AppCompatActivity {
         edtConfirmPassword = findViewById(R.id.edt_confirm_password);
         btnSignUp = findViewById(R.id.btn_sign_up);
         tvGoToSignIn = findViewById(R.id.tv_goto_sign_in);
+        rbFemale = findViewById(R.id.rb_female);
+        rbMale = findViewById(R.id.rb_male);
+
         //init service
         service = new PatientServiceMock();
         //go back to sign in screen
@@ -54,10 +62,19 @@ public class RegisterActivity extends AppCompatActivity {
                 String phone = edtPhone.getText().toString();
                 String password = edtPassword.getText().toString();
                 String confirmPassword = edtConfirmPassword.getText().toString();
+                Sex sex;
+                if (rbFemale.isSelected()) {
+                    sex = Sex.Female;
+                } else {
+                    sex = Sex.Male;
+                }
 
                 if (password.equals(confirmPassword)) {
-                    Patient patient = new Patient(phone, password, firstName, lastName);
-                    service.Register(patient);
+                    Patient patient = new Patient(phone, password, firstName, lastName, sex);
+                    service.register(patient);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

@@ -75,7 +75,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
+        android:background="@drawable/roundedbutton"
         android:text="Sign In"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_warning" />
@@ -85,11 +87,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:checked="false"
         android:text="Remember me"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sign_up" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_goto_sign_up" />
 
     <TextView
         android:id="@+id/tv_login_warning"

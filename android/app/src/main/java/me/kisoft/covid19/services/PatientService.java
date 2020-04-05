@@ -3,7 +3,7 @@ package me.kisoft.covid19.services;
 import me.kisoft.covid19.models.Patient;
 
 public interface PatientService {
-    void Login(String username, String password);
+    Patient login(String phone, String password);
 
-    void Register(Patient patient);
+    void register(Patient patient);
 }

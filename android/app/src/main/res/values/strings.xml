@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">covid19</string>
-    <!--  Sign up page  -->
+    <!--  Sign up screen  -->
     <string name="sign_up_first_name">First Name<font color="#FF0000">*</font></string>
     <string name="sign_up_last_name">Last Name<font fgcolor="red">*</font></string>
     <string name="sign_up_phone">Phone<font fgcolor="red">*</font></string>
     <string name="sign_up_password">Password<font fgcolor="red">*</font></string>
     <string name="sign_up_confirm_password">Confirm Password<font fgcolor="red">*</font></string>
+
+    <!--  Sign in screen  -->
+    <string name="sign_in_incorrect">Incorrect Email or Password</string>
+    <string name="sign_in_password_required">Password field can\'t be empty</string>
+    <string name="sign_in_phone_required">Phone field can\'t be empty</string>
 
 </resources>
