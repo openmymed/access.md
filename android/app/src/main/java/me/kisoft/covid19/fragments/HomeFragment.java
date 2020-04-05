@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class HomeFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ImageView imgDoctor;
     private TextView tvDoctorName;
+    private Button btnChat;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -37,8 +39,9 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         //init screen components
         rvHome = root.findViewById(R.id.rv_home);
-        imgDoctor = root.findViewById(R.id.img_doctor);
+        imgDoctor = root.findViewById(R.id.img_doctor); //todo add doctor name and picture later..
         tvDoctorName = root.findViewById(R.id.tv_doctor_name);
+        btnChat = root.findViewById(R.id.btn_chat);
 
         questions = new ArrayList<>();
         questionsAdapter = new QuestionsAdapter(questions);
@@ -46,6 +49,13 @@ public class HomeFragment extends Fragment {
         rvHome.setAdapter(questionsAdapter);
         rvHome.setLayoutManager(linearLayoutManager);
         getQuestions();
+
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo open chat screen
+            }
+        });
 
         return root;
     }

@@ -18,12 +18,6 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/navigation_chat"
-        android:name="me.kisoft.covid19.fragments.NotificationsFragment"
-        android:label="@string/title_chat"
-        tools:layout="@layout/fragment_chat" />
-
-    <fragment
         android:id="@+id/navigation_notifications"
         android:name="me.kisoft.covid19.fragments.NotificationsFragment"
         android:label="@string/title_notifications"
