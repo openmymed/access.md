@@ -23,6 +23,7 @@ import me.kisoft.covid19.adapters.QuestionsAdapter;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceMock;
+//Home has the questions from teh doctor
 
 public class HomeFragment extends Fragment {
     private RecyclerView rvHome;

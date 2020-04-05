@@ -24,7 +24,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvLoginWarning;
     private TextView tvGoToSignUp;
     private PatientService service;
-
+    //TODO Async coonection with the API,
+    //TODO formatting break to different methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
