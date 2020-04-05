@@ -1,5 +1,6 @@
 package me.kisoft.covid19.fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import me.kisoft.covid19.AddSymptomsActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.adapters.QuestionsAdapter;
 import me.kisoft.covid19.models.Question;
@@ -32,7 +36,9 @@ public class HomeFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ImageView imgDoctor;
     private TextView tvDoctorName;
+    private TextView tvNoQuestions;
     private Button btnChat;
+    private FloatingActionButton fabAddSymptoms;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -43,6 +49,8 @@ public class HomeFragment extends Fragment {
         imgDoctor = root.findViewById(R.id.img_doctor); //todo add doctor name and picture later..
         tvDoctorName = root.findViewById(R.id.tv_doctor_name);
         btnChat = root.findViewById(R.id.btn_chat);
+        tvNoQuestions = root.findViewById(R.id.tv_no_questions);
+        fabAddSymptoms = root.findViewById(R.id.fab_add_symptoms);
 
         questions = new ArrayList<>();
         questionsAdapter = new QuestionsAdapter(questions);
@@ -55,6 +63,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //todo open chat screen
+            }
+        });
+        fabAddSymptoms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddSymptomsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -70,10 +85,15 @@ public class HomeFragment extends Fragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 List<Question> questionList = service.getQuestions();
-                for (Question q : questionList) {
-                    questions.add(q);
+                if (questionList.isEmpty()) {
+                    tvNoQuestions.setVisibility(View.VISIBLE);
+                } else {
+                    rvHome.setVisibility(View.VISIBLE);
+                    for (Question q : questionList) {
+                        questions.add(q);
+                    }
+                    questionsAdapter.notifyDataSetChanged();
                 }
-                questionsAdapter.notifyDataSetChanged();
                 return null;
             }
         }.execute();
