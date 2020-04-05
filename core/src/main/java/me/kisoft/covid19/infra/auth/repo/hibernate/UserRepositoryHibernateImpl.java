@@ -21,7 +21,7 @@ public class UserRepositoryHibernateImpl extends HibernateCrudRepository<User> i
   @Override
   public User getUserByUsername(String username) {
     try {
-      return getEm().createNamedQuery("UserPersistable.byUsername", User.class)
+      return getEm().createNamedQuery("User.byUsername", User.class)
        .setParameter("username", username)
        .getSingleResult();
     } catch (NoResultException ex) {
