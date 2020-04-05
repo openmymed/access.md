@@ -12,7 +12,8 @@ import io.javalin.core.security.Role;
  * @author tareq
  */
 public enum UserRole implements Role {
-  ROLE_CUSTOMER,
-  ROLE_BARISTA,
+  ROLE_DOCTOR,
+  ROLE_PATIENT,
+  ROLE_ADMIN,
   NONE
 }

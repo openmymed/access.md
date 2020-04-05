@@ -8,6 +8,7 @@ package me.kisoft.covid19.domain.auth.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import me.kisoft.covid19.domain.event.DomainEvent;
@@ -19,14 +20,14 @@ import me.kisoft.covid19.domain.entity.DomainEntity;
  */
 @Getter
 @Setter
-@Entity
+@Entity(name="User")
+@Table(name="APP_USER")
 public class User extends DomainEntity {
 
-  private String username;
   @JsonProperty
   private String password;
+  private String username;
   private UserRole userRole;
-  private String name;
   private String telephoneNumber;
 
   @JsonIgnore
