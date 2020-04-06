@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.kisoft.covid19.AddSymptomsActivity;
+import me.kisoft.covid19.ChatActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.adapters.QuestionsAdapter;
 import me.kisoft.covid19.models.Question;
@@ -62,7 +63,8 @@ public class HomeFragment extends Fragment {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo open chat screen
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                startActivity(intent);
             }
         });
         fabAddSymptoms.setOnClickListener(new View.OnClickListener() {
