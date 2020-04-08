@@ -3,7 +3,7 @@ class A{
   constructor(attr, text) {
     <div this="el">
       <h3>{attr.title}</h3>
-      <span this="span">Hello</span> {text}
+      <span this="span">Hello DOCKERY BOIS AND GIRLS</span> {text}
       <h4>{attr.name}</h4>
     </div>;
   }
