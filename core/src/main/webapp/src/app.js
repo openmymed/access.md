@@ -22,7 +22,7 @@ class B{
   }
   update() {
     this.span.textContent = "You";
-    this.a.update("test");
+    this.a.update("DOCKERY BOIS AND GIRLS");
   }
 }
 
