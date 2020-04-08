@@ -13,6 +13,7 @@ This application is a web/mobile app that allows doctors and patients to followu
 * [General Implementation Guidelines](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:application_architecture)
 * [Sequence Diagrams & Other Designs](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:sequence_diagram)
 * [Meeting Minutes](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:meeting_minutes:start)
+* [Trello Board](https://trello.com/b/WnCSjaa5/covid19-followup-app)
 
 
 # Contributors
