@@ -4,7 +4,7 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
      <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-       <property name="javax.persistence.jdbc.url" value="jdbc:derby:app_db;create=true"/>
+       <property name="javax.persistence.jdbc.url" value="jdbc:derby:data/app_db;create=true"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
