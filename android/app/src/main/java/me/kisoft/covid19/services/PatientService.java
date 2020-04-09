@@ -6,8 +6,9 @@ import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 
 public interface PatientService {
-    Patient login(String phone, String password);
-    void register(Patient patient);
+    Patient login(String username, String password);
+
+    Boolean register(Patient patient);
 
     List<Question> getQuestions();
 }

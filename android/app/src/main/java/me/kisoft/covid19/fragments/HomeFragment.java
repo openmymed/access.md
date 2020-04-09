@@ -27,7 +27,7 @@ import me.kisoft.covid19.R;
 import me.kisoft.covid19.adapters.QuestionsAdapter;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.services.PatientService;
-import me.kisoft.covid19.services.PatientServiceMock;
+import me.kisoft.covid19.services.PatientServiceDelegate;
 //Home has the questions from teh doctor
 
 public class HomeFragment extends Fragment {
@@ -80,9 +80,8 @@ public class HomeFragment extends Fragment {
 
     void getQuestions() {
         new AsyncTask<Void, Void, Void>() {
-            //todo check if this is correct.
 
-            PatientService service = new PatientServiceMock();
+            PatientService service = new PatientServiceDelegate();
 
             @Override
             protected Void doInBackground(Void... voids) {
