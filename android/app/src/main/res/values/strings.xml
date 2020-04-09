@@ -6,11 +6,21 @@
     <string name="sign_up_phone">Phone<font fgcolor="red">*</font></string>
     <string name="sign_up_password">Password<font fgcolor="red">*</font></string>
     <string name="sign_up_confirm_password">Confirm Password<font fgcolor="red">*</font></string>
+    <string name="already_have_account">Already have an account? Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="error_sign_up">Error while signing up</string>
+
 
     <!--  Sign in screen  -->
     <string name="sign_in_incorrect">Incorrect Email or Password</string>
     <string name="sign_in_password_required">Password field can\'t be empty</string>
+    <string name="sign_in_all_fields_required">All fields are required</string>
     <string name="sign_in_phone_required">Phone field can\'t be empty</string>
+    <string name="sign_in">Sign in</string>
+    <string name="username_phone">Username/Phone</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="dont_have_account">Don\'t have an account? Sign up</string>
 
     <!--  Main screen  -->
     <string name="title_activity_main">MainActivity</string>
@@ -18,5 +28,34 @@
     <string name="title_chat">Chat</string>
     <string name="title_profile">Profile</string>
     <string name="title_notifications">Notifications</string>
+
+    <!-- General Info Fragment -->
+    <string name="general_info_title">General Info</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender<font color="#FF0000">*</font></string>
+    <string name="weight">Weight<font color="#FF0000">*</font></string>
+    <string name="height">Height<font color="#FF0000">*</font></string>
+    <string name="age">Age<font color="#FF0000">*</font></string>
+    <string name="next_btn">Next</string>
+
+    <!-- Medication Fragment -->
+    <string name="medication_title">Medications</string>
+    <string name="medication_subtitle">Please list all of your current medications</string>
+    <string name="prev_btn">Previous</string>
+    <string name="add_new_medication">Add a new medication</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Medical Flags -->
+    <string name="medical_flags_title">Medical Flags</string>
+    <string name="medical_flags_subtitle">Please select all that apply on you.</string>
+    <string name="g6pd">G6PD Deficiency</string>
+    <string name="respiratory">Respiratory Diseases</string>
+    <string name="diabetes">Diabetes </string>
+    <string name="cardiovascular">Cardiovascular Diseases</string>
+    <string name="obesity">Obesity</string>
+    <string name="finish">Finish</string>
+
 
 </resources>

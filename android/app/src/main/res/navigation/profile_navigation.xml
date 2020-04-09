@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_navigation"
+    app:startDestination="@+id/navigation_general_info">
+    <fragment
+        android:id="@+id/navigation_general_info"
+        android:name="me.kisoft.covid19.fragments.GeneralInfoFragment"
+        android:label="@string/general_info_title"
+        tools:layout="@layout/fragment_general_info">
+        <action
+            android:id="@+id/action_navigation_general_info_to_navigation_medication"
+            app:destination="@id/navigation_medication" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_medication"
+        android:name="me.kisoft.covid19.fragments.MedicationFragment"
+        android:label="@string/medication_title"
+        tools:layout="@layout/fragment_medication">
+        <action
+            android:id="@+id/action_navigation_medication_to_navigation_medical_flags"
+            app:destination="@id/navigation_medical_flags" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_medical_flags"
+        android:name="me.kisoft.covid19.fragments.MedicalFlagsFragment"
+        android:label="@string/medical_flags_title"
+        tools:layout="@layout/fragment_medical_flags" />
+</navigation>

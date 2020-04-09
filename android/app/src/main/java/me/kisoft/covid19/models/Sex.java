@@ -1,5 +1,7 @@
 package me.kisoft.covid19.models;
 
-public enum Sex {
+import java.io.Serializable;
+
+public enum Sex implements Serializable {
     Female, Male
 }
