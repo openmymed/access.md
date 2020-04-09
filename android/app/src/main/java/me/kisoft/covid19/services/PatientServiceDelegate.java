@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.QuestionType;
@@ -33,5 +34,11 @@ public class PatientServiceDelegate implements PatientService {
     @Override
     public List<Question> getQuestions() {
         return questions;
+    }
+
+    @Override
+    public Boolean createMedicalProfile(MedicalProfile profile) {
+        //todo needs implementation
+        return false;
     }
 }
