@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
+        Paper.init(this);
         //init screen components
         etUsername = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
@@ -80,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
     private void login(final String username, final String password) {
         new AsyncTask<Void, Void, Patient>() {
             ProgressDialog dialog;

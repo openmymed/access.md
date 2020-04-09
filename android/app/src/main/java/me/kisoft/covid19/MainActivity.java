@@ -1,9 +1,12 @@
 package me.kisoft.covid19;
 
+import android.app.Notification;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -13,13 +16,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import me.kisoft.covid19.utils.NotificationUtility;
 
+import static me.kisoft.covid19.AppWraper.CHANNEL_1_ID;
+
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navView;
+    private NotificationManagerCompat notificationManager;
+    NotificationUtility notificationUtil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
+        notificationManager = NotificationManagerCompat.from(this);
+         notificationUtil = new NotificationUtility(this);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -28,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-    }
 
+    }
+    // This is just a mock button to test Notifications
     public void notify(View view) {
-        NotificationUtility notificationUtil = new NotificationUtility(this);
-        notificationUtil.setNotification(this,"notificationTitle","notificationMessage",1 );
-
+        notificationUtil.notify(this,"notificationTitle","notificationMessage",1 );
     }
+
+
 }
