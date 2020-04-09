@@ -7,4 +7,4 @@ COPY target/covid19-followup-app-*.jar /app/covid19-followup-app.jar
 COPY target/lib/* /app/lib/
 COPY src/scripts/start.sh /app/start.sh
 WORKDIR /app
-CMD start.sh
+CMD ls && start.sh
