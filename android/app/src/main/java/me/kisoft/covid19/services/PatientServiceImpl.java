@@ -46,9 +46,8 @@ public class PatientServiceImpl implements PatientService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -64,9 +63,8 @@ public class PatientServiceImpl implements PatientService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return false;
         }
+        return false;
     }
 
     @Override
