@@ -1,5 +1,7 @@
 package me.kisoft.covid19.services;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -45,7 +47,7 @@ public class PatientServiceImpl implements PatientService {
                 return null;//what to return? if 500 or something else
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Login ", e.toString());
         }
         return null;
     }
@@ -62,7 +64,7 @@ public class PatientServiceImpl implements PatientService {
                 return false;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Register ", e.toString());
         }
         return false;
     }
