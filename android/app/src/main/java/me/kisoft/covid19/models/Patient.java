@@ -9,6 +9,7 @@ public class Patient implements Serializable {
     private String password;
     private UserRole userRole;
     private String telephoneNumber;
+    private transient MedicalProfile profile;
 
     public Patient() {
     }
@@ -72,6 +73,14 @@ public class Patient implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public MedicalProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(MedicalProfile profile) {
+        this.profile = profile;
     }
 
     @Override

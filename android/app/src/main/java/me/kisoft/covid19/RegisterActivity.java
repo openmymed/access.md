@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.services.PatientService;
-import me.kisoft.covid19.services.PatientServiceImpl;
+import me.kisoft.covid19.services.PatientServiceDelegate;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText edtPhone;
@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        service = new PatientServiceImpl();
+        service = new PatientServiceDelegate();
         super.onStart();
     }
 

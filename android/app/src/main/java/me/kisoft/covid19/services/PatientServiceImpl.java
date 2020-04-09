@@ -1,5 +1,7 @@
 package me.kisoft.covid19.services;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -8,6 +10,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import okhttp3.MediaType;
@@ -17,9 +20,18 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PatientServiceImpl implements PatientService {
+    final String WEBSITE_URL = "https://covid19-staging.kisoft.me/";
+    final String LOGIN_URL = WEBSITE_URL + "login";
+    final String REGISTER_URL = WEBSITE_URL + "patient/signup";
+    final String PROFILE_URL = WEBSITE_URL + "patient/profile";
+    final String CHANGE_PASSWORD = WEBSITE_URL + "user/password";
+    final String CODE_URL = WEBSITE_URL + "patient/code";
+    final String QUESTIONS_URL = WEBSITE_URL + "patient/question";
+    final String ANSWER_URL = WEBSITE_URL + "patient/question/{question_id}/answer";//TODO remember to change question_id
+    final String RECOMMENDATION_URL = WEBSITE_URL + "patient/recommendation";
+    final String SYMPTOMS_URL = WEBSITE_URL + "patient/symptom";
+
     final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    final String LOGIN_URL = "https://covid19-staging.kisoft.me/login";
-    final String REGISTER_URL = "https://covid19-staging.kisoft.me/patient/signup";
     OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -45,7 +57,7 @@ public class PatientServiceImpl implements PatientService {
                 return null;//what to return? if 500 or something else
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Login ", e.toString());
         }
         return null;
     }
@@ -62,7 +74,7 @@ public class PatientServiceImpl implements PatientService {
                 return false;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Register ", e.toString());
         }
         return false;
     }
@@ -72,7 +84,12 @@ public class PatientServiceImpl implements PatientService {
         return null;
     }
 
-    //from OKHttp
+    @Override
+    public Boolean createMedicalProfile(MedicalProfile profile) {
+        return null;
+    }
+
+    //POST from OKHttp
     private Response post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(json, JSON);
         Request request = new Request.Builder()
@@ -83,12 +100,24 @@ public class PatientServiceImpl implements PatientService {
         return response;
     }
 
-    //from OKHttp
+    //GET from OKHttp
     private Response get(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
 
+        try (Response response = client.newCall(request).execute()) {
+            return response;
+        }
+    }
+
+    //PUT from OKHttp
+    private Response put(String url, String json) throws IOException {
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .put(body)
+                .build();
         try (Response response = client.newCall(request).execute()) {
             return response;
         }

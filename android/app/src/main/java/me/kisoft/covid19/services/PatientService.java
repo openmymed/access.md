@@ -2,6 +2,7 @@ package me.kisoft.covid19.services;
 
 import java.util.List;
 
+import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 
@@ -11,4 +12,6 @@ public interface PatientService {
     Boolean register(Patient patient);
 
     List<Question> getQuestions();
+
+    Boolean createMedicalProfile(MedicalProfile profile);
 }

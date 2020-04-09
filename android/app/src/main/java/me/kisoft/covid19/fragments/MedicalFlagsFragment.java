@@ -1,5 +1,6 @@
 package me.kisoft.covid19.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.paperdb.Paper;
+import me.kisoft.covid19.LoginActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.utils.RememberMe;
@@ -67,9 +69,9 @@ public class MedicalFlagsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addDiseaseToList();
-//                Intent intent = new Intent(getContext(), MainActivity.class);
-//                startActivity(intent);
-//                getActivity().finish();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 
