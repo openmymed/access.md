@@ -1,6 +1,7 @@
 package me.kisoft.covid19.models;
 
 public class Question {
+    private transient int id;
     private String question;
     private String answer;
     private QuestionType type;
@@ -12,6 +13,14 @@ public class Question {
         this.question = question;
         this.answer = answer;
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getQuestion() {

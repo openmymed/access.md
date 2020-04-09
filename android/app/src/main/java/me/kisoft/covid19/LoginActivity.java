@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.paperdb.Paper;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.services.PatientService;
-import me.kisoft.covid19.services.PatientServiceImpl;
+import me.kisoft.covid19.services.PatientServiceDelegate;
 import me.kisoft.covid19.utils.RememberMe;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        service = new PatientServiceImpl();
+        service = new PatientServiceDelegate();
         //check if remember me is activated to login immediately
         Paper.init(this);
         String phone = Paper.book().read(RememberMe.phone);

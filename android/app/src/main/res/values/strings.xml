@@ -17,6 +17,7 @@
     <string name="sign_in_all_fields_required">All fields are required</string>
     <string name="sign_in_phone_required">Phone field can\'t be empty</string>
     <string name="sign_in">Sign in</string>
+    <string name="forgot_password">Forgot your password?</string>
     <string name="username_phone">Username/Phone</string>
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
