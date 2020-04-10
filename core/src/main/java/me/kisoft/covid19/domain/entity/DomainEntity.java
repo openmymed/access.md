@@ -12,7 +12,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.PostUpdate;
-import lombok.Data;
+import javax.persistence.Transient;
+import lombok.Getter;
+import lombok.Setter;
+import me.kisoft.covid19.domain.event.DomainEvent;
+import me.kisoft.covid19.domain.event.EventBus;
 import org.hibernate.envers.Audited;
 
 /**
@@ -21,29 +25,34 @@ import org.hibernate.envers.Audited;
  */
 @MappedSuperclass
 @Audited
+@Getter
+@Setter
 public abstract class DomainEntity {
 
+    protected static transient final String DELETED_EVENT = "%sDeleted";
+    protected static transient final String CREATED_EVENT = "%sCreated";
+    protected static transient final String UPDATED_EVENT = "%sUpdated";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
 
-    public Long getId() {
-        return id;
+
+    public void postDeleted() {
+        EventBus.getInstance().post(new DomainEvent(String.format(DELETED_EVENT, getEntityName()), this));
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void postCreated() {
+        EventBus.getInstance().post(new DomainEvent(String.format(CREATED_EVENT, getEntityName()), this));
     }
 
-    public abstract void postDeleted();
-
-    public abstract void postSaved();
-
-    public abstract void postUpdated();
+    public void postUpdated() {
+        EventBus.getInstance().post(new DomainEvent(String.format(UPDATED_EVENT, getEntityName()), this));
+    }
 
     @PostPersist
     public void postPersist() {
-        postSaved();
+        postCreated();
     }
 
     @PostUpdate
@@ -55,4 +64,7 @@ public abstract class DomainEntity {
     public void postRemove() {
         postDeleted();
     }
+
+    @Transient
+    public abstract String getEntityName();
 }
