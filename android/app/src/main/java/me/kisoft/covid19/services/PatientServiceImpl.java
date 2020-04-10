@@ -32,7 +32,7 @@ public class PatientServiceImpl implements PatientService {
     final String SYMPTOMS_URL = WEBSITE_URL + "patient/symptom";
 
     final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    OkHttpClient client = new OkHttpClient();
+   
 
     @Override
     public Patient login(String username, String password) {
