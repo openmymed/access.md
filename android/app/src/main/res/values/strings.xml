@@ -30,6 +30,10 @@
     <string name="title_profile">Profile</string>
     <string name="title_notifications">Notifications</string>
 
+    <!--  Home Fragment  -->
+    <string name="no_new_questions">No new questions</string>
+    <string name="questions">Questions:</string>
+
     <!-- General Info Fragment -->
     <string name="general_info_title">General Info</string>
     <string name="male">Male</string>
@@ -46,7 +50,7 @@
     <string name="prev_btn">Previous</string>
     <string name="add_new_medication">Add a new medication</string>
     <string name="add">Add</string>
-    <string name="cancel">Cancel</string>
+    <string name="btn_cancel">Cancel</string>
 
     <!-- Medical Flags -->
     <string name="medical_flags_title">Medical Flags</string>
@@ -57,6 +61,11 @@
     <string name="cardiovascular">Cardiovascular Diseases</string>
     <string name="obesity">Obesity</string>
     <string name="finish">Finish</string>
+
+    <!--  Add Symptoms Screen   -->
+    <string name="add_symptoms_title">What symptoms are you feeling now?</string>
+    <string name="btn_submit">Submit</string>
+    <string name="notes">Notes</string>
 
 
 </resources>

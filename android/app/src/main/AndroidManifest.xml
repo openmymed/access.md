@@ -15,7 +15,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".CreateProfileActivity" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".AddSymptomsActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />

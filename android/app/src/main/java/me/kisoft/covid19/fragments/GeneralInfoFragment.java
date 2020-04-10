@@ -2,7 +2,6 @@ package me.kisoft.covid19.fragments;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +40,7 @@ public class GeneralInfoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_general_info, container, false);
         btnNextStep = view.findViewById(R.id.btn_general_step);
@@ -53,7 +51,6 @@ public class GeneralInfoFragment extends Fragment {
         rbFemale = view.findViewById(R.id.rb_female);
         rbMale = view.findViewById(R.id.rb_male);
         radioGroup = view.findViewById(R.id.radioGroup);
-        Paper.init(getContext());
         return view;
     }
 
@@ -62,7 +59,6 @@ public class GeneralInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         profile = Paper.book().read(RememberMe.medProfile);
         if (profile != null) {
-            Log.e("", Paper.book().read(RememberMe.medProfile).toString());
             etHeight.setText(String.valueOf(profile.getHeight()));
             etAge.setText(String.valueOf(profile.getAge()));
             etWeight.setText(String.valueOf(profile.getWeight()));
