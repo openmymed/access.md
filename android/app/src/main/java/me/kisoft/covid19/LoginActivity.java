@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         service = new PatientServiceDelegate();
         //check if remember me is activated to login immediately
-        Paper.init(this);
         String phone = Paper.book().read(RememberMe.phone);
         String password = Paper.book().read(RememberMe.password);
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password))
@@ -47,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-        Paper.init(this);
         //init screen components
         etUsername = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
@@ -102,7 +100,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Patient p) {
-                dialog.dismiss();
                 if (p != null) {
                     tvLoginWarning.setVisibility(View.GONE);
                     if (chkRememberMe.isChecked()) {
@@ -116,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                     tvLoginWarning.setText(getString(R.string.sign_in_incorrect));
                     tvLoginWarning.setVisibility(View.VISIBLE);
                 }
+                dialog.dismiss();
                 super.onPostExecute(p);
             }
         }.execute();

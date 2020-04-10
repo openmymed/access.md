@@ -6,6 +6,9 @@ import android.app.NotificationManager;
 import android.os.Build;
 import android.util.Log;
 
+import io.paperdb.Paper;
+import me.kisoft.covid19.utils.RestClient;
+
 public class AppWraper extends Application {
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
@@ -13,6 +16,8 @@ public class AppWraper extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        RestClient.init(this.getApplicationContext());
+        Paper.init(this.getApplicationContext());
         Log.e("TAG","Im in App Class on Create");
         createNotificationChannels();
     }

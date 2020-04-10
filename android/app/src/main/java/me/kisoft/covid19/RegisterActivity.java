@@ -88,7 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                return service.register(patient);
+                Boolean result = service.register(patient);
+                if (result) {
+                    //login internally for the session
+                    service.login(patient.getUsername(), patient.getPassword());
+                }
+                return result;
             }
 
             @Override
