@@ -7,16 +7,20 @@ package me.kisoft.covid19.domain.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import me.kisoft.covid19.domain.auth.entity.User;
-import me.kisoft.covid19.domain.auth.entity.UserRole;
+import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.entity.DomainEntity;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
@@ -27,8 +31,6 @@ import org.hibernate.envers.Audited;
  */
 @Entity(name = "Patient")
 @Table(name = "APP_USER")
-@Audited
-@AuditOverride
 @Getter
 @Setter
 public class Patient extends DomainEntity {
@@ -38,11 +40,23 @@ public class Patient extends DomainEntity {
     private String username;
     private UserRole userRole;
     private String telephoneNumber;
-    
+
+    @ManyToOne
+    @Access(AccessType.PROPERTY)
+    private Doctor doctor;
+
     @Access(AccessType.PROPERTY)
     @OneToOne(cascade = CascadeType.ALL)
     MedicalProfile profile = new MedicalProfile();
-    
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Reccomendation> reccomendations = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Question> questions = new ArrayList<>();
+
     public Patient(User user) {
         this.setUsername(user.getUsername());
         this.setPassword(user.getPassword());
@@ -50,9 +64,10 @@ public class Patient extends DomainEntity {
         this.setTelephoneNumber(user.getTelephoneNumber());
     }
 
-    public Patient(){
-        
+    public Patient() {
+
     }
+
     @JsonIgnore
     public String getPassword() {
         return this.password;
@@ -63,6 +78,21 @@ public class Patient extends DomainEntity {
         this.password = password;
     }
 
+    public void addQuestion(Question question) {
+        if (questions == null) {
+            questions = new ArrayList<>();
+        }
+        question.setPatient(this);
+        questions.add(question);
+    }
+
+    public void addReccomendation(Reccomendation reccomendation) {
+        if (reccomendations == null) {
+            reccomendations = new ArrayList<>();
+        }
+        reccomendation.setPatient(this);
+        reccomendations.add(reccomendation);
+    }
 
     @Override
     public String getEntityName() {

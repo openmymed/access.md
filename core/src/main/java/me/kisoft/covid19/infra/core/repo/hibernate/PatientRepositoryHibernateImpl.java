@@ -5,8 +5,12 @@
  */
 package me.kisoft.covid19.infra.core.repo.hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
 import me.kisoft.covid19.domain.core.repo.PatientRepository;
 import me.kisoft.covid19.domain.core.entity.Patient;
+import me.kisoft.covid19.domain.core.entity.Question;
+import me.kisoft.covid19.domain.core.entity.Reccomendation;
 import me.kisoft.covid19.infra.repo.hiberante.HibernateCrudRepository;
 
 /**
@@ -19,5 +23,21 @@ public class PatientRepositoryHibernateImpl extends HibernateCrudRepository<Pati
     public Class<Patient> getType() {
         return Patient.class;
     }
-    
+
+    @Override
+    public List<Question> getPatientQuestions(Long patientId) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Question> getUnAnsweredPatientQuestions(Long patientId) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Reccomendation> getPatientReccomendations(Long patientId) {
+        return new ArrayList<>();
+    }
+
+
 }

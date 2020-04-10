@@ -10,9 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.kisoft.covid19.domain.auth.entity.User;
-import me.kisoft.covid19.domain.auth.entity.UserRole;
+import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.entity.DomainEntity;
 
 /**
@@ -23,6 +24,7 @@ import me.kisoft.covid19.domain.entity.DomainEntity;
 @Table(name = "APP_USER")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Doctor extends DomainEntity {
 
     @JsonProperty

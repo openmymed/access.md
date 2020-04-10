@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import me.kisoft.covid19.domain.entity.DomainEntity;
-import me.kisoft.covid19.domain.enums.Sex;
+import me.kisoft.covid19.domain.core.enums.Sex;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 

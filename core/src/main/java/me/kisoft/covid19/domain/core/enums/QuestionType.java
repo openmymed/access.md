@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.kisoft.covid19.domain.auth.entity;
-
-import io.javalin.core.security.Role;
+package me.kisoft.covid19.domain.core.enums;
 
 /**
  *
  * @author tareq
  */
-public enum UserRole implements Role {
-  ROLE_DOCTOR,
-  ROLE_PATIENT,
-  ROLE_ADMIN,
-  NONE
+public enum QuestionType {
+     Scale, Binary, Text,
 }

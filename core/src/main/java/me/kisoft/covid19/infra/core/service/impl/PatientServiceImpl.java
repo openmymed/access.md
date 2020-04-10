@@ -6,7 +6,7 @@
 package me.kisoft.covid19.infra.core.service.impl;
 
 import me.kisoft.covid19.domain.auth.entity.User;
-import me.kisoft.covid19.domain.auth.entity.UserRole;
+import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.core.repo.PatientRepository;
 import me.kisoft.covid19.domain.core.service.PatientService;
 import me.kisoft.covid19.domain.core.entity.MedicalProfile;

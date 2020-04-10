@@ -5,6 +5,7 @@
  */
 package me.kisoft.covid19.domain.auth.entity;
 
+import me.kisoft.covid19.domain.auth.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
