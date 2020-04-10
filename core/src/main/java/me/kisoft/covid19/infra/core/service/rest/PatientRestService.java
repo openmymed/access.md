@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.kisoft.covid19.infra.auth.service.rest;
+package me.kisoft.covid19.infra.core.service.rest;
 
 import io.javalin.http.Context;
 import me.kisoft.covid19.domain.auth.entity.User;

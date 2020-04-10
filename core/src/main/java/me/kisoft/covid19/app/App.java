@@ -24,7 +24,7 @@ import me.kisoft.covid19.domain.auth.entity.UserRole;
 import static me.kisoft.covid19.domain.auth.entity.UserRole.NONE;
 import static me.kisoft.covid19.domain.auth.entity.UserRole.ROLE_PATIENT;
 import me.kisoft.covid19.domain.event.EventBus;
-import me.kisoft.covid19.infra.auth.service.rest.PatientRestService;
+import me.kisoft.covid19.infra.core.service.rest.PatientRestService;
 import me.kisoft.covid19.infra.auth.service.rest.UserRestService;
 import me.kisoft.covid19.infra.factory.EntityManagerFactory;
 import org.eclipse.jetty.server.session.DefaultSessionCache;
