@@ -6,7 +6,7 @@
 package me.kisoft.covid19.domain.core.service;
 
 import me.kisoft.covid19.domain.auth.entity.User;
-import me.kisoft.covid19.domain.entity.MedicalProfile;
+import me.kisoft.covid19.domain.core.entity.MedicalProfile;
 
 /**
  *

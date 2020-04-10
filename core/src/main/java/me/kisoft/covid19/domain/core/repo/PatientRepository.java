@@ -5,7 +5,7 @@
  */
 package me.kisoft.covid19.domain.core.repo;
 
-import me.kisoft.covid19.domain.entity.Patient;
+import me.kisoft.covid19.domain.core.entity.Patient;
 import me.kisoft.covid19.domain.repo.CrudRepository;
 
 /**

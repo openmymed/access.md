@@ -13,8 +13,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import me.kisoft.covid19.domain.event.DomainEvent;
-import me.kisoft.covid19.domain.event.EventBus;
 import me.kisoft.covid19.domain.entity.DomainEntity;
 
 /**

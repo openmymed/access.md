@@ -9,8 +9,8 @@ import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.entity.UserRole;
 import me.kisoft.covid19.domain.core.repo.PatientRepository;
 import me.kisoft.covid19.domain.core.service.PatientService;
-import me.kisoft.covid19.domain.entity.MedicalProfile;
-import me.kisoft.covid19.domain.entity.Patient;
+import me.kisoft.covid19.domain.core.entity.MedicalProfile;
+import me.kisoft.covid19.domain.core.entity.Patient;
 import me.kisoft.covid19.infra.core.factory.PatientRepositoryFactory;
 
 /**

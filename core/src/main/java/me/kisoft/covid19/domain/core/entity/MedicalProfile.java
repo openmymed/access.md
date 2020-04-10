@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.kisoft.covid19.domain.entity;
+package me.kisoft.covid19.domain.core.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import me.kisoft.covid19.domain.entity.DomainEntity;
 import me.kisoft.covid19.domain.enums.Sex;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;

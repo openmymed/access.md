@@ -6,7 +6,7 @@
 package me.kisoft.covid19.infra.core.repo.hibernate;
 
 import me.kisoft.covid19.domain.core.repo.PatientRepository;
-import me.kisoft.covid19.domain.entity.Patient;
+import me.kisoft.covid19.domain.core.entity.Patient;
 import me.kisoft.covid19.infra.repo.hiberante.HibernateCrudRepository;
 
 /**

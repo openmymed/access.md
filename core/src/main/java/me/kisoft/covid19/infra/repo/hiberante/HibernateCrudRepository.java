@@ -7,12 +7,8 @@ package me.kisoft.covid19.infra.repo.hiberante;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.transaction.NotSupportedException;
 import static javax.transaction.Status.STATUS_NO_TRANSACTION;
-import javax.transaction.SystemException;
 import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 import lombok.SneakyThrows;

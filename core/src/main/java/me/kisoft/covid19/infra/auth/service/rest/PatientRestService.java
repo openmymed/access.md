@@ -9,7 +9,7 @@ import io.javalin.http.Context;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.repo.UserRepository;
 import me.kisoft.covid19.domain.core.service.PatientService;
-import me.kisoft.covid19.domain.entity.MedicalProfile;
+import me.kisoft.covid19.domain.core.entity.MedicalProfile;
 import me.kisoft.covid19.infra.auth.factory.UserRepositoryFactory;
 import me.kisoft.covid19.infra.core.factory.PatientServiceFactory;
 
