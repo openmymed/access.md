@@ -4,17 +4,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -51,13 +49,10 @@ public class MedicationFragment extends Fragment {
         btnPrevStep = view.findViewById(R.id.btn_prev_step);
         fabAddToList = view.findViewById(R.id.fab_add_medication);
         medicationListView = view.findViewById(R.id.medication_listview);
-        Paper.init(getContext());
 
         profile = Paper.book().read(RememberMe.medProfile);
         if (profile != null) {
-            Log.e("", Paper.book().read(RememberMe.medProfile).toString());
             if (profile.getMedications() != null) {
-                Log.e("hi", "");
                 medications = profile.getMedications();
             } else {
                 medications = new ArrayList<>();
@@ -84,17 +79,10 @@ public class MedicationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addMedToList(view, R.id.navigation_medical_flags);
-//                Log.e("", Paper.book().read(RememberMe.medProfile).toString());
             }
         });
 
         return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 
     private void addMedToList(View view, int destination) {
@@ -104,8 +92,13 @@ public class MedicationFragment extends Fragment {
     }
 
     private void showAddItemDialog(Context c) {
+        //giving margins to etMedication
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(48, 0, 48, 0);
         final EditText etMedication = new EditText(c);
-        AlertDialog dialog = new AlertDialog.Builder(c)
+        etMedication.setLayoutParams(layoutParams);
+
+        AlertDialog dialog = new AlertDialog.Builder(c, R.style.CustomAlertDialog)
                 .setTitle(getString(R.string.add_new_medication))
                 .setView(etMedication)
                 .setPositiveButton(getString(R.string.add), new DialogInterface.OnClickListener() {
@@ -116,7 +109,7 @@ public class MedicationFragment extends Fragment {
                         medicationAdapter.notifyDataSetChanged();
                     }
                 })
-                .setNegativeButton(getString(R.string.cancel), null)
+                .setNegativeButton(getString(R.string.btn_cancel), null)
                 .create();
         dialog.show();
     }

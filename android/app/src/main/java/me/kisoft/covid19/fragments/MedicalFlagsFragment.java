@@ -1,6 +1,7 @@
 package me.kisoft.covid19.fragments;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.paperdb.Paper;
-import me.kisoft.covid19.LoginActivity;
+import me.kisoft.covid19.MainActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.models.MedicalProfile;
+import me.kisoft.covid19.services.PatientService;
+import me.kisoft.covid19.services.PatientServiceDelegate;
 import me.kisoft.covid19.utils.RememberMe;
 
 public class MedicalFlagsFragment extends Fragment {
@@ -32,6 +35,7 @@ public class MedicalFlagsFragment extends Fragment {
     private List<String> diseases;
     private CheckBox[] checkBoxes;
     private MedicalProfile profile;
+    private PatientService service;
 
     public MedicalFlagsFragment() {
         // Required empty public constructor
@@ -49,10 +53,8 @@ public class MedicalFlagsFragment extends Fragment {
         chkCardiovascular = view.findViewById(R.id.chk_cardiovascular);
         chkDiabetes = view.findViewById(R.id.chk_diabetes);
         chkObesity = view.findViewById(R.id.chk_obesity);
-
+        service = new PatientServiceDelegate();
         checkBoxes = new CheckBox[]{chkG6PD, chkCardiovascular, chkRespiratory, chkDiabetes, chkObesity};
-
-        Paper.init(getContext());
 
         profile = Paper.book().read(RememberMe.medProfile);
         diseases = new ArrayList<>();
@@ -69,13 +71,32 @@ public class MedicalFlagsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addDiseaseToList();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                createMedicalProfile((MedicalProfile) Paper.book().read(RememberMe.medProfile));
             }
         });
 
         return view;
+    }
+
+    private void createMedicalProfile(final MedicalProfile profile) {
+        new AsyncTask<Void, Void, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                return service.createMedicalProfile(profile);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aVoid) {
+                super.onPostExecute(aVoid);
+                if (aVoid) {
+                    Paper.book().delete(RememberMe.medProfile);
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+        }.execute();
     }
 
     private void addDiseaseToList() {
