@@ -18,17 +18,14 @@ public interface CrudRepository<T extends DomainEntity> extends AutoCloseable {
 
     T findById(Long id);
 
-    default T refresh(T toRefresh) {
-        //toRefresh = findById(toRefresh.getId());
-        return toRefresh;
-    }
 
     T save(T toSave);
 
-    public default T update(T toUpdate) {
-        //return this.update(toUpdate, toUpdate.getId());
-        return null;
-    }
 
     void delete(Long id);
+    
+    @Override
+    default void close(){
+        
+    }
 }

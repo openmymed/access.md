@@ -7,29 +7,41 @@ package me.kisoft.covid19.infra.auth.service.rest;
 
 import io.javalin.http.Context;
 import me.kisoft.covid19.domain.auth.entity.User;
-import me.kisoft.covid19.domain.auth.entity.UserRole;
 import me.kisoft.covid19.domain.auth.repo.UserRepository;
-import me.kisoft.covid19.domain.auth.service.UserService;
+import me.kisoft.covid19.domain.core.service.PatientService;
+import me.kisoft.covid19.domain.entity.MedicalProfile;
 import me.kisoft.covid19.infra.auth.factory.UserRepositoryFactory;
-import me.kisoft.covid19.infra.auth.factory.UserServiceFactory;
+import me.kisoft.covid19.infra.core.factory.PatientServiceFactory;
 
 /**
  *
  * @author tareq
  */
 public class PatientRestService {
-     UserService userService = UserServiceFactory.getInstance().get();
-     
-     public void signUp(Context ctx) throws Exception {
+
+    PatientService patientService = PatientServiceFactory.getInstance().get();
+
+    public void signUp(Context ctx) throws Exception {
         try ( UserRepository repo = UserRepositoryFactory.getInstance().get()) {
             User toCreate = ctx.bodyAsClass(User.class);
-            toCreate.setUserRole(UserRole.ROLE_PATIENT);
             if (repo.getUserByUsername(toCreate.getUsername()) == null) {
-                userService.signUp(toCreate);
+                patientService.createPatient(toCreate);
                 ctx.res.setStatus(200);
             } else {
                 ctx.res.setStatus(400);
             }
         }
+    }
+
+    public void updateMedicalProfile(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        patientService.updatePatientMedicalProfile(user.getId(), ctx.bodyAsClass(MedicalProfile.class));
+        ctx.res.setStatus(200);
+    }
+
+    public void getMedicalProfile(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        ctx.json(patientService.getPatientMedicalProfile(user.getId()));
+        ctx.res.setStatus(200);
     }
 }

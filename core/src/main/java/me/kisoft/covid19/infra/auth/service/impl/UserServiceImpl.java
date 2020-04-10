@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 @Log
 public class UserServiceImpl implements UserService {
 
-  @SneakyThrows
   @Override
   public User signIn(String username, String password) {
     try (UserRepository repo = UserRepositoryFactory.getInstance().get()) {
@@ -34,7 +33,6 @@ public class UserServiceImpl implements UserService {
     return null;
   }
 
-  @SneakyThrows
   @Override
   public User signUp(User user) {
     try (UserRepository repo = UserRepositoryFactory.getInstance().get()) {
