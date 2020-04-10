@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="app_prod_PU" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-       <property name="javax.persistence.jdbc.url" value="jdbc:derby:data/app_db;create=true"/>
-      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.listeners.envers.autoRegister" value="true"/>
-    </properties>
-  </persistence-unit>
-  <persistence-unit name="app_dev_PU" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:app_db_dev;create=true"/>
-      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.listeners.envers.autoRegister" value="true"/>
-    </properties>
-  </persistence-unit>
-  <persistence-unit name="app_test_PU" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:app_db_test;create=true"/>
-      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-      <property name="hibernate.listeners.envers.autoRegister" value="true"/>
-      <property name = "hibernate.show_sql" value = "true" />
-    </properties>
-  </persistence-unit>
+    <persistence-unit name="app_prod_PU" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:data/app_db;create=true"/>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.listeners.envers.autoRegister" value="true"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="app_dev_PU" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:app_db_dev;create=true"/>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.listeners.envers.autoRegister" value="true"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="app_test_PU" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:app_db_test;create=true"/>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.listeners.envers.autoRegister" value="true"/>
+            <property name = "hibernate.show_sql" value = "true" />
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>

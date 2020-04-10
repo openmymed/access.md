@@ -41,8 +41,6 @@ public class PatientServiceImpl implements PatientService {
         try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.findById(id);
             if (p.getId() != null) {
-              p.getProfile().getMedicalFlags();
-              p.getProfile().getMedications();
               return p.getProfile();
             }
         }
