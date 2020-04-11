@@ -31,11 +31,11 @@ public class RestClient {
     public static final String REGISTER_URL = BASE_URL + "patient/signup";
     public static final String PROFILE_URL = BASE_URL + "patient/profile";
     public static final String CHANGE_PASSWORD = BASE_URL + "user/password";
-    public static final String CODE_URL = BASE_URL + "patient/code";
+    public static final String SECURITY_CODE_URL = BASE_URL + "patient/code";
     public static final String QUESTIONS_URL = BASE_URL + "patient/question";
     public static final String ANSWER_URL = BASE_URL + "patient/question/{question_id}/answer";//TODO remember to change question_id
     public static final String RECOMMENDATION_URL = BASE_URL + "patient/recommendation";
-    public static final String GET_SYMPTOMS_URL = BASE_URL + "symptom/codes";
+    public static final String GET_ICPC_URL = BASE_URL + "symptom/codes";
     public static final String POST_SYMPTOMS_URL = BASE_URL + "patient/symptom";
     static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     static ClearableCookieJar cookieJar;

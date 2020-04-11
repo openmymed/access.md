@@ -69,5 +69,8 @@
     <string name="btn_submit">Submit</string>
     <string name="notes">Notes</string>
 
+    <!--  Security Code Screen  -->
+    <string name="security_code_title">Security Code</string>
+
 
 </resources>

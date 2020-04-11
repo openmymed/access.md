@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".SecurityCodeActivity"></activity>
         <activity android:name=".CreateProfileActivity" />
         <activity android:name=".ChatActivity" />
         <activity
