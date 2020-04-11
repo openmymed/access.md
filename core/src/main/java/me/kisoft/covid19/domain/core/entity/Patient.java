@@ -22,8 +22,6 @@ import lombok.Setter;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.entity.DomainEntity;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.Audited;
 import java.util.Objects;
 
 /**
@@ -62,6 +60,8 @@ public class Patient extends DomainEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Symptom> symptoms = new ArrayList<>();
 
+    
+    
     public Patient(User user) {
         this.setUsername(user.getUsername());
         this.setPassword(user.getPassword());

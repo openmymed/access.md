@@ -33,7 +33,8 @@ public class User extends DomainEntity {
     private String username;
     private UserRole userRole;
     private String telephoneNumber;
-
+   
+    
     @JsonIgnore
     public String getPassword() {
         return this.password;

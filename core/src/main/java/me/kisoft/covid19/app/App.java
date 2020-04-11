@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.extern.java.Log;
+import me.kisoft.covid19.app.service.BackgroundService;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.enums.UserRole;
 import static me.kisoft.covid19.domain.auth.enums.UserRole.NONE;
@@ -55,6 +56,7 @@ public class App {
         }
         EntityManagerFactory.getInstance().setPersistenceUnit(persistenceUnitName);
         readICPCCodes();
+        startBackgroundServices();
         startServer();
         registerDomainHandlers();
         registerDerbyShutdownHook();
@@ -66,6 +68,16 @@ public class App {
             return UserRole.NONE;
         }
         return user.getUserRole();
+    }
+
+    private static void startBackgroundServices() {
+        BackgroundService.startBackgroundServices();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BackgroundService.stopBackgroundServices();
+            }
+        }));
     }
 
     private static void registerDomainHandlers() throws Throwable {
@@ -126,13 +138,13 @@ public class App {
                 });
                 path("question", () -> {
                     get(patientService::getUnansweredQuestions, roles(ROLE_PATIENT));
-                    path(":id",()->{
-                       path("answer",()->{
+                    path(":id", () -> {
+                        path("answer", () -> {
                             put(patientService::answerQuestion, roles(ROLE_PATIENT));
-                       }); 
+                        });
                     });
                 });
-                path("symptom",()->{
+                path("symptom", () -> {
                     post(patientService::addSymptom, roles(ROLE_PATIENT));
                 });
             });
@@ -178,7 +190,7 @@ public class App {
             String[] entries = icpc.split("\n");
             for (String entry : entries) {
                 String[] values = entry.split(";");
-                icpcEntries.add(new ICPCEntry(values[0].replaceAll("\"", ""), values[1].replaceAll("\"", ""),ICPCType.valueOf(values[2].replaceAll("\"", ""))));
+                icpcEntries.add(new ICPCEntry(values[0].replaceAll("\"", ""), values[1].replaceAll("\"", ""), ICPCType.valueOf(values[2].replaceAll("\"", ""))));
             }
             ICPCServiceFactory.getInstance().get().setEntries(icpcEntries);
         } catch (IOException ex) {

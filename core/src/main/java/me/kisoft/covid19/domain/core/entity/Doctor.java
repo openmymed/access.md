@@ -7,7 +7,10 @@ package me.kisoft.covid19.domain.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +36,9 @@ public class Doctor extends DomainEntity {
     private UserRole userRole;
     private String telephoneNumber;
 
+    @OneToMany
+    private List<Patient> patients = new ArrayList<>();
+    
      public Doctor(User user) {
         this.setUsername(user.getUsername());
         this.setPassword(user.getPassword());
@@ -49,6 +55,15 @@ public class Doctor extends DomainEntity {
         this.password = password;
     }
 
+    
+    public void addPatient(Patient patient){
+        if(patients == null){
+            patients = new ArrayList<>();
+        }
+        patient.setDoctor(this);
+        patients.add(patient);
+    }
+    
     @Override
     public String getEntityName() {
         return "doctor";
