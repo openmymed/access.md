@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.List;
 
 import io.paperdb.Paper;
-import me.kisoft.covid19.models.Symptom;
+import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
 import me.kisoft.covid19.utils.Keys;
@@ -59,19 +59,20 @@ public class AppWraper extends Application {
     }
 
     private void getSymptoms(){
-        List<Symptom> symptoms = Paper.book().read(Keys.SYMPTOMS_KEY);
-        if( symptoms == null){
-            new AsyncTask<Void,Boolean, List<Symptom>>(){
+        List<ICPCEntry> icpcEntries = Paper.book().read(Keys.ICPC_KEY);
+        if (icpcEntries == null) {
+            Log.e("ICPC call", "true");
+            new AsyncTask<Void, Boolean, List<ICPCEntry>>() {
                 @Override
-                protected List<Symptom> doInBackground(Void... voids) {
+                protected List<ICPCEntry> doInBackground(Void... voids) {
                     PatientService service = new PatientServiceDelegate();
-                    return service.getSymptoms();
+                    return service.getICPC();
                 }
 
                 @Override
-                protected void onPostExecute(List<Symptom> symptoms) {
-                    super.onPostExecute(symptoms);
-                    Paper.book().write(Keys.SYMPTOMS_KEY,symptoms);
+                protected void onPostExecute(List<ICPCEntry> icpcEntryList) {
+                    super.onPostExecute(icpcEntryList);
+                    Paper.book().write(Keys.ICPC_KEY, icpcEntryList);
                 }
             }.execute();
         }

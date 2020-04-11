@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,6 +33,7 @@ import io.paperdb.Paper;
 import me.kisoft.covid19.ChatActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.adapters.QuestionsAdapter;
+import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.Symptom;
 import me.kisoft.covid19.services.PatientService;
@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment {
     private TextView tvNoQuestions;
     private Button btnChat;
     private FloatingActionButton fabAddSymptoms;
-    private List<String> symptoms;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -102,14 +101,14 @@ public class HomeFragment extends Fragment {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(48, 16, 48, 0);
         //creating adapter for spinner to add data.
-        ArrayAdapter<Symptom> symptomsAdapter = new ArrayAdapter<Symptom>(getContext(), android.R.layout.simple_spinner_item, (List<Symptom>) Paper.book().read(Keys.SYMPTOMS_KEY));
-        symptomsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<ICPCEntry> aICPC = new ArrayAdapter<ICPCEntry>(getContext(), android.R.layout.simple_spinner_item, (List<ICPCEntry>) Paper.book().read(Keys.ICPC_KEY));
+        aICPC.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //creating components of the dialog.
         final SearchableSpinner spSymptoms = new SearchableSpinner(c);
         spSymptoms.setLayoutParams(layoutParams);
         spSymptoms.setTitle(getString(R.string.select_symptom));
         spSymptoms.setPositiveButton(getString(R.string.btn_search));
-        spSymptoms.setAdapter(symptomsAdapter);
+        spSymptoms.setAdapter(aICPC);
         final EditText etSymptomNote = new EditText(c);
         etSymptomNote.setLines(3);
         etSymptomNote.setLayoutParams(layoutParams);
@@ -126,9 +125,9 @@ public class HomeFragment extends Fragment {
                 .setPositiveButton(getString(R.string.btn_submit), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Symptom symptom = (Symptom) spSymptoms.getSelectedItem();
+                        ICPCEntry icpcEntry = (ICPCEntry) spSymptoms.getSelectedItem();
                         String note = String.valueOf(etSymptomNote.getText());
-//                        addSymptoms(new Symptom(symptom, note));//todo fix this
+                        addSymptoms(new Symptom(icpcEntry.getCode(), note));
                     }
                 })
                 .setNegativeButton(getString(R.string.btn_cancel), null)

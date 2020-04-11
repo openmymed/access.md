@@ -1,6 +1,5 @@
 package me.kisoft.covid19.services;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,10 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
@@ -69,39 +68,24 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Question> getQuestions() {
-        return null;
-    }
-
-    @Override
-    public List<Symptom> getSymptoms() {
-        List<Symptom> symptoms = new ArrayList<>();
+    public List<ICPCEntry> getICPC() {
+        List<ICPCEntry> icpcEntries = new ArrayList<>();
         Gson gson = new Gson();
-        try (Response response = RestClient.get(RestClient.GET_SYMPTOMS_URL)) {
-            Log.i("Symptoms Code", String.valueOf(response.code()));//used for testing
+        try (Response response = RestClient.get(RestClient.GET_ICPC_URL)) {
+            Log.i("ICPC Code", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
                 JSONArray jsonArray = new JSONArray(response.body().string());
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    Symptom symptom = gson.fromJson(jsonArray.get(i).toString(), Symptom.class);
-                    symptoms.add(symptom);
+                    ICPCEntry icpcEntry = gson.fromJson(jsonArray.get(i).toString(), ICPCEntry.class);
+                    icpcEntries.add(icpcEntry);
                 }
-                return symptoms;
+                return icpcEntries;
             } else {
                 return null;
             }
         } catch (IOException | JSONException e) {
-            Log.e("GET Symptoms", e.toString());
+            Log.e("GET ICPC", e.toString());
         }
-        return null;
-    }
-
-    @Override
-    public Boolean addSymptom(Symptom symptom) {
-        return null;
-    }
-
-    @Override
-    public Boolean answerQuestion(Question question) {
         return null;
     }
 
@@ -109,8 +93,8 @@ public class PatientServiceImpl implements PatientService {
     public Boolean createMedicalProfile(MedicalProfile profile) {
         Gson gson = new Gson();
         String json = gson.toJson(profile);
-        try (Response response = RestClient.put(RestClient.PROFILE_URL, json)){
-            Log.i("MedicalProfile", "" + response.code());//used for testing
+        try (Response response = RestClient.put(RestClient.PROFILE_URL, json)) {
+            Log.i("MedicalProfile", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
                 return true;
             } else {
@@ -120,6 +104,85 @@ public class PatientServiceImpl implements PatientService {
             Log.e("Medical Profile", e.toString());
         }
         return false;
+    }
+
+    @Override
+    public Boolean addSymptom(Symptom symptom) {
+        //POST
+        Gson gson = new Gson();
+        String json = gson.toJson(symptom);
+        try (Response response = RestClient.post(RestClient.POST_SYMPTOMS_URL, json)) {
+            Log.i("Add Symptom", String.valueOf(response.code()));//used for testing
+            Log.i("Add Symptom", response.body().string());//used for testing
+            if (response.isSuccessful()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            Log.e("Add Symptom ", e.toString());
+        }
+        return false;
+    }
+
+    //not tested yet.
+    @Override
+    public List<Question> getQuestions() {
+        List<Question> questions = new ArrayList<>();
+        Gson gson = new Gson();
+        try (Response response = RestClient.get(RestClient.QUESTIONS_URL)) {
+            Log.i("Question Code", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+                JSONArray jsonArray = new JSONArray(response.body().string());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Question question = gson.fromJson(jsonArray.get(i).toString(), Question.class);
+                    questions.add(question);
+                }
+                return questions;
+            }
+        } catch (IOException | JSONException e) {
+            Log.e("GET Questions", e.toString());
+        }
+        return questions;
+    }
+
+    //not implemented.
+    @Override
+    public Boolean answerQuestion(Question question) {
+        Gson gson = new Gson();
+        String json = gson.toJson(question);
+        try (Response response = RestClient.put("change url later", json)) { //todo change url later
+            Log.i("Answer Question", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            Log.e("Answer Question", e.toString());
+        }
+        return false;
+    }
+
+    //not tested yet.
+    @Override
+    public String getSecurityCode() {
+        String securityCode;
+        Gson gson = new Gson();
+        try (Response response = RestClient.get(RestClient.SECURITY_CODE_URL)) {
+            Log.i("Security Code", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+                String jsonRes = response.body().string();
+                securityCode = gson.fromJson(jsonRes, String.class);
+                Log.e("", "" + securityCode);
+                return securityCode;
+            } else {
+                return null;
+            }
+        } catch (IOException e) {
+            Log.e("GET Security Code", e.toString());
+        }
+        return null;
     }
 
 }

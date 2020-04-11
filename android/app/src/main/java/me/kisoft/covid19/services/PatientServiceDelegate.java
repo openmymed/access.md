@@ -1,26 +1,17 @@
 package me.kisoft.covid19.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
+import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
-import me.kisoft.covid19.models.QuestionType;
 import me.kisoft.covid19.models.Symptom;
 
 public class PatientServiceDelegate implements PatientService {
 
     PatientService service = new PatientServiceImpl();
-
-    static List<Question> questions = new ArrayList<>(Arrays.asList(
-            new Question("Do you have fever?", "", QuestionType.Binary),
-            new Question("Do you have any allergies?", "", QuestionType.Text),
-            new Question("How are you?", "", QuestionType.Scale),
-            new Question("How are you?", "", QuestionType.Scale)));
-    //pre defined symptoms.
-    static List<String> symptoms = new ArrayList<>(Arrays.asList("dry cough", "fever", "tiredness", "difficulty breathing"));
 
     @Override
     public Patient login(String username, String password) {
@@ -34,27 +25,32 @@ public class PatientServiceDelegate implements PatientService {
 
     @Override
     public List<Question> getQuestions() {
-        return questions;
+        return service.getQuestions();
     }
 
     @Override
-    public List<Symptom> getSymptoms() {
-        return service.getSymptoms();
+    public List<ICPCEntry> getICPC() {
+        return service.getICPC();
     }
 
     @Override
     public Boolean addSymptom(Symptom symptom) {
-        return true;
+        return service.addSymptom(symptom);
     }
 
     @Override
     public Boolean answerQuestion(Question question) {
-        return null;
+        return service.answerQuestion(question);
     }
 
 
     @Override
     public Boolean createMedicalProfile(MedicalProfile profile) {
         return service.createMedicalProfile(profile);
+    }
+
+    @Override
+    public String getSecurityCode() {
+        return service.getSecurityCode();
     }
 }
