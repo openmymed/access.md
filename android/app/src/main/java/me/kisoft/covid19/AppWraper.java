@@ -3,10 +3,17 @@ package me.kisoft.covid19;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
+import java.util.List;
+
 import io.paperdb.Paper;
+import me.kisoft.covid19.models.Symptom;
+import me.kisoft.covid19.services.PatientService;
+import me.kisoft.covid19.services.PatientServiceDelegate;
+import me.kisoft.covid19.utils.Keys;
 import me.kisoft.covid19.utils.RestClient;
 
 public class AppWraper extends Application {
@@ -18,6 +25,8 @@ public class AppWraper extends Application {
         super.onCreate();
         RestClient.init(this.getApplicationContext());
         Paper.init(this.getApplicationContext());
+        getSymptoms();
+
         Log.e("TAG","Im in App Class on Create");
         createNotificationChannels();
     }
@@ -49,4 +58,22 @@ public class AppWraper extends Application {
         }
     }
 
+    private void getSymptoms(){
+        List<Symptom> symptoms = Paper.book().read(Keys.SYMPTOMS_KEY);
+        if( symptoms == null){
+            new AsyncTask<Void,Boolean, List<Symptom>>(){
+                @Override
+                protected List<Symptom> doInBackground(Void... voids) {
+                    PatientService service = new PatientServiceDelegate();
+                    return service.getSymptoms();
+                }
+
+                @Override
+                protected void onPostExecute(List<Symptom> symptoms) {
+                    super.onPostExecute(symptoms);
+                    Paper.book().write(Keys.SYMPTOMS_KEY,symptoms);
+                }
+            }.execute();
+        }
+    }
 }

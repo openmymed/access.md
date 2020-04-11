@@ -20,7 +20,7 @@ import io.paperdb.Paper;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Sex;
-import me.kisoft.covid19.utils.RememberMe;
+import me.kisoft.covid19.utils.Keys;
 
 public class GeneralInfoFragment extends Fragment {
 
@@ -57,7 +57,7 @@ public class GeneralInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profile = Paper.book().read(RememberMe.medProfile);
+        profile = Paper.book().read(Keys.MED_PROFILE_KEY);
         if (profile != null) {
             etHeight.setText(String.valueOf(profile.getHeight()));
             etAge.setText(String.valueOf(profile.getAge()));
@@ -74,7 +74,7 @@ public class GeneralInfoFragment extends Fragment {
             public void onClick(View view) {
                 MedicalProfile newProfile = checkInputs(profile);
                 if (newProfile != null) {
-                    Paper.book().write(RememberMe.medProfile, newProfile);
+                    Paper.book().write(Keys.MED_PROFILE_KEY, newProfile);
                     Navigation.findNavController(view).navigate(R.id.navigation_medication);
                 } else {
                     tvRequiredWarning.setVisibility(View.VISIBLE);
