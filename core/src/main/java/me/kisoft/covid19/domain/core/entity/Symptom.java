@@ -27,6 +27,8 @@ public class Symptom extends DomainEntity {
     @ManyToOne
     @JsonIgnore
     private Patient patient;
+    
+    private String note;
 
     @Override
     public String getEntityName() {
