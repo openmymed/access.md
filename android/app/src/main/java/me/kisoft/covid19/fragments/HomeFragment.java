@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
         //creating components of the dialog.
         final SearchableSpinner spSymptoms = new SearchableSpinner(c);
         spSymptoms.setLayoutParams(layoutParams);
-        spSymptoms.setTitle(null);
+        spSymptoms.setTitle(getString(R.string.select_symptom));
         spSymptoms.setPositiveButton(getString(R.string.btn_search));
         spSymptoms.setAdapter(symptomsAdapter);
         final EditText etSymptomNote = new EditText(c);

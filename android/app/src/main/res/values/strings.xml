@@ -34,6 +34,7 @@
     <string name="no_new_questions">No new questions</string>
     <string name="questions">Questions:</string>
     <string name="btn_search">Search</string>
+    <string name="select_symptom">Select Symptom</string>
 
     <!-- General Info Fragment -->
     <string name="general_info_title">General Info</string>
