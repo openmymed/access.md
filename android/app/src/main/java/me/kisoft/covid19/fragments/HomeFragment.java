@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,8 +105,10 @@ public class HomeFragment extends Fragment {
         ArrayAdapter<Symptom> symptomsAdapter = new ArrayAdapter<Symptom>(getContext(), android.R.layout.simple_spinner_item, (List<Symptom>) Paper.book().read(Keys.SYMPTOMS_KEY));
         symptomsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //creating components of the dialog.
-        final Spinner spSymptoms = new Spinner(c);
+        final SearchableSpinner spSymptoms = new SearchableSpinner(c);
         spSymptoms.setLayoutParams(layoutParams);
+        spSymptoms.setTitle(null);
+        spSymptoms.setPositiveButton(getString(R.string.btn_search));
         spSymptoms.setAdapter(symptomsAdapter);
         final EditText etSymptomNote = new EditText(c);
         etSymptomNote.setLines(3);

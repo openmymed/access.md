@@ -33,6 +33,6 @@ public class Symptom implements Serializable {
 
     @Override
     public String toString() {
-        return  code + " - " + title;
+        return title;
     }
 }
