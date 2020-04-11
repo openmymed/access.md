@@ -144,11 +144,38 @@ public class App {
                         });
                     });
                 });
-                path("code",()->{
+                path("code", () -> {
                     get(patientService::getSecurityCode, roles(ROLE_PATIENT));
                 });
                 path("symptom", () -> {
                     post(patientService::addSymptom, roles(ROLE_PATIENT));
+                });
+            });
+            path("doctor", () -> {
+                path("feed", () -> {
+
+                });
+                path("patient", () -> {
+                    path(":id", () -> {
+                        path("profile", () -> {
+
+                        });
+                        path("symptom", () -> {
+
+                        });
+                        path("answer", () -> {
+
+                        });
+                        path("question", () -> {
+
+                        });
+                    });
+                });
+
+            });
+            path("admin", () -> {
+                path("doctor", () -> {
+
                 });
             });
         });
