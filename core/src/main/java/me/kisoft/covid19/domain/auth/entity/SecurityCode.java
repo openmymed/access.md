@@ -5,6 +5,7 @@
  */
 package me.kisoft.covid19.domain.auth.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -35,13 +36,17 @@ import org.apache.commons.lang3.RandomStringUtils;
 })
 public class SecurityCode extends DomainEntity {
 
+    @JsonIgnore
     private long consumedBy;
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     private SecurityCodeStatus status;
+    @JsonIgnore
     private long belongsTo;
     private String code;
     @Temporal(TemporalType.TIME)
     private Date validUntil;
+    @JsonIgnore
     @Temporal(TemporalType.TIME)
     private Date consumedOn;
     private static final long FIVE_MINUTES = 60l * 5l * 1000l;
