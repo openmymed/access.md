@@ -1,30 +1,38 @@
 package me.kisoft.covid19.models;
 
-public class Symptom {
-    private String symptom;
-    private String notes;
+import java.io.Serializable;
+
+public class Symptom implements Serializable {
+    private String code;
+    private String title;
 
     public Symptom() {
     }
 
-    public Symptom(String symptom, String notes) {
-        this.symptom = symptom;
-        this.notes = notes;
+    public Symptom(String code, String title) {
+        this.code = code;
+        this.title = title;
     }
 
-    public String getSymptom() {
-        return symptom;
+    public String getCode() {
+        return code;
     }
 
-    public void setSymptom(String symptom) {
-        this.symptom = symptom;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+    @Override
+    public String toString() {
+        return  code + " - " + title;
     }
 }

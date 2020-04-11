@@ -17,7 +17,7 @@ import io.paperdb.Paper;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
-import me.kisoft.covid19.utils.RememberMe;
+import me.kisoft.covid19.utils.Keys;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         service = new PatientServiceDelegate();
         //check if remember me is activated to login immediately
-        String phone = Paper.book().read(RememberMe.phone);
-        String password = Paper.book().read(RememberMe.password);
+        String phone = Paper.book().read(Keys.PHONE_KEY);
+        String password = Paper.book().read(Keys.PASSWORD_KEY);
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password))
             login(phone, password);
 
@@ -103,8 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (p != null) {
                     tvLoginWarning.setVisibility(View.GONE);
                     if (chkRememberMe.isChecked()) {
-                        Paper.book().write(RememberMe.phone, username);
-                        Paper.book().write(RememberMe.password, password);
+                        Paper.book().write(Keys.PHONE_KEY, username);
+                        Paper.book().write(Keys.PASSWORD_KEY, password);
                     }
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

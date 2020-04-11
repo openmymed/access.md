@@ -29,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import me.kisoft.covid19.ChatActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.adapters.QuestionsAdapter;
@@ -36,6 +37,7 @@ import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.Symptom;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
+import me.kisoft.covid19.utils.Keys;
 //Home has the questions from teh doctor
 
 public class HomeFragment extends Fragment {
@@ -77,7 +79,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getSymptoms();
         getQuestions();
 
         btnChat.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +101,7 @@ public class HomeFragment extends Fragment {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(48, 16, 48, 0);
         //creating adapter for spinner to add data.
-        ArrayAdapter<String> symptomsAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, symptoms);
+        ArrayAdapter<Symptom> symptomsAdapter = new ArrayAdapter<Symptom>(getContext(), android.R.layout.simple_spinner_item, (List<Symptom>) Paper.book().read(Keys.SYMPTOMS_KEY));
         symptomsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //creating components of the dialog.
         final Spinner spSymptoms = new Spinner(c);
@@ -122,9 +123,9 @@ public class HomeFragment extends Fragment {
                 .setPositiveButton(getString(R.string.btn_submit), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String symptom = spSymptoms.getSelectedItem().toString();
+                        Symptom symptom = (Symptom) spSymptoms.getSelectedItem();
                         String note = String.valueOf(etSymptomNote.getText());
-                        addSymptoms(new Symptom(symptom, note));
+//                        addSymptoms(new Symptom(symptom, note));//todo fix this
                     }
                 })
                 .setNegativeButton(getString(R.string.btn_cancel), null)
@@ -152,22 +153,6 @@ public class HomeFragment extends Fragment {
                     questionsAdapter.notifyDataSetChanged();
                 }
                 super.onPostExecute(questions);
-            }
-        }.execute();
-    }
-
-    void getSymptoms() {
-        new AsyncTask<Void, Void, List<String>>() {
-
-            @Override
-            protected List<String> doInBackground(Void... voids) {
-                return service.getSymptoms();
-            }
-
-            @Override
-            protected void onPostExecute(List<String> symptomList) {
-                symptoms = symptomList;
-                super.onPostExecute(symptomList);
             }
         }.execute();
     }
