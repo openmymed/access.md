@@ -5,8 +5,12 @@
  */
 package me.kisoft.covid19.domain.core.service;
 
+import java.util.List;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.core.entity.MedicalProfile;
+import me.kisoft.covid19.domain.core.entity.Question;
+import me.kisoft.covid19.domain.core.entity.Reccomendation;
+import me.kisoft.covid19.domain.core.entity.Symptom;
 
 /**
  *
@@ -18,6 +22,9 @@ public interface PatientService {
     void createPatient(User user);
 
     public MedicalProfile getPatientMedicalProfile(Long id);
-    
+    public List<Question> getPatientUnansweredQuestions(Long id);
+    public List<Reccomendation> getPatientReccomendations(Long id);
+    public void answerPatientQuestion(Long id, Long questionId, String answer);
+    public void addNewPatientSymptom(Long patientId, Symptom symptom);
     
 }

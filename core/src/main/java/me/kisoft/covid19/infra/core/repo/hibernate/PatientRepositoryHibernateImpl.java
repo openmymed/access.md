@@ -7,6 +7,7 @@ package me.kisoft.covid19.infra.core.repo.hibernate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import me.kisoft.covid19.domain.core.repo.PatientRepository;
 import me.kisoft.covid19.domain.core.entity.Patient;
 import me.kisoft.covid19.domain.core.entity.Question;
@@ -26,17 +27,17 @@ public class PatientRepositoryHibernateImpl extends HibernateCrudRepository<Pati
 
     @Override
     public List<Question> getPatientQuestions(Long patientId) {
-        return new ArrayList<>();
+        return this.findById(patientId).getQuestions();
     }
 
     @Override
     public List<Question> getUnAnsweredPatientQuestions(Long patientId) {
-        return new ArrayList<>();
+        return this.findById(patientId).getQuestions().stream().filter(question -> !question.isAnswered()).collect(Collectors.toList());
     }
 
     @Override
     public List<Reccomendation> getPatientReccomendations(Long patientId) {
-        return new ArrayList<>();
+        return  this.findById(patientId).getReccomendations();
     }
 
 

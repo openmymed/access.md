@@ -10,6 +10,8 @@ import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.repo.UserRepository;
 import me.kisoft.covid19.domain.core.service.PatientService;
 import me.kisoft.covid19.domain.core.entity.MedicalProfile;
+import me.kisoft.covid19.domain.core.entity.Question;
+import me.kisoft.covid19.domain.core.entity.Symptom;
 import me.kisoft.covid19.infra.auth.factory.UserRepositoryFactory;
 import me.kisoft.covid19.infra.core.factory.PatientServiceFactory;
 
@@ -43,5 +45,31 @@ public class PatientRestService {
         User user = ctx.sessionAttribute("user");
         ctx.json(patientService.getPatientMedicalProfile(user.getId()));
         ctx.res.setStatus(200);
+    }
+
+    public void getUnansweredQuestions(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        ctx.json(patientService.getPatientUnansweredQuestions(user.getId()));
+        ctx.res.setStatus(200);
+    }
+
+    public void getReccomendations(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        ctx.json(patientService.getPatientReccomendations(user.getId()));
+        ctx.res.setStatus(200);
+    }
+    
+    public void answerQuestion(Context ctx){
+          User user = ctx.sessionAttribute("user");
+          Long questionId = ctx.pathParam("id", Long.class).get();
+          Question question = ctx.bodyAsClass(Question.class);
+          patientService.answerPatientQuestion(user.getId(), questionId,question.getAnswer());
+          ctx.status(200);
+    }
+    
+    public void addSymptom(Context ctx){
+          User user = ctx.sessionAttribute("user");
+          patientService.addNewPatientSymptom(user.getId(), ctx.bodyAsClass(Symptom.class));
+          ctx.status(200);
     }
 }

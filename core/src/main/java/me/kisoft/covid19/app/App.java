@@ -120,6 +120,20 @@ public class App {
                     put(patientService::updateMedicalProfile, roles(ROLE_PATIENT));
                     get(patientService::getMedicalProfile, roles(ROLE_PATIENT));
                 });
+                path("reccomendation", () -> {
+                    get(patientService::getReccomendations, roles(ROLE_PATIENT));
+                });
+                path("question", () -> {
+                    get(patientService::getUnansweredQuestions, roles(ROLE_PATIENT));
+                    path(":id",()->{
+                       path("answer",()->{
+                            put(patientService::answerQuestion, roles(ROLE_PATIENT));
+                       }); 
+                    });
+                });
+                path("symptom",()->{
+                    post(patientService::addSymptom, roles(ROLE_PATIENT));
+                });
             });
         });
 

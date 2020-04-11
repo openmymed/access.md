@@ -24,6 +24,7 @@ import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.entity.DomainEntity;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
+import java.util.Objects;
 
 /**
  *
@@ -56,6 +57,10 @@ public class Patient extends DomainEntity {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
+    
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Symptom> symptoms = new ArrayList<>();
 
     public Patient(User user) {
         this.setUsername(user.getUsername());
@@ -92,6 +97,23 @@ public class Patient extends DomainEntity {
         }
         reccomendation.setPatient(this);
         reccomendations.add(reccomendation);
+    }
+    
+    public void answerQuestion(String answer, Long questionId){
+        Question foundQuestion = questions.stream()
+                .filter(question-> Objects.equals(questionId,question.getId())).findFirst().orElse(null);
+        if(foundQuestion!=null){
+            foundQuestion.answerQuestion(answer);
+        }
+    }
+    
+    public void addSymptom(Symptom symptom){
+        if(symptoms == null){
+            symptoms = new ArrayList<>();
+        }
+        symptom.setPatient(this);
+        symptoms.add(symptom);
+        
     }
 
     @Override
