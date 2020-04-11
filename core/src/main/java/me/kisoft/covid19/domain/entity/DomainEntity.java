@@ -5,6 +5,7 @@
  */
 package me.kisoft.covid19.domain.entity;
 
+import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,11 +13,15 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
 import javax.persistence.PostUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 import me.kisoft.covid19.domain.event.DomainEvent;
 import me.kisoft.covid19.domain.event.EventBus;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 
 /**
@@ -32,11 +37,18 @@ public abstract class DomainEntity {
     protected static transient final String DELETED_EVENT = "%sDeleted";
     protected static transient final String CREATED_EVENT = "%sCreated";
     protected static transient final String UPDATED_EVENT = "%sUpdated";
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date creationDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    private Date updateDate;
 
     public void postDeleted() {
         EventBus.getInstance().post(new DomainEvent(String.format(DELETED_EVENT, getEntityName()), this));
