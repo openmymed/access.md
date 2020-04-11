@@ -7,6 +7,7 @@ import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
+import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
 
 public class PatientServiceDelegate implements PatientService {
@@ -50,7 +51,7 @@ public class PatientServiceDelegate implements PatientService {
     }
 
     @Override
-    public String getSecurityCode() {
+    public SecurityCode getSecurityCode() {
         return service.getSecurityCode();
     }
 }

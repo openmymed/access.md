@@ -3,19 +3,27 @@ package me.kisoft.covid19.services;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
+import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
 import me.kisoft.covid19.utils.RestClient;
 import okhttp3.Response;
@@ -164,17 +172,23 @@ public class PatientServiceImpl implements PatientService {
         return false;
     }
 
-    //not tested yet.
     @Override
-    public String getSecurityCode() {
-        String securityCode;
-        Gson gson = new Gson();
+    public SecurityCode getSecurityCode() {
+        // Creates the json object which will manage the information received
+        GsonBuilder builder = new GsonBuilder();
+
+        //  Register an adapter to manage the date types as long values
+        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return new Date(json.getAsJsonPrimitive().getAsLong());
+            }
+        });
+        Gson gson = builder.create();
         try (Response response = RestClient.get(RestClient.SECURITY_CODE_URL)) {
             Log.i("Security Code", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
                 String jsonRes = response.body().string();
-                securityCode = gson.fromJson(jsonRes, String.class);
-                Log.e("", "" + securityCode);
+                SecurityCode securityCode = gson.fromJson(jsonRes, SecurityCode.class);
                 return securityCode;
             } else {
                 return null;

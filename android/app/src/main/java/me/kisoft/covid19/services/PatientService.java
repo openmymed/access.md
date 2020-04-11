@@ -6,6 +6,7 @@ import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
+import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
 
 public interface PatientService {
@@ -24,5 +25,5 @@ public interface PatientService {
 
     Boolean createMedicalProfile(MedicalProfile profile);
 
-    String getSecurityCode();
+    SecurityCode getSecurityCode();
 }
