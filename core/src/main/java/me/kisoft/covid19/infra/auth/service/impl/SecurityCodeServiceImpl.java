@@ -19,10 +19,10 @@ public class SecurityCodeServiceImpl implements SecurityCodeService {
     @Override
     public SecurityCode createSecurityCode(long userId) {
         try ( SecurityCodeRepository repo = SecurityCodeRepositoryFactory.getInstance().get()) {
-            repo.getValidUserCodes(userId).forEach(code -> {
+            for(SecurityCode code : repo.getValidUserCodes(userId)){
                 code.invalidate();
                 repo.save(code);
-            });
+            }
             SecurityCode sc = new SecurityCode(userId);
             repo.save(sc);
             return sc;
@@ -45,10 +45,10 @@ public class SecurityCodeServiceImpl implements SecurityCodeService {
     @Override
     public void expireCodes() {
         try ( SecurityCodeRepository repo = SecurityCodeRepositoryFactory.getInstance().get()) {
-            repo.getUnexpiredCodes().forEach(code ->{
+             for(SecurityCode code : repo.getUnexpiredCodes()){
                 code.timeOut();
                 repo.save(code);
-            });
+            }
         }
     }
 

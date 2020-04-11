@@ -34,7 +34,7 @@ public abstract class BackgroundService {
                 if (o instanceof BackgroundService) {
                     ((BackgroundService) o).start();
                     SERVICES.add((BackgroundService) o);
-                    log.info("Added Event Background Service " + clazz.getSimpleName());
+                    log.log(Level.INFO, "Started Background Service : {0}", clazz.getSimpleName());
                 }
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 Logger.getLogger(EventBus.class.getName()).log(Level.SEVERE, null, ex);

@@ -8,8 +8,6 @@ package me.kisoft.covid19.infra.repo.hiberante;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import static javax.transaction.Status.STATUS_NO_TRANSACTION;
-import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 import lombok.SneakyThrows;
 import me.kisoft.covid19.domain.entity.DomainEntity;
@@ -22,7 +20,12 @@ import me.kisoft.covid19.infra.factory.EntityManagerFactory;
  */
 public abstract class HibernateCrudRepository<T extends DomainEntity> implements CrudRepository<T>, AutoCloseable {
 
+    private static final TransactionManager MANAGER = com.arjuna.ats.jta.TransactionManager.transactionManager();
     private EntityManager em = EntityManagerFactory.getInstance().get();
+
+    public HibernateCrudRepository() {
+
+    }
 
     protected EntityManager getEm() {
         return em;
@@ -61,9 +64,9 @@ public abstract class HibernateCrudRepository<T extends DomainEntity> implements
         T toDelete = findById(id);
         if (toDelete != null) {
             startTransaction();
-            try{
+            try {
                 getEm().remove(toDelete);
-            }finally{
+            } finally {
                 commitTransaction();
             }
         }
@@ -76,24 +79,18 @@ public abstract class HibernateCrudRepository<T extends DomainEntity> implements
     }
 
     public TransactionManager getTransactionManager() {
-        return com.arjuna.ats.jta.TransactionManager.transactionManager();
+        return MANAGER;
     }
 
     @SneakyThrows
-    public Transaction getTransaction() {
-        if (getTransactionManager().getStatus() == STATUS_NO_TRANSACTION) {
-            getTransactionManager().begin();
-        }
-        return getTransactionManager().getTransaction();
-    }
-
     public void startTransaction() {
-        getTransaction();
+        getTransactionManager().begin();
+        getEm().joinTransaction();
     }
-    
+
     @SneakyThrows
-    public void commitTransaction(){
-         getTransaction().commit();
+    public void commitTransaction() {
+        getTransactionManager().commit();
     }
 
     public abstract Class<T> getType();

@@ -8,10 +8,12 @@ package me.kisoft.covid19.infra.core.service.rest;
 import io.javalin.http.Context;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.repo.UserRepository;
+import me.kisoft.covid19.domain.auth.service.SecurityCodeService;
 import me.kisoft.covid19.domain.core.service.PatientService;
 import me.kisoft.covid19.domain.core.entity.MedicalProfile;
 import me.kisoft.covid19.domain.core.entity.Question;
 import me.kisoft.covid19.domain.core.entity.Symptom;
+import me.kisoft.covid19.infra.auth.factory.SecurityCodeServiceFactory;
 import me.kisoft.covid19.infra.auth.factory.UserRepositoryFactory;
 import me.kisoft.covid19.infra.core.factory.PatientServiceFactory;
 
@@ -22,7 +24,7 @@ import me.kisoft.covid19.infra.core.factory.PatientServiceFactory;
 public class PatientRestService {
 
     PatientService patientService = PatientServiceFactory.getInstance().get();
-
+    SecurityCodeService securityCodeService = SecurityCodeServiceFactory.getInstance().get();
     public void signUp(Context ctx) throws Exception {
         try ( UserRepository repo = UserRepositoryFactory.getInstance().get()) {
             User toCreate = ctx.bodyAsClass(User.class);
@@ -71,5 +73,11 @@ public class PatientRestService {
           User user = ctx.sessionAttribute("user");
           patientService.addNewPatientSymptom(user.getId(), ctx.bodyAsClass(Symptom.class));
           ctx.status(200);
+    }
+    
+    public void getSecurityCode(Context ctx){
+        User user = ctx.sessionAttribute("user");
+        ctx.json(securityCodeService.createSecurityCode(user.getId()));
+         ctx.status(200);
     }
 }

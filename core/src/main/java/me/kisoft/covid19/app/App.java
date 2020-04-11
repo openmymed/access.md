@@ -144,6 +144,9 @@ public class App {
                         });
                     });
                 });
+                path("code",()->{
+                    get(patientService::getSecurityCode, roles(ROLE_PATIENT));
+                });
                 path("symptom", () -> {
                     post(patientService::addSymptom, roles(ROLE_PATIENT));
                 });
