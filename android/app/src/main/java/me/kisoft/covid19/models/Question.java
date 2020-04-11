@@ -5,6 +5,7 @@ public class Question {
     private String question;
     private String answer;
     private QuestionType type;
+    private boolean answered;
 
     public Question() {
     }
