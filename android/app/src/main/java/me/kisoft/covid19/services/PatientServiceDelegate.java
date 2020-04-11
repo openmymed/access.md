@@ -38,8 +38,8 @@ public class PatientServiceDelegate implements PatientService {
     }
 
     @Override
-    public List<String> getSymptoms() {
-        return symptoms;
+    public List<Symptom> getSymptoms() {
+        return service.getSymptoms();
     }
 
     @Override

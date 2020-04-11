@@ -24,7 +24,7 @@ import java.util.List;
 import io.paperdb.Paper;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.models.MedicalProfile;
-import me.kisoft.covid19.utils.RememberMe;
+import me.kisoft.covid19.utils.Keys;
 
 public class MedicationFragment extends Fragment {
 
@@ -50,7 +50,7 @@ public class MedicationFragment extends Fragment {
         fabAddToList = view.findViewById(R.id.fab_add_medication);
         medicationListView = view.findViewById(R.id.medication_listview);
 
-        profile = Paper.book().read(RememberMe.medProfile);
+        profile = Paper.book().read(Keys.MED_PROFILE_KEY);
         if (profile != null) {
             if (profile.getMedications() != null) {
                 medications = profile.getMedications();
@@ -87,7 +87,7 @@ public class MedicationFragment extends Fragment {
 
     private void addMedToList(View view, int destination) {
         profile.setMedications(medications);
-        Paper.book().write(RememberMe.medProfile, profile);
+        Paper.book().write(Keys.MED_PROFILE_KEY, profile);
         Navigation.findNavController(view).navigate(destination);
     }
 

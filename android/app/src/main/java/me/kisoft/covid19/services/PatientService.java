@@ -15,7 +15,7 @@ public interface PatientService {
 
     List<Question> getQuestions();
 
-    List<String> getSymptoms();
+    List<Symptom> getSymptoms();
 
     Boolean addSymptom(Symptom symptom);
 

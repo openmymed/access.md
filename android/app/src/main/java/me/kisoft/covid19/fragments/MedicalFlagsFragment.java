@@ -21,7 +21,7 @@ import me.kisoft.covid19.R;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
-import me.kisoft.covid19.utils.RememberMe;
+import me.kisoft.covid19.utils.Keys;
 
 public class MedicalFlagsFragment extends Fragment {
     private Button btnFinish;
@@ -56,7 +56,7 @@ public class MedicalFlagsFragment extends Fragment {
         service = new PatientServiceDelegate();
         checkBoxes = new CheckBox[]{chkG6PD, chkCardiovascular, chkRespiratory, chkDiabetes, chkObesity};
 
-        profile = Paper.book().read(RememberMe.medProfile);
+        profile = Paper.book().read(Keys.MED_PROFILE_KEY);
         diseases = new ArrayList<>();
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +71,7 @@ public class MedicalFlagsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addDiseaseToList();
-                createMedicalProfile((MedicalProfile) Paper.book().read(RememberMe.medProfile));
+                createMedicalProfile((MedicalProfile) Paper.book().read(Keys.MED_PROFILE_KEY));
             }
         });
 
@@ -90,7 +90,7 @@ public class MedicalFlagsFragment extends Fragment {
             protected void onPostExecute(Boolean aVoid) {
                 super.onPostExecute(aVoid);
                 if (aVoid) {
-                    Paper.book().delete(RememberMe.medProfile);
+                    Paper.book().delete(Keys.MED_PROFILE_KEY);
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);
                     getActivity().finish();
@@ -107,6 +107,6 @@ public class MedicalFlagsFragment extends Fragment {
             }
         }
         profile.setMedicalFlags(diseases);
-        Paper.book().write(RememberMe.medProfile, profile);
+        Paper.book().write(Keys.MED_PROFILE_KEY, profile);
     }
 }

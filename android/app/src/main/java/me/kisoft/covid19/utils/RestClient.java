@@ -35,7 +35,8 @@ public class RestClient {
     public static final String QUESTIONS_URL = BASE_URL + "patient/question";
     public static final String ANSWER_URL = BASE_URL + "patient/question/{question_id}/answer";//TODO remember to change question_id
     public static final String RECOMMENDATION_URL = BASE_URL + "patient/recommendation";
-    public static final String SYMPTOMS_URL = BASE_URL + "patient/symptom";
+    public static final String GET_SYMPTOMS_URL = BASE_URL + "symptom/codes";
+    public static final String POST_SYMPTOMS_URL = BASE_URL + "patient/symptom";
     static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     static ClearableCookieJar cookieJar;
     static OkHttpClient CLIENT;
@@ -62,9 +63,9 @@ public class RestClient {
                 .url(url)
                 .build();
 
-        try (Response response = CLIENT.newCall(request).execute()) {
-            return response;
-        }
+        Response response = CLIENT.newCall(request).execute();
+        return response;
+
     }
 
     //PUT from OKHttp

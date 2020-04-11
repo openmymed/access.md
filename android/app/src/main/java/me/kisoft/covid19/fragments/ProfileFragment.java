@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import io.paperdb.Paper;
 import me.kisoft.covid19.LoginActivity;
 import me.kisoft.covid19.R;
-import me.kisoft.covid19.utils.RememberMe;
+import me.kisoft.covid19.utils.Keys;
 
 
 public class ProfileFragment extends Fragment {
@@ -25,8 +25,8 @@ public class ProfileFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Paper.book().delete(RememberMe.phone);
-                Paper.book().delete(RememberMe.password);
+                Paper.book().delete(Keys.PHONE_KEY);
+                Paper.book().delete(Keys.PASSWORD_KEY);
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
