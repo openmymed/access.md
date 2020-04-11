@@ -16,8 +16,8 @@ import me.kisoft.covid19.infra.core.factory.ICPCServiceFactory;
 public class ICPCRestService {
     private ICPCService service = ICPCServiceFactory.getInstance().get();
     
-    public void getICPCEntries(Context ctx){
-        ctx.json(service.getEntries());
+    public void getICPCSymptoms(Context ctx){
+        ctx.json(service.getSymptoms());
         ctx.res.setStatus(200);
     }
 }

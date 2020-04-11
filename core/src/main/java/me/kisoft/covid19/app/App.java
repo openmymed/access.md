@@ -26,6 +26,7 @@ import me.kisoft.covid19.domain.auth.enums.UserRole;
 import static me.kisoft.covid19.domain.auth.enums.UserRole.NONE;
 import static me.kisoft.covid19.domain.auth.enums.UserRole.ROLE_PATIENT;
 import me.kisoft.covid19.domain.core.entity.ICPCEntry;
+import me.kisoft.covid19.domain.core.enums.ICPCType;
 import me.kisoft.covid19.domain.event.EventBus;
 import me.kisoft.covid19.infra.core.service.rest.PatientRestService;
 import me.kisoft.covid19.infra.auth.service.rest.UserRestService;
@@ -109,7 +110,7 @@ public class App {
             });
             path("symptom", () -> {
                 path("codes", () -> {
-                    get(icpcService::getICPCEntries, roles(NONE));
+                    get(icpcService::getICPCSymptoms, roles(NONE));
                 });
             });
             path("patient", () -> {
@@ -177,7 +178,7 @@ public class App {
             String[] entries = icpc.split("\n");
             for (String entry : entries) {
                 String[] values = entry.split(";");
-                icpcEntries.add(new ICPCEntry(values[0].replaceAll("\"", ""), values[1].replaceAll("\"", "")));
+                icpcEntries.add(new ICPCEntry(values[0].replaceAll("\"", ""), values[1].replaceAll("\"", ""),ICPCType.valueOf(values[2].replaceAll("\"", ""))));
             }
             ICPCServiceFactory.getInstance().get().setEntries(icpcEntries);
         } catch (IOException ex) {

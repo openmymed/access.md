@@ -14,7 +14,14 @@ import me.kisoft.covid19.domain.core.entity.ICPCEntry;
  */
 public interface ICPCService {
     
+    List<ICPCEntry> getSymptoms();
+    List<ICPCEntry> getInfections();
+    List<ICPCEntry> getNeoplasms();
+    List<ICPCEntry> getInjuries();
+    List<ICPCEntry> getProcesses();
+    List<ICPCEntry> getCongenitalAnomalies();
     List<ICPCEntry> getEntries();
+    List<ICPCEntry> getOther();
     
     void setEntries(List<ICPCEntry> entries);
     

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.kisoft.covid19.domain.core.enums.ICPCType;
 
 /**
  *
@@ -21,4 +22,5 @@ import lombok.Setter;
 public class ICPCEntry {
     private String code;
     private String title;
+    private ICPCType type;
 }
