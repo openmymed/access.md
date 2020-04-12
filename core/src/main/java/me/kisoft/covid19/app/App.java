@@ -14,8 +14,10 @@ import static io.javalin.apibuilder.ApiBuilder.put;
 import static io.javalin.core.security.SecurityUtil.roles;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ import me.kisoft.covid19.infra.core.factory.ICPCServiceFactory;
 import me.kisoft.covid19.infra.core.service.rest.DoctorRestService;
 import me.kisoft.covid19.infra.core.service.rest.ICPCRestService;
 import me.kisoft.covid19.infra.factory.EntityManagerFactory;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.eclipse.jetty.server.session.DefaultSessionCache;
 import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionCache;
@@ -226,14 +230,12 @@ public class App {
     private static void readICPCCodes() {
         try {
             ArrayList<ICPCEntry> icpcEntries = new ArrayList<>();
-            String icpc = new String(App.class.getClassLoader().getResourceAsStream("icpc_en.csv").readAllBytes());
-            String[] entries = icpc.split("\n");
-            for (String entry : entries) {
-                String[] values = entry.split(";");
-                if (values.length == 3) {
-                    icpcEntries.add(new ICPCEntry(values[0].replaceAll("\"", ""), values[1].replaceAll("\"", ""), ICPCType.valueOf(values[2].replaceAll("\"", ""))));
-                }
-            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    App.class.getClassLoader().getResourceAsStream("icpc_en.csv")));
+            CSVParser csvFileParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'));
+            csvFileParser.iterator().forEachRemaining(record -> {
+                icpcEntries.add(new ICPCEntry(record.get(0), record.get(1), ICPCType.valueOf(record.get(2))));
+            });
             ICPCServiceFactory.getInstance().get().setEntries(icpcEntries);
         } catch (IOException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
