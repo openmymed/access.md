@@ -6,6 +6,7 @@
 package me.kisoft.covid19.app;
 
 import io.javalin.Javalin;
+import static io.javalin.apibuilder.ApiBuilder.delete;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
@@ -25,6 +26,7 @@ import me.kisoft.covid19.app.service.BackgroundService;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.enums.UserRole;
 import static me.kisoft.covid19.domain.auth.enums.UserRole.NONE;
+import static me.kisoft.covid19.domain.auth.enums.UserRole.ROLE_DOCTOR;
 import static me.kisoft.covid19.domain.auth.enums.UserRole.ROLE_PATIENT;
 import me.kisoft.covid19.domain.core.entity.ICPCEntry;
 import me.kisoft.covid19.domain.core.enums.ICPCType;
@@ -32,6 +34,7 @@ import me.kisoft.covid19.domain.event.EventBus;
 import me.kisoft.covid19.infra.core.service.rest.PatientRestService;
 import me.kisoft.covid19.infra.auth.service.rest.UserRestService;
 import me.kisoft.covid19.infra.core.factory.ICPCServiceFactory;
+import me.kisoft.covid19.infra.core.service.rest.DoctorRestService;
 import me.kisoft.covid19.infra.core.service.rest.ICPCRestService;
 import me.kisoft.covid19.infra.factory.EntityManagerFactory;
 import org.eclipse.jetty.server.session.DefaultSessionCache;
@@ -116,6 +119,7 @@ public class App {
         UserRestService userService = new UserRestService();
         PatientRestService patientService = new PatientRestService();
         ICPCRestService icpcService = new ICPCRestService();
+        DoctorRestService doctorService = new DoctorRestService();
         app.routes(() -> {
             path("login", () -> {
                 post(userService::signIn, roles(NONE));
@@ -153,21 +157,27 @@ public class App {
             });
             path("doctor", () -> {
                 path("feed", () -> {
-
+                    get(doctorService::getPatientsFeed,roles(ROLE_DOCTOR));
                 });
                 path("patient", () -> {
                     path(":id", () -> {
                         path("profile", () -> {
-
+                             get(doctorService::getPatientProfile,roles(ROLE_DOCTOR));
                         });
                         path("symptom", () -> {
-
+                             get(doctorService::listPatientSymptoms,roles(ROLE_DOCTOR));
                         });
                         path("answer", () -> {
-
+                             get(doctorService::listPatientAnswers,roles(ROLE_DOCTOR));
                         });
                         path("question", () -> {
-
+                             get(doctorService::listPatientQuestions,roles(ROLE_DOCTOR));
+                             post(doctorService::createPatientQuestion,roles(ROLE_DOCTOR));
+                             path(":id",()->{
+                                  delete(doctorService::deletePatientQuestion,roles(ROLE_DOCTOR));
+                                  put(doctorService::updatePatientQuestion,roles(ROLE_DOCTOR));
+                                  get(doctorService::getPatientQuestion,roles(ROLE_DOCTOR));
+                             });
                         });
                     });
                 });
@@ -175,7 +185,7 @@ public class App {
             });
             path("admin", () -> {
                 path("doctor", () -> {
-
+                     post(doctorService::createDoctor,roles(ROLE_DOCTOR));
                 });
             });
         });

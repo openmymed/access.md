@@ -23,6 +23,8 @@ import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.entity.DomainEntity;
 import java.util.Objects;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
@@ -32,6 +34,9 @@ import java.util.Objects;
 @Table(name = "APP_USER")
 @Getter
 @Setter
+@NamedQueries({
+@NamedQuery(name= "Patient.byDoctorAndId",query="SELECT p  from Patient p WHERE p.id=(:patient_id) AND p.doctor.id=(:doctor_id)")
+})
 public class Patient extends DomainEntity {
 
     @JsonProperty
@@ -103,7 +108,9 @@ public class Patient extends DomainEntity {
         Question foundQuestion = questions.stream()
                 .filter(question-> Objects.equals(questionId,question.getId())).findFirst().orElse(null);
         if(foundQuestion!=null){
-            foundQuestion.answerQuestion(answer);
+            Answer questionAnswer = new Answer();
+            questionAnswer.setAnswer(answer);
+            foundQuestion.answerQuestion(questionAnswer);
         }
     }
     

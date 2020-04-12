@@ -30,16 +30,16 @@ public class SecurityCodeServiceImpl implements SecurityCodeService {
     }
 
     @Override
-    public boolean consumeSecurityCode(String code, long consumerId) {
+    public long consumeSecurityCode(String code, long consumerId) {
         try ( SecurityCodeRepository repo = SecurityCodeRepositoryFactory.getInstance().get()) {
             SecurityCode sc = repo.findByCode(code);
             if (sc != null) {
                 sc.consume(consumerId);
                 repo.save(sc);
-                return true;
+                return sc.getBelongsTo();
             }
         }
-        return false;
+        return -1;
     }
 
     @Override

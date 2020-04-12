@@ -5,12 +5,14 @@
  */
 package me.kisoft.covid19.domain.core.service;
 
+import java.util.Date;
 import java.util.List;
 import me.kisoft.covid19.domain.auth.entity.User;
+import me.kisoft.covid19.domain.core.entity.Answer;
 import me.kisoft.covid19.domain.core.entity.MedicalProfile;
 import me.kisoft.covid19.domain.core.entity.Patient;
 import me.kisoft.covid19.domain.core.entity.Question;
-import me.kisoft.covid19.domain.core.entity.RecurringQuestion;
+import me.kisoft.covid19.domain.core.entity.Symptom;
 
 /**
  *
@@ -20,15 +22,20 @@ public interface DoctorService {
     public List<Patient> getDoctorPatients(Long doctorid);
  
     public MedicalProfile getPatientProfile(Long doctorId, Long patientId);
-    public void getPatientSymptoms(Long doctorId, Long patientId);
+    
+    
+    public List<Symptom> getPatientSymptoms(Long doctorId, Long patientId);
   
-    public void getPatientAnswers(Long doctorId, Long patientId);
+    public List<Answer> getPatientAnswers(Long doctorId, Long patientId);
    
-    public void addRecurringQuestion(Long doctorId, Long patientId, RecurringQuestion question);
+    public List<Answer> getAllPatientsNewAnswersSince(Long doctorId, Date date);
+    
+    public List<Symptom> getAllPatientsNewSymptomsSince(Long doctorId, Date date);
 
-    public void addOneTimeQuestion(Long patientId, Long doctorId, Question question);
+    public void addQuestionForPatient(Long doctorId,Long patientId,  Question question);
 
-    public void addPatient(Long doctorId, String patientSecurityCode);
+    public void addPatient(Long doctorId, Long patientId);
     
     public void createDoctor(User user);
+
 }

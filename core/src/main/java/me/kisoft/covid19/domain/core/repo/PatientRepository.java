@@ -22,4 +22,7 @@ public interface PatientRepository extends CrudRepository<Patient>{
      List<Question> getUnAnsweredPatientQuestions(Long patientId);
      
      List<Reccomendation> getPatientReccomendations(Long patientId);
+     
+     Patient getPatientByDoctorAndId(Long patientId, Long doctorId);
+     
 }

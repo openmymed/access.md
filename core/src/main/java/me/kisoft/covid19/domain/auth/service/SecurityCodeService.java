@@ -15,7 +15,7 @@ public interface SecurityCodeService {
     
     public SecurityCode createSecurityCode(long userId);
     
-    public boolean consumeSecurityCode(String code, long consumerId);
+    public long consumeSecurityCode(String code, long consumerId);
     
     public void expireCodes();
 }

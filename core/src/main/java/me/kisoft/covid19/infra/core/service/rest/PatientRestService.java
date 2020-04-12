@@ -9,6 +9,7 @@ import io.javalin.http.Context;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.repo.UserRepository;
 import me.kisoft.covid19.domain.auth.service.SecurityCodeService;
+import me.kisoft.covid19.domain.core.entity.Answer;
 import me.kisoft.covid19.domain.core.service.PatientService;
 import me.kisoft.covid19.domain.core.entity.MedicalProfile;
 import me.kisoft.covid19.domain.core.entity.Question;
@@ -64,8 +65,8 @@ public class PatientRestService {
     public void answerQuestion(Context ctx){
           User user = ctx.sessionAttribute("user");
           Long questionId = ctx.pathParam("id", Long.class).get();
-          Question question = ctx.bodyAsClass(Question.class);
-          patientService.answerPatientQuestion(user.getId(), questionId,question.getAnswer());
+          Answer answer = ctx.bodyAsClass(Answer.class);
+          patientService.answerPatientQuestion(user.getId(), questionId,answer.getAnswer());
           ctx.status(200);
     }
     

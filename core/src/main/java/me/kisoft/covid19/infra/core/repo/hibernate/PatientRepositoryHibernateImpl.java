@@ -5,9 +5,9 @@
  */
 package me.kisoft.covid19.infra.core.repo.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.NoResultException;
 import me.kisoft.covid19.domain.core.repo.PatientRepository;
 import me.kisoft.covid19.domain.core.entity.Patient;
 import me.kisoft.covid19.domain.core.entity.Question;
@@ -38,6 +38,18 @@ public class PatientRepositoryHibernateImpl extends HibernateCrudRepository<Pati
     @Override
     public List<Reccomendation> getPatientReccomendations(Long patientId) {
         return  this.findById(patientId).getReccomendations();
+    }
+
+    @Override
+    public Patient getPatientByDoctorAndId(Long patientId, Long doctorId) {
+        try{
+            return getEm().createNamedQuery("Patient.byDoctorAndId",Patient.class)
+                    .setParameter("patient_id", patientId)
+                    .setParameter("doctor_id", doctorId)
+                    .getSingleResult();
+        }catch(NoResultException ex){
+            return null;
+        }
     }
 
 
