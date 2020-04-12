@@ -177,7 +177,7 @@ public class App {
                         path("question", () -> {
                             get(doctorService::listPatientQuestions, roles(ROLE_DOCTOR));
                             post(doctorService::createPatientQuestion, roles(ROLE_DOCTOR));
-                            path(":id", () -> {
+                            path(":question_id", () -> {
                                 delete(doctorService::deletePatientQuestion, roles(ROLE_DOCTOR));
                                 put(doctorService::updatePatientQuestion, roles(ROLE_DOCTOR));
                                 get(doctorService::getPatientQuestion, roles(ROLE_DOCTOR));
@@ -189,7 +189,7 @@ public class App {
             });
             path("admin", () -> {
                 path("doctor", () -> {
-                    post(doctorService::createDoctor, roles(ROLE_DOCTOR));
+                    post(doctorService::createDoctor, roles(NONE));
                 });
             });
         });

@@ -38,4 +38,12 @@ public interface DoctorService {
     
     public void createDoctor(User user);
 
+    public List<Question> getPatientQuestions(Long id, Long patientId);
+
+    public void removePatientQuestion(Long id, Long patientId, Long questionId);
+
+    public void updatePatientQuestion(Long id, Long patientId, Long questionId, Question question);
+
+    public Object getPatientQuestion(Long id, Long patientId, Long questionId);
+
 }
