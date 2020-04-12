@@ -10,7 +10,7 @@ module.exports = (env) => {
             filename: 'app.js'
         },
         plugins: [new HtmlWebpackPlugin({
-                title: 'قوجي'
+                title: 'Covid19'
             }),
             new CleanWebpackPlugin()
         ],
@@ -18,8 +18,8 @@ module.exports = (env) => {
             minimize: env.production
         },
         watchOptions: {
-            aggregateTimeout: 50,
-            poll: 100
+            aggregateTimeout: 1000,
+            poll: 2000
         },
         module: {
             rules: [

@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -33,6 +35,7 @@ public class Doctor extends DomainEntity {
     @JsonProperty
     private String password;
     private String username;
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private String telephoneNumber;
 

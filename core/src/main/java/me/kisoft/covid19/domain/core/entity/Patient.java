@@ -23,6 +23,8 @@ import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.entity.DomainEntity;
 import java.util.Objects;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -42,6 +44,7 @@ public class Patient extends DomainEntity {
     @JsonProperty
     private String password;
     private String username;
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private String telephoneNumber;
 

@@ -9,6 +9,8 @@ import me.kisoft.covid19.domain.auth.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,6 +33,7 @@ public class User extends DomainEntity {
     @JsonProperty
     private String password;
     private String username;
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private String telephoneNumber;
    

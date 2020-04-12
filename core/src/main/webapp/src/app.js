@@ -1,43 +1,34 @@
 import { el, text, mount } from 'redom';
-class A {
-    constructor(attr, text) {
-        <div this="el">
-            <form onsubmit={
-                (e) => {
-                    e.preventDefault()
-                    console.log(this.username.value, this.password.value)
-                }
-                                }>
-                <input type="text" this="username"/>
-                <input type="password" this="password"/>   
-                <input type="submit" this="submit"/>   
-            </form>
-            <h3>{attr.title}</h3>
-            <span this="span">Hello DOCKERY BOIS AND GIRLS</span> {text}
-            <h4>{attr.name}</h4>
-        </div>;
-    }
-    update(data) {
-        this.span.textContent = data;
-    }
-}
+import {App} from 'redom-app'
+import {PatientList} from "./view/patient-list";
+import {PatientDetails} from "./view/patient-details";
+import {Signin} from "./view/signin"
+import {Home} from "./view/home";
+import * as $ from "jquery";
 
-class B {
+window.auth = false;
+class AuthenticationMiddleware {
     constructor() {
-        <div this="el">
-            <A this="a" title="Hello World example" name="A VERY TESTY BOI">
-                <span this="span">World</span>
-            </A>
-        </div>;
+
     }
-    update() {
-        this.span.textContent = "You";
-        this.a.update("DOCKERY BOIS AND GIRLS");
+    //this is what the auth function needs to look like
+    exec(currentView, nextView, params) {
+        if (window.auth == false) {
+            return "signin"
+        }else{
+            return nextView
+        }
+
     }
+
 }
 
-const b = <B />;
 
-mount(document.body, b);
 
-b.update();
+const app = new App().routes({
+    home: Home,
+    default: Signin,
+    signin: Signin,
+    patients: PatientList,
+    patient: PatientDetails
+}).middlewares([new AuthenticationMiddleware()]).start()
