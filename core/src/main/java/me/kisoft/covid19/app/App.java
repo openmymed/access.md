@@ -157,27 +157,27 @@ public class App {
             });
             path("doctor", () -> {
                 path("feed", () -> {
-                    get(doctorService::getPatientsFeed,roles(ROLE_DOCTOR));
+                    get(doctorService::getPatientsFeed, roles(ROLE_DOCTOR));
                 });
                 path("patient", () -> {
                     path(":id", () -> {
                         path("profile", () -> {
-                             get(doctorService::getPatientProfile,roles(ROLE_DOCTOR));
+                            get(doctorService::getPatientProfile, roles(ROLE_DOCTOR));
                         });
                         path("symptom", () -> {
-                             get(doctorService::listPatientSymptoms,roles(ROLE_DOCTOR));
+                            get(doctorService::listPatientSymptoms, roles(ROLE_DOCTOR));
                         });
                         path("answer", () -> {
-                             get(doctorService::listPatientAnswers,roles(ROLE_DOCTOR));
+                            get(doctorService::listPatientAnswers, roles(ROLE_DOCTOR));
                         });
                         path("question", () -> {
-                             get(doctorService::listPatientQuestions,roles(ROLE_DOCTOR));
-                             post(doctorService::createPatientQuestion,roles(ROLE_DOCTOR));
-                             path(":id",()->{
-                                  delete(doctorService::deletePatientQuestion,roles(ROLE_DOCTOR));
-                                  put(doctorService::updatePatientQuestion,roles(ROLE_DOCTOR));
-                                  get(doctorService::getPatientQuestion,roles(ROLE_DOCTOR));
-                             });
+                            get(doctorService::listPatientQuestions, roles(ROLE_DOCTOR));
+                            post(doctorService::createPatientQuestion, roles(ROLE_DOCTOR));
+                            path(":id", () -> {
+                                delete(doctorService::deletePatientQuestion, roles(ROLE_DOCTOR));
+                                put(doctorService::updatePatientQuestion, roles(ROLE_DOCTOR));
+                                get(doctorService::getPatientQuestion, roles(ROLE_DOCTOR));
+                            });
                         });
                     });
                 });
@@ -185,7 +185,7 @@ public class App {
             });
             path("admin", () -> {
                 path("doctor", () -> {
-                     post(doctorService::createDoctor,roles(ROLE_DOCTOR));
+                    post(doctorService::createDoctor, roles(ROLE_DOCTOR));
                 });
             });
         });
@@ -230,7 +230,9 @@ public class App {
             String[] entries = icpc.split("\n");
             for (String entry : entries) {
                 String[] values = entry.split(";");
-                icpcEntries.add(new ICPCEntry(values[0].replaceAll("\"", ""), values[1].replaceAll("\"", ""), ICPCType.valueOf(values[2].replaceAll("\"", ""))));
+                if (values.length == 3) {
+                    icpcEntries.add(new ICPCEntry(values[0].replaceAll("\"", ""), values[1].replaceAll("\"", ""), ICPCType.valueOf(values[2].replaceAll("\"", ""))));
+                }
             }
             ICPCServiceFactory.getInstance().get().setEntries(icpcEntries);
         } catch (IOException ex) {
