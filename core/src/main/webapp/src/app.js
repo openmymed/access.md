@@ -1,4 +1,4 @@
-import { el, text, mount } from "redom";
+import { el, text, mount,setChildren } from "redom";
 import { App } from "redom-app";
 import { PatientList } from "./view/patient-list";
 import { PatientDetails } from "./view/patient-details";
@@ -23,13 +23,15 @@ class AuthenticationMiddleware {
   }
 }
 
+const container = el('div.container-fluid')
+setChildren(container,[sidebar,content])
+mount(document.body,container)
 const app = new App()
   .routes({
     home: Home,
     default: Signin,
-    default: Home,
     patients: PatientList,
     patient: PatientDetails,
   })
   .middlewares([new AuthenticationMiddleware()])
-  .start();
+  .start(container);

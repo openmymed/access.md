@@ -9,6 +9,7 @@ export class MedicalProfile {
     constructor(attr, text) {
         <div this="el">
         <h4>MEDICAL PROFILE</h4>
+        
         </div>
     }
     
