@@ -56,10 +56,6 @@ body {
   .login-form {
     margin-top: 80%;
   }
-
-  .register-form {
-    margin-top: 20%;
-  }
 }
 
 .login-main-text {
@@ -75,4 +71,29 @@ body {
 .btn-black {
   background-color: #158498 !important;
   color: #fff;
+}
+
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: 5px 7px 25px #999;
+}
+.text-white {
+  width: 100%;
+  font-size: x-large;
+  background-color: #158498;
+}
+.text-blue {
+  background-color: #fff;
+  color: #191e30;
+}
+/* li color #191E30 */
+.sidebar-link {
+  color: #191e30;
+  transition: all 0.4;
+}
+.sidebar-link:hover {
+  color: #158498;
 }
