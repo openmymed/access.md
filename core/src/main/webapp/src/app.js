@@ -5,7 +5,8 @@ import { PatientDetails } from "./view/patient-details";
 import { Signin } from "./view/signin";
 import { Home } from "./view/home";
 import "@fortawesome/fontawesome-free/js/all";
-import "./style/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/app.css";
 import * as $ from "jquery";
 
