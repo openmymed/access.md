@@ -264,7 +264,7 @@ public class App {
         user.setUserRole(ROLE_ADMIN);
         user.setPassword(password);
         repo.save(user);
-        log.log(Level.INFO, "Admin Password is {0}", password);
+        log.log(Level.INFO, "Admin Username is 'admin' and Admin Password is {0}", password);
       }
     }
   }
