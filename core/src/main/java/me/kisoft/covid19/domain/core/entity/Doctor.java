@@ -45,7 +45,7 @@ public class Doctor extends DomainEntity {
      public Doctor(User user) {
         this.setUsername(user.getUsername());
         this.setPassword(user.getPassword());
-        this.setUserRole(UserRole.ROLE_PATIENT);
+        this.setUserRole(UserRole.ROLE_DOCTOR);
         this.setTelephoneNumber(user.getTelephoneNumber());
     }
     @JsonIgnore

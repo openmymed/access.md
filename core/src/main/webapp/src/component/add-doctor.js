@@ -25,16 +25,24 @@ constructor(attr, text) {
         </button>
       </div>
       <div class="modal-body container-fluid">
-        <div class="col-12">
-          <div class="form-group">
-            <label for="code-field">Secret Code</label>
-            <input class="form-control" id="code-field" type="text" this="code"></input>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input class="form-control" id="username" type="text" this="username"></input>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input class="form-control" id="password" type="text" this="password"></input>
+            </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary" data-dismiss="modal" onclick={(e) => {this.addPatient()}}>Add</button>
+        <button class="btn btn-primary" data-dismiss="modal" onclick={(e) => {this.addDoctor()}}>Add</button>
       </div>
     </div>
   </div>
@@ -45,8 +53,25 @@ show() {
 $(this.el).modal({backdrop:false})
 }
 
-addPatient() {
-console.log(this.code)
+addDoctor() {
+  fetch("/admin/doctor", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: this.username.value,
+                password: this.password.value,
+            })
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                alert("Wrong username or password");
+            }
+        }).then((json) => {
+            
+        });
 }
 
 update(data) {

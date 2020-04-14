@@ -5,7 +5,9 @@
  */
 package me.kisoft.covid19.domain.auth.repo;
 
+import java.util.List;
 import me.kisoft.covid19.domain.auth.entity.User;
+import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.repo.CrudRepository;
 
 /**
@@ -15,4 +17,6 @@ import me.kisoft.covid19.domain.repo.CrudRepository;
 public interface UserRepository extends CrudRepository<User> {
 
   User getUserByUsername(String username);
+  
+  List<User> getUsersByRole(UserRole role);
 }

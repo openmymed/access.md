@@ -79,8 +79,7 @@ class LoginForm {
                 alert("Wrong username or password");
             }
         }).then((json) => {
-            if (json.userRole == "ROLE_PATIENT") {
-                //TODO: change this TO ROLE_DOCTOR.
+            if (json.userRole == "ROLE_DOCTOR") {
                 window.auth = true;
                 goto("home");
             } else if (json.userRole == "ROLE_ADMIN") {

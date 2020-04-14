@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.core.entity.Answer;
+import me.kisoft.covid19.domain.core.entity.Doctor;
 import me.kisoft.covid19.domain.core.entity.MedicalProfile;
 import me.kisoft.covid19.domain.core.entity.Patient;
 import me.kisoft.covid19.domain.core.entity.Question;
@@ -21,6 +22,8 @@ import me.kisoft.covid19.domain.core.entity.Symptom;
 public interface DoctorService {
     public List<Patient> getDoctorPatients(Long doctorid);
  
+    public List<Doctor> getDoctors();
+    
     public MedicalProfile getPatientProfile(Long doctorId, Long patientId);
     
     

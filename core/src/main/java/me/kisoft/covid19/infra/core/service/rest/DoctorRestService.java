@@ -76,5 +76,10 @@ public class DoctorRestService {
         doctorService.createDoctor(user);
         ctx.status(200);
     }
+    
+    public void getDoctors(Context ctx){
+        ctx.json(doctorService.getDoctors());
+        ctx.status(200);
+    }
 
 }

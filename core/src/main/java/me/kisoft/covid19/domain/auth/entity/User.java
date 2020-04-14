@@ -27,29 +27,29 @@ import me.kisoft.covid19.domain.entity.DomainEntity;
 @Entity(name = "User")
 @Table(name = "APP_USER")
 @NamedQueries({
-    @NamedQuery(name = "User.byUsername", query = "SELECT u from User u where u.username=(:username)")})
+  @NamedQuery(name = "User.byUsername", query = "SELECT u from User u where u.username=(:username)"),
+  @NamedQuery(name = "User.listByRole", query = "SELECT u from User u where u.userRole=(:role)")})
 public class User extends DomainEntity {
 
-    @JsonProperty
-    private String password;
-    private String username;
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-    private String telephoneNumber;
-   
-    
-    @JsonIgnore
-    public String getPassword() {
-        return this.password;
-    }
+  @JsonProperty
+  private String password;
+  private String username;
+  @Enumerated(EnumType.STRING)
+  private UserRole userRole;
+  private String telephoneNumber;
 
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  @JsonIgnore
+  public String getPassword() {
+    return this.password;
+  }
 
-   @Override
-    public String getEntityName() {
-        return "user";
-    }
+  @JsonProperty
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  @Override
+  public String getEntityName() {
+    return "user";
+  }
 }
