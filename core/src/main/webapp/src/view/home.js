@@ -16,7 +16,6 @@ export class Home {
         </Page>
     }
     update(params) {
-        console.log(this.patientUpdates, this.overview)
         this.patientUpdates.update(params)
         this.overview.update(params)
     }

@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 import { el, text, mount } from 'redom';
-
+import {AdminPage} from "../component/page"
 export class AdminHome {
     constructor(attr, text) {
-        <div this="el">
-        <h4>ADMIN HOME</h4>
-        </div>
+        <AdminPage this="el">
+            <h4>ADMIN HOME</h4>
+        </AdminPage>
     }
-    
+
     update(data) {
 
     }

@@ -1,9 +1,11 @@
 import { el, text, mount,setChildren } from "redom";
 import { App } from "redom-app";
 import { PatientList } from "./view/patient-list";
+import { DoctorList } from "./view/doctor-list";
 import { PatientDetails } from "./view/patient-details";
 import { Signin } from "./view/signin";
 import { Home } from "./view/home";
+import { AdminHome } from "./view/admin";
 import "@fortawesome/fontawesome-free/js/all";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -32,6 +34,8 @@ const app = new App()
     default: Signin,
     patients: PatientList,
     patient: PatientDetails,
+    admin : AdminHome,
+    doctors:DoctorList
   })
   .middlewares([new AuthenticationMiddleware()])
   .start(container);

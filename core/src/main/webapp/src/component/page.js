@@ -7,16 +7,27 @@
 
 import { el, text, mount } from "redom";
 import {NavBar} from "./navbar";
-
+import {AdminNavBar} from "./navbar";
 export class Page {
-    constructor(args) {
-        <div this="el" class="row">
-            <NavBar></NavBar>
-            <div class="col-xl-10 col-sm-12 col-md-8 col-lg-9">
-                {arguments}
-            </div>
-        </div>
-    }
-    update() {
-    }
+  constructor(args) {
+    <div this="el" class="row">
+      <NavBar></NavBar>
+      <div class="col-xl-10 col-sm-12 col-md-8 col-lg-9">
+        {arguments}
+      </div>
+    </div>
+  }
+  update() {
+  }
+}
+
+export class AdminPage {
+  constructor(args) {
+    <div this="el" class="row">
+      <AdminNavBar></AdminNavBar>
+      <div class="col-xl-10 col-sm-12 col-md-8 col-lg-9">
+        {arguments}
+      </div>
+    </div>
+  }
 }
