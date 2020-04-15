@@ -12,7 +12,7 @@ export class Page {
   constructor(args) {
     <div this="el" class="row">
       <NavBar></NavBar>
-      <div class="col-xl-10 col-sm-12 col-md-8 col-lg-9">
+      <div class="offset-2 col-xl-10 col-sm-12 col-md-8 col-lg-9">
         {arguments}
       </div>
     </div>
@@ -25,7 +25,7 @@ export class AdminPage {
   constructor(args) {
     <div this="el" class="row">
       <AdminNavBar></AdminNavBar>
-      <div class="col-xl-10 col-sm-12 col-md-8 col-lg-9">
+      <div class="offset-2 col-xl-10 col-sm-12 col-md-8 col-lg-9">
         {arguments}
       </div>
     </div>

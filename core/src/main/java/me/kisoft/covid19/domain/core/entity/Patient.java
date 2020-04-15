@@ -37,98 +37,100 @@ import javax.persistence.NamedQuery;
 @Getter
 @Setter
 @NamedQueries({
-@NamedQuery(name= "Patient.byDoctorAndId",query="SELECT p  from Patient p WHERE p.id=(:patient_id) AND p.doctor.id=(:doctor_id)")
+  @NamedQuery(name = "Patient.byDoctorAndId", query = "SELECT p  from Patient p WHERE p.id=(:patient_id) AND p.doctor.id=(:doctor_id)")
 })
 public class Patient extends DomainEntity {
 
-    @JsonProperty
-    private String password;
-    private String username;
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-    private String telephoneNumber;
+  @JsonIgnore
+  private String password;
+  private String username;
+  @Enumerated(EnumType.STRING)
+  private UserRole userRole;
+  private String telephoneNumber;
+  private String firstName;
+  private String lastName;
+  @ManyToOne
+  @Access(AccessType.PROPERTY)
+  @JsonIgnore
+  private Doctor doctor;
 
-    @ManyToOne
-    @Access(AccessType.PROPERTY)
-    private Doctor doctor;
+  @Access(AccessType.PROPERTY)
+  @OneToOne(cascade = CascadeType.ALL)
+  MedicalProfile profile = new MedicalProfile();
 
-    @Access(AccessType.PROPERTY)
-    @OneToOne(cascade = CascadeType.ALL)
-    MedicalProfile profile = new MedicalProfile();
+  @JsonIgnore
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<Reccomendation> reccomendations = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Reccomendation> reccomendations = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<Question> questions = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Question> questions = new ArrayList<>();
-    
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Symptom> symptoms = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<Symptom> symptoms = new ArrayList<>();
 
-    
-    
-    public Patient(User user) {
-        this.setUsername(user.getUsername());
-        this.setPassword(user.getPassword());
-        this.setUserRole(UserRole.ROLE_PATIENT);
-        this.setTelephoneNumber(user.getTelephoneNumber());
+  public Patient(User user) {
+    this.setUsername(user.getUsername());
+    this.setPassword(user.getPassword());
+    this.setUserRole(UserRole.ROLE_PATIENT);
+    this.setTelephoneNumber(user.getTelephoneNumber());
+    this.setFirstName(user.getFirstName());
+    this.setLastName(user.getLastName());
+  }
+
+  public Patient() {
+
+  }
+
+  @JsonIgnore
+  public String getPassword() {
+    return this.password;
+  }
+
+  @JsonProperty
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void addQuestion(Question question) {
+    if (questions == null) {
+      questions = new ArrayList<>();
     }
+    question.setPatient(this);
+    questions.add(question);
+  }
 
-    public Patient() {
+  public void addReccomendation(Reccomendation reccomendation) {
+    if (reccomendations == null) {
+      reccomendations = new ArrayList<>();
+    }
+    reccomendation.setPatient(this);
+    reccomendations.add(reccomendation);
+  }
 
+  public void answerQuestion(String answer, Long questionId) {
+    Question foundQuestion = questions.stream()
+            .filter(question -> Objects.equals(questionId, question.getId())).findFirst().orElse(null);
+    if (foundQuestion != null) {
+      Answer questionAnswer = new Answer();
+      questionAnswer.setAnswer(answer);
+      foundQuestion.answerQuestion(questionAnswer);
     }
+  }
 
-    @JsonIgnore
-    public String getPassword() {
-        return this.password;
+  public void addSymptom(Symptom symptom) {
+    if (symptoms == null) {
+      symptoms = new ArrayList<>();
     }
+    symptom.setPatient(this);
+    symptoms.add(symptom);
 
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  }
 
-    public void addQuestion(Question question) {
-        if (questions == null) {
-            questions = new ArrayList<>();
-        }
-        question.setPatient(this);
-        questions.add(question);
-    }
-
-    public void addReccomendation(Reccomendation reccomendation) {
-        if (reccomendations == null) {
-            reccomendations = new ArrayList<>();
-        }
-        reccomendation.setPatient(this);
-        reccomendations.add(reccomendation);
-    }
-    
-    public void answerQuestion(String answer, Long questionId){
-        Question foundQuestion = questions.stream()
-                .filter(question-> Objects.equals(questionId,question.getId())).findFirst().orElse(null);
-        if(foundQuestion!=null){
-            Answer questionAnswer = new Answer();
-            questionAnswer.setAnswer(answer);
-            foundQuestion.answerQuestion(questionAnswer);
-        }
-    }
-    
-    public void addSymptom(Symptom symptom){
-        if(symptoms == null){
-            symptoms = new ArrayList<>();
-        }
-        symptom.setPatient(this);
-        symptoms.add(symptom);
-        
-    }
-
-    @Override
-    public String getEntityName() {
-        return "patient";
-    }
+  @Override
+  public String getEntityName() {
+    return "patient";
+  }
 
 }

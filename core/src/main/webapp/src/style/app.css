@@ -2,6 +2,7 @@ body {
   font-family: "Lato", sans-serif;
   background-color: #f4f5fa;
   --primary: #3399ff;
+  --accent:#158498;
 }
 
 .main-head {

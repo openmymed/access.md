@@ -31,12 +31,14 @@ import me.kisoft.covid19.domain.entity.DomainEntity;
   @NamedQuery(name = "User.listByRole", query = "SELECT u from User u where u.userRole=(:role)")})
 public class User extends DomainEntity {
 
-  @JsonProperty
+  @JsonIgnore
   private String password;
   private String username;
   @Enumerated(EnumType.STRING)
   private UserRole userRole;
   private String telephoneNumber;
+  private String firstName;
+  private String lastName;
 
   @JsonIgnore
   public String getPassword() {
