@@ -26,7 +26,6 @@ class AuthenticationMiddleware {
 }
 
 const container = el('div.container-fluid')
-setChildren(container,[sidebar,content])
 mount(document.body,container)
 const app = new App()
   .routes({

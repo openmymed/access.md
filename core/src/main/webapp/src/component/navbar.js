@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import { el, text, mount } from "redom";
+import { el, text, mount, setChildren } from "redom";
 import {AddPatient} from "./add-patient"
 import {AddDoctor} from "./add-doctor"
 export class NavBar {
