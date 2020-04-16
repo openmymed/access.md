@@ -13,9 +13,9 @@ export class Overview {
       <div class="row">
         <div class="col-sm-12 col-xl-11 col-lg-9 col-md-8">
           <div class="ml-5 row pt-md-2">
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
+            <Card this="totalPatient"></Card>
+            <Card this="newActivities"></Card>
+            <Card this="newQuestions"></Card>
           </div>
         </div>
       </div>
