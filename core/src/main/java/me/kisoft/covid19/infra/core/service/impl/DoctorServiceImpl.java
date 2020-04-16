@@ -83,12 +83,12 @@ public class DoctorServiceImpl implements DoctorService {
   }
 
   @Override
-  public List<Answer> getAllPatientsUnseenAnswers(Long doctorId, Date date) {
+  public List<Answer> getAllPatientsUnseenAnswers(Long doctorId) {
     return new ArrayList<>();
   }
 
   @Override
-  public List<Symptom> getAllPatientsUnseenSymptoms(Long doctorId, Date date) {
+  public List<Symptom> getAllPatientsUnseenSymptoms(Long doctorId) {
     return new ArrayList<>();
   }
 

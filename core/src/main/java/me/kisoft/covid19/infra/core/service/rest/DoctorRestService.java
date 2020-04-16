@@ -31,8 +31,8 @@ public class DoctorRestService {
 
   public void getPatientsFeed(Context ctx) {
     User user = ctx.sessionAttribute("user");
-    List<Answer> answers = doctorService.getAllPatientsUnseenAnswers(user.getId(), new Date());
-    List<Symptom> symptoms = doctorService.getAllPatientsUnseenSymptoms(user.getId(), new Date());
+    List<Answer> answers = doctorService.getAllPatientsUnseenAnswers(user.getId());
+    List<Symptom> symptoms = doctorService.getAllPatientsUnseenSymptoms(user.getId());
     List<PatientUpdateVo> updates = new ArrayList<>();
     answers.stream().forEach(answer -> {
       updates.add(new PatientUpdateVo(answer.getQuestion().getPatient(), answer));
