@@ -119,7 +119,9 @@ table {
 .bg-blue-primary {
   background-color: #158498;
 }
-
+.bg-light-grey {
+  background-color: #edeef3;
+}
 /* li color #191E30 */
 
 .sidebar-link {

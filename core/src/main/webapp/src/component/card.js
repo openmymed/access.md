@@ -7,8 +7,8 @@
 import { el, text, mount } from "redom";
 export class Card {
   constructor(attr, text) {
-    let title = "Total Patient";
-    let number = "30";
+    let title = "";
+    let number = "";
     <div this="el" class="col-lg-4 col-sm-12 p-2">
       <div class="card card-common rounded-lg">
         <div class="card-body">
