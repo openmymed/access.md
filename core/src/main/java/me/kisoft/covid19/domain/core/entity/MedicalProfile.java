@@ -40,8 +40,6 @@ public class MedicalProfile extends DomainEntity {
   private boolean obesity = false;
   @ElementCollection
   private List<String> medications = new ArrayList<>();
-  @ElementCollection
-  private List<String> medicalFlags = new ArrayList<>();
 
   @Override
   public String getEntityName() {
