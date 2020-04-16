@@ -6,6 +6,7 @@
 
 import { el, text, mount } from "redom";
 import { goto } from "redom-app";
+import {loadIcpc} from "../utils/icpc"
 export class Signin {
   constructor() {
     const _self = this;
@@ -88,6 +89,7 @@ class LoginForm {
         let fullName = json.firstName + " " + json.lastName;
         if (json.userRole == "ROLE_DOCTOR") {
           window.auth = true;
+          loadIcpc();
           sessionStorage.setItem("name", fullName);
           goto("home");
         } else if (json.userRole == "ROLE_ADMIN") {

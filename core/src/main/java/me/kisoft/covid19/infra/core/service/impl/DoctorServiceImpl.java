@@ -44,17 +44,16 @@ public class DoctorServiceImpl implements DoctorService {
   }
 
   @Override
-  public List<Symptom> getPatientSymptoms(Long doctorId, Long patientId) {
+  public List<Symptom> getUnseenPatientSymptoms(Long doctorId, Long patientId) {
     try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
-      return repo.getPatientByDoctorAndId(patientId, doctorId).getSymptoms();
+      return repo.getPatientByDoctorAndId(patientId, doctorId).getUnseenSymptoms();
     }
   }
 
   @Override
-  public List<Answer> getPatientAnswers(Long doctorId, Long patientId) {
+  public List<Answer> getUnseenPatientAnswers(Long doctorId, Long patientId) {
     try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
-      return repo.getPatientByDoctorAndId(patientId, doctorId).getQuestions()
-              .stream().flatMap(question -> question.getAnswers().stream()).collect(Collectors.toList());
+      return repo.getPatientByDoctorAndId(patientId, doctorId).getUnseenAnswers();
     }
   }
 
@@ -120,11 +119,29 @@ public class DoctorServiceImpl implements DoctorService {
   }
 
   @Override
-  public Patient getPatient(Long doctorId,Long patientId ) {
-    try(PatientRepository repo = PatientRepositoryFactory.getInstance().get()){
+  public Patient getPatient(Long doctorId, Long patientId) {
+    try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
       return repo.getPatientByDoctorAndId(patientId, doctorId);
     }
 
+  }
+
+  @Override
+  public void markAnswerSeen(Long doctorId, Long patientId, Long answerId) {
+    try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+      Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
+      p.markAnswerSeen(answerId);
+      repo.save(p);
+    }
+  }
+
+  @Override
+  public void markSymptomSeen(Long doctorId, Long patientId, Long symptomId) {
+    try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+      Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
+      p.markSymptomSeen(symptomId);
+      repo.save(p);
+    }
   }
 
 }

@@ -7,7 +7,7 @@
 import { el, text, mount , list} from "redom";
 export class MedicalProfile {
 constructor(attr, text) {
-<div this="el" class="col-lg-4 p-0 border-right">
+<div this="el" class="col-lg-3 p-0 border-right">
   <div class="d-flex row mt-4 pl-5">
     <img
       alt="patient-profile-img"

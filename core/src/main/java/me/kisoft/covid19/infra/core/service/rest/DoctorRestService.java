@@ -36,12 +36,12 @@ public class DoctorRestService {
 
   public void listPatientSymptoms(Context ctx) {
     User user = ctx.sessionAttribute("user");
-    ctx.json(doctorService.getPatientSymptoms(user.getId(), ctx.pathParam("id", Long.class).get()));
+    ctx.json(doctorService.getUnseenPatientSymptoms(user.getId(), ctx.pathParam("id", Long.class).get()));
   }
 
   public void listPatientAnswers(Context ctx) {
     User user = ctx.sessionAttribute("user");
-    ctx.json(doctorService.getPatientAnswers(user.getId(), ctx.pathParam("id", Long.class).get()));
+    ctx.json(doctorService.getUnseenPatientAnswers(user.getId(), ctx.pathParam("id", Long.class).get()));
   }
 
   public void listPatientQuestions(Context ctx) {
@@ -88,20 +88,32 @@ public class DoctorRestService {
     ctx.json(doctorService.getDoctorPatients(user.getId()));
     ctx.status(200);
   }
-  
-  public void consumePatientCode(Context ctx){
+
+  public void consumePatientCode(Context ctx) {
     User user = ctx.sessionAttribute("user");
-    HashMap<String,String> map = ctx.bodyAsClass(HashMap.class);
+    HashMap<String, String> map = ctx.bodyAsClass(HashMap.class);
     long consumeSecurityCode = securityCodeService.consumeSecurityCode(map.get("code"), user.getId());
-    if(consumeSecurityCode>0){
+    if (consumeSecurityCode > 0) {
       doctorService.addPatient(user.getId(), consumeSecurityCode);
     }
     ctx.status(200);
   }
-  
-  public void getPatient(Context ctx){
-      User user = ctx.sessionAttribute("user");
-      ctx.json(doctorService.getPatient(user.getId(), ctx.pathParam("id",Long.class).get()));
+
+  public void getPatient(Context ctx) {
+    User user = ctx.sessionAttribute("user");
+    ctx.json(doctorService.getPatient(user.getId(), ctx.pathParam("id", Long.class).get()));
+  }
+
+  public void markAnswerSeen(Context ctx) {
+    User user = ctx.sessionAttribute("user");
+    doctorService.markAnswerSeen(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.pathParam("answer_id", Long.class).get());
+    ctx.status(200);
+  }
+
+  public void markSymptomSeen(Context ctx) {
+    User user = ctx.sessionAttribute("user");
+    doctorService.markSymptomSeen(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.pathParam("symptom_id", Long.class).get());
+    ctx.status(200);
   }
 
 }

@@ -4,15 +4,91 @@
  * and open the template in the editor.
  */
 
-import { el, text, mount } from "redom";
+import { el, text, mount, list,unmount } from "redom";
+import {getTitle} from "../utils/icpc"
 export class Answers {
   constructor(attr, text) {
     <div this="el" class="col-lg-6">
       <div class="bg-light-grey mx-2 my-4">
         <h5 class="p-3 text-info font-weight-bold">Patient Answers</h5>
+        <div class="col-12">
+          {this.answers = list('div.container-fluid', Answer) }
+        </div>
       </div>
     </div>;
   }
 
-  update(data) {}
+  update(patientId) {
+    this._getPatientAnswers(patientId).then((data)=>{
+      this.answers.update(data,{"patientId":patientId});
+    })
+    
+  }
+  
+  
+  _getPatientAnswers(patientId){
+    return  fetch("/doctor/patient/"+patientId+"/answer", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          alert("Wrong username or password");
+        }
+      })
+    
+  }
+}
+
+class Answer {
+  constructor(attr, text) {
+    <div this="el" class="row">
+      <div class="card card-common rounded-lg w-100">
+        <div class="card-header d-flex justify-content-start">
+          <h5 this="name"></h5>
+        </div>
+        <div class="card-body">
+          <p this="note"></p>
+          <p>
+          <div class="d-flex justify-content-between w-100">
+            <p this="date"></p>
+            <button this="dismiss" class="btn btn-danger">Dismiss</button>
+          </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+
+  update(data, index, items, context) {
+    this.data = data;
+    this.patientId = context.patientId;
+    this.name.textContent = getTitle(data.answerCode);
+    this.note.textContent = data.note;
+    this.date.textContent = data.creationDate;
+    this.dismiss.onclick = (e) =>{
+     this._dismiss().then((res)=>{
+       unmount(this.el.parentNode,this)
+     })
+    }
+  }
+  
+  _dismiss(){
+     return  fetch("/doctor/patient/"+this.patientId+"/answer/"+this.data.id+"/seen", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+        if (res.ok) {
+          return "ok"
+        } else {
+          alert("Wrong username or password");
+        }
+      })
+  }
+
 }

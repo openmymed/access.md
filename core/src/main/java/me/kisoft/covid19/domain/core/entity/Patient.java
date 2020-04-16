@@ -23,6 +23,7 @@ import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.enums.UserRole;
 import me.kisoft.covid19.domain.entity.DomainEntity;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
@@ -119,6 +120,21 @@ public class Patient extends DomainEntity {
     }
   }
 
+  public void markAnswerSeen(Long answerId) {
+    this.getQuestions()
+            .stream()
+            .flatMap(question -> question.getAnswers().stream())
+            .filter(answer -> Objects.equals(answer.getId(), answerId))
+            .findFirst().orElse(new Answer()).setSeen(true);
+  }
+
+  public void markSymptomSeen(Long symptomId) {
+    this.getSymptoms()
+            .stream()
+            .filter(symptom -> Objects.equals(symptom.getId(), symptomId))
+            .findFirst().orElse(new Symptom()).setSeen(true);
+  }
+
   public void addSymptom(Symptom symptom) {
     if (symptoms == null) {
       symptoms = new ArrayList<>();
@@ -131,6 +147,17 @@ public class Patient extends DomainEntity {
   @Override
   public String getEntityName() {
     return "patient";
+  }
+
+  public List<Answer> getUnseenAnswers() {
+    return this.getQuestions().stream()
+            .flatMap(question -> question.getAnswers().stream())
+            .filter(answer -> ! answer.isSeen()).collect(Collectors.toList());
+  }
+
+  public List<Symptom> getUnseenSymptoms() {
+    return this.getSymptoms().stream()
+            .filter(symptom -> !symptom.isSeen()).collect(Collectors.toList());
   }
 
 }

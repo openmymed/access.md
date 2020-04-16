@@ -14,7 +14,7 @@ export class PatientDetails {
       <h4 class="ml-4">Patient Profile</h4>
       <div class="row m-3 border bg-light">
         <MedicalProfile this="medicalProfile" />
-        <div class="col-lg-8 bg-light">
+        <div class="col-lg-9 bg-light">
           <div class="row">
             <Symptoms this="symptoms" />
             <Answers this="answers" />

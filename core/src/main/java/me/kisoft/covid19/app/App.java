@@ -181,9 +181,19 @@ public class App {
             });
             path("symptom", () -> {
               get(doctorService::listPatientSymptoms, roles(ROLE_DOCTOR));
+              path(":symptom_id",()->{
+                path("seen",()->{
+                  put(doctorService::markSymptomSeen,roles(ROLE_DOCTOR));
+                });
+              });
             });
             path("answer", () -> {
               get(doctorService::listPatientAnswers, roles(ROLE_DOCTOR));
+              path(":answer_id",()->{
+                path("seen",()->{
+                  put(doctorService::markAnswerSeen,roles(ROLE_DOCTOR));
+                });
+              });
             });
             path("question", () -> {
               get(doctorService::listPatientQuestions, roles(ROLE_DOCTOR));

@@ -27,9 +27,9 @@ public interface DoctorService {
     public MedicalProfile getPatientProfile(Long doctorId, Long patientId);
     
     
-    public List<Symptom> getPatientSymptoms(Long doctorId, Long patientId);
+    public List<Symptom> getUnseenPatientSymptoms(Long doctorId, Long patientId);
   
-    public List<Answer> getPatientAnswers(Long doctorId, Long patientId);
+    public List<Answer> getUnseenPatientAnswers(Long doctorId, Long patientId);
    
     public List<Answer> getAllPatientsNewAnswersSince(Long doctorId, Date date);
     
@@ -50,5 +50,9 @@ public interface DoctorService {
     public Question getPatientQuestion(Long id, Long patientId, Long questionId);
 
   public Patient getPatient(Long id, Long get);
+
+  public void markAnswerSeen(Long doctorId, Long patientId, Long answerId);
+
+  public void markSymptomSeen(Long doctorId, Long patientId, Long answerId);
 
 }
