@@ -22,26 +22,30 @@ import org.hibernate.envers.Audited;
  * @author tareq
  */
 @Entity(name = "MedicalProfile")
-@Table(name="MEDICAL_PROFILE")
+@Table(name = "MEDICAL_PROFILE")
 @Getter
 @Setter
 @Audited
 @AuditOverride
 public class MedicalProfile extends DomainEntity {
 
+  private int age;
+  private double height;
+  private double weight;
+  private Sex sex;
+  private boolean g6pdDeficiency = false;
+  private boolean respiratoryDiseases = false;
+  private boolean diabetes = false;
+  private boolean cardiovascularDiseases = false;
+  private boolean obesity = false;
+  @ElementCollection
+  private List<String> medications = new ArrayList<>();
+  @ElementCollection
+  private List<String> medicalFlags = new ArrayList<>();
 
-    private int age;
-    private double height;
-    private double weight;
-    private Sex sex;
-    @ElementCollection
-    private List<String> medications = new ArrayList<>();
-    @ElementCollection
-    private List<String> medicalFlags = new ArrayList<>();
-
- @Override
-    public String getEntityName() {
-        return "medicalProfile";
-    }
+  @Override
+  public String getEntityName() {
+    return "medicalProfile";
+  }
 
 }

@@ -47,27 +47,27 @@ constructor(attr, text) {
     Medical Flags
   </h5>
   <div class="col-12 py-1">
-    <input type="checkbox" id="G6PD" this="g6pd" name="G6PD" value="G6PD Deficiency" ></input>
+    <input disabled="disabled"  type="checkbox" id="G6PD" this="g6pdDeficiency" name="G6PD" value="G6PD Deficiency" ></input>
     <label class="ml-1" for="G6PD">
       G6PD Deficiency
     </label>
     <br></br>
-    <input type="checkbox" id="respiratory" name="respiratory" value="Respiratory Diseases" this="respiratory"></input>
+    <input disabled="disabled"  type="checkbox" id="respiratory" name="respiratory" value="Respiratory Diseases" this="respiratoryDiseases"></input>
     <label class="ml-1" for="respiratory">
       Respiratory Diseases
     </label>
     <br ></br>
-    <input type="checkbox" id="diabetes" name="diabetes" value="Diabetes" this="diabetes"></input>
+    <input disabled="disabled" type="checkbox" id="diabetes" name="diabetes" value="Diabetes" this="diabetes"></input>
     <label class="ml-1" for="diabetes">
       Diabetes
     </label>
     <br ></br>
-    <input type="checkbox" id="cardio" name="cardio" value="Cardiovascular Diseases" this="cardiovascular"></input>
+    <input disabled="disabled" type="checkbox" id="cardio" name="cardio" value="Cardiovascular Diseases" this="cardiovascularDiseases"></input>
     <label class="ml-1" for="cardio">
       Cardiovascular Diseases
     </label>
     <br ></br>
-    <input type="checkbox" id="obesity" name="obesity" value="Obesity" this="obese"></input>
+    <input disabled="disabled" type="checkbox" id="obesity" name="obesity" value="Obesity" this="obesity"></input>
     <label class="ml-1" for="obesity">
       Obesity
     </label>
@@ -93,8 +93,12 @@ update(patientId) {
         }else{
           this.sex.textContent = "Female"
         }
-        this._processFlags(json.medicalFlags);
-        this.medications.update(json.medications);
+       this.g6pdDeficiency.checked =json.g6pdDeficiency;
+       this.respiratoryDiseases.checked = json.respiratoryDiseases;
+       this.diabetes.checked = json.diabetes;
+       this.cardiovascularDiseases.checked = json.cardiovascularDiseases;
+       this.obesity.checked = json.obseity;
+       this.medications.update(json.medications);
       });
       
   this._getPatientProfile(patientId).then((json)=>{
@@ -102,9 +106,7 @@ update(patientId) {
     this.name.textContent = json.firstName +  " " + json.lastName 
   })    
   }
-  _processFlags(medicalFlags){
-      
-  }
+
   
   
   _getPatientProfile(patientId){
