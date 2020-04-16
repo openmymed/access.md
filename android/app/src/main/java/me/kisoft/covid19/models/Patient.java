@@ -7,6 +7,8 @@ public class Patient implements Serializable {
     private transient int id;
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
     private UserRole userRole;
     private String telephoneNumber;
     private transient MedicalProfile profile;
@@ -14,24 +16,23 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
-    public Patient(String username, String password, String telephoneNumber) {
+    public Patient(String username, String password, String telephoneNumber,String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.telephoneNumber = telephoneNumber;
+        this.userRole = UserRole.ROLE_PATIENT;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public Patient(String username, String password, UserRole userRole, String telephoneNumber) {
-        this.username = username;
-        this.password = password;
-        this.userRole = userRole;
-        this.telephoneNumber = telephoneNumber;
-    }
 
-    public Patient(int id, String username, String password, UserRole userRole, String telephoneNumber) {
+    public Patient(int id, String username, String password, String firstName, String lastName, String telephoneNumber) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.userRole = userRole;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userRole = UserRole.ROLE_PATIENT;
         this.telephoneNumber = telephoneNumber;
     }
 
@@ -75,6 +76,22 @@ public class Patient implements Serializable {
         this.password = password;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public MedicalProfile getProfile() {
         return profile;
     }
@@ -89,8 +106,11 @@ public class Patient implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", userRole=" + userRole +
                 ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", profile=" + profile +
                 '}';
     }
 }
