@@ -63,7 +63,7 @@ public class SecurityCode extends DomainEntity {
     }
 
     private String generateCode() {
-        return RandomStringUtils.random(8, true, true);
+        return RandomStringUtils.random(8, true, true).toLowerCase();
     }
 
     private Date generateValidUntil() {

@@ -31,9 +31,9 @@ public interface DoctorService {
   
     public List<Answer> getUnseenPatientAnswers(Long doctorId, Long patientId);
    
-    public List<Answer> getAllPatientsNewAnswersSince(Long doctorId, Date date);
+    public List<Answer> getAllPatientsUnseenAnswers(Long doctorId, Date date);
     
-    public List<Symptom> getAllPatientsNewSymptomsSince(Long doctorId, Date date);
+    public List<Symptom> getAllPatientsUnseenSymptoms(Long doctorId, Date date);
 
     public void addQuestionForPatient(Long doctorId,Long patientId,  Question question);
 

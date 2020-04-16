@@ -10,6 +10,6 @@ package me.kisoft.covid19.infra.core.service.rest.vo;
  * @author tareq
  */
 public enum PatientUpdateType {
-    QUESTION_ANSWERED,
-    SYMPTOM_ADDED
+    UNSEEN_ANSWER,
+    UNSEEN_UPDATE
 }

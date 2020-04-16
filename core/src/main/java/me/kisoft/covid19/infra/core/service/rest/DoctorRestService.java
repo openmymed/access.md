@@ -6,14 +6,19 @@
 package me.kisoft.covid19.infra.core.service.rest;
 
 import io.javalin.http.Context;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import me.kisoft.covid19.domain.auth.entity.User;
 import me.kisoft.covid19.domain.auth.service.SecurityCodeService;
+import me.kisoft.covid19.domain.core.entity.Answer;
 import me.kisoft.covid19.domain.core.entity.Question;
+import me.kisoft.covid19.domain.core.entity.Symptom;
 import me.kisoft.covid19.domain.core.service.DoctorService;
 import me.kisoft.covid19.infra.auth.factory.SecurityCodeServiceFactory;
 import me.kisoft.covid19.infra.core.factory.DoctorServiceFactory;
+import me.kisoft.covid19.infra.core.service.rest.vo.PatientUpdateVo;
 
 /**
  *
@@ -26,7 +31,16 @@ public class DoctorRestService {
 
   public void getPatientsFeed(Context ctx) {
     User user = ctx.sessionAttribute("user");
-    doctorService.getAllPatientsNewAnswersSince(user.getId(), new Date());
+    List<Answer> answers = doctorService.getAllPatientsUnseenAnswers(user.getId(), new Date());
+    List<Symptom> symptoms = doctorService.getAllPatientsUnseenSymptoms(user.getId(), new Date());
+    List<PatientUpdateVo> updates = new ArrayList<>();
+    answers.stream().forEach(answer -> {
+      updates.add(new PatientUpdateVo(answer.getQuestion().getPatient(), answer));
+    });
+    symptoms.stream().forEach(symptom -> {
+      updates.add(new PatientUpdateVo(symptom.getPatient(), symptom));
+    });
+    ctx.json(updates);
   }
 
   public void getPatientProfile(Context ctx) {
