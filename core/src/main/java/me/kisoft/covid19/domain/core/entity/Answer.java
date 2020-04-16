@@ -5,6 +5,7 @@
  */
 package me.kisoft.covid19.domain.core.entity;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -23,8 +24,17 @@ import me.kisoft.covid19.domain.entity.DomainEntity;
 public class Answer extends DomainEntity {
     @ManyToOne
     private Question question;
+    
     private String answer;
-
+    private boolean seen;
+    private Date seenOn;
+    
+    public void setSeen(boolean seen){
+      if(seen == true){
+        seenOn = new Date();
+      }
+      this.seen = seen;
+    }
     @Override
     public String getEntityName() {
         return "answer";
