@@ -13,41 +13,42 @@ export class PatientList {
       <div class="col-12">
         <table class="table" this="table">
           <thead>
-            <th scope="col" class="text-left">
-              Name
-            </th>
-            <th scope="col" class="text-center">
-              Number
-            </th>
-            <th scope="col" class="text-right">
-              Profile
-            </th>
+          <th scope="col" class="text-left">
+            Name
+          </th>
+          <th scope="col" class="text-center">
+            Number
+          </th>
+          <th scope="col" class="text-right">
+            Profile
+          </th>
           </thead>
           {(this.patients = list("tbody", PatientEntry))}
         </table>
       </div>
     </Page>;
   }
-  update() {}
-  onmount() {
+  update() {
+
     fetch("/doctor/patient", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          alert("Wrong username or password");
-        }
-      })
-      .then((json) => {
-        this.patients.update(json);
-      });
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              } else {
+                alert("Wrong username or password");
+              }
+            })
+            .then((json) => {
+              this.patients.update(json);
+            });
   }
 }
+
 
 class PatientEntry {
   constructor() {

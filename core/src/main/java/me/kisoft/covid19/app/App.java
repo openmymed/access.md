@@ -139,6 +139,7 @@ public class App {
         });
       });
       path("patient", () -> {
+        
         path("signup", () -> {
           post(patientService::signUp, roles(NONE));
         });
@@ -174,6 +175,7 @@ public class App {
             post(doctorService::consumePatientCode, roles(ROLE_DOCTOR));
           });
           path(":id", () -> {
+            get(doctorService::getPatient,roles(ROLE_DOCTOR));
             path("profile", () -> {
               get(doctorService::getPatientProfile, roles(ROLE_DOCTOR));
             });

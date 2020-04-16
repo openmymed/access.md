@@ -47,6 +47,8 @@ public interface DoctorService {
 
     public void updatePatientQuestion(Long id, Long patientId, Long questionId, Question question);
 
-    public Object getPatientQuestion(Long id, Long patientId, Long questionId);
+    public Question getPatientQuestion(Long id, Long patientId, Long questionId);
+
+  public Patient getPatient(Long id, Long get);
 
 }

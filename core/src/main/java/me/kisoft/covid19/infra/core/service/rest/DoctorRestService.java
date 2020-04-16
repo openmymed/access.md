@@ -98,5 +98,10 @@ public class DoctorRestService {
     }
     ctx.status(200);
   }
+  
+  public void getPatient(Context ctx){
+      User user = ctx.sessionAttribute("user");
+      ctx.json(doctorService.getPatient(user.getId(), ctx.pathParam("id",Long.class).get()));
+  }
 
 }

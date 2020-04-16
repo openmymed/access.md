@@ -119,4 +119,12 @@ public class DoctorServiceImpl implements DoctorService {
     }
   }
 
+  @Override
+  public Patient getPatient(Long doctorId,Long patientId ) {
+    try(PatientRepository repo = PatientRepositoryFactory.getInstance().get()){
+      return repo.getPatientByDoctorAndId(patientId, doctorId);
+    }
+
+  }
+
 }
