@@ -169,6 +169,10 @@ public class App {
           get(doctorService::getPatientsFeed, roles(ROLE_DOCTOR));
         });
         path("patient", () -> {
+          get(doctorService::listPatients,roles(ROLE_DOCTOR));
+          path("add",()->{
+            post(doctorService::consumePatientCode, roles(ROLE_DOCTOR));
+          });
           path(":id", () -> {
             path("profile", () -> {
               get(doctorService::getPatientProfile, roles(ROLE_DOCTOR));

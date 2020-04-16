@@ -32,44 +32,48 @@ import me.kisoft.covid19.domain.entity.DomainEntity;
 @NoArgsConstructor
 public class Doctor extends DomainEntity {
 
-    @JsonProperty
-    private String password;
-    private String username;
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-    private String telephoneNumber;
+  @JsonIgnore
+  private String password;
+  private String username;
+  @Enumerated(EnumType.STRING)
+  private UserRole userRole;
+  private String telephoneNumber;
+  private String firstName;
+  private String lastName;
+  @JsonIgnore
+  @OneToMany
+  private List<Patient> patients = new ArrayList<>();
 
-    @OneToMany
-    private List<Patient> patients = new ArrayList<>();
-    
-     public Doctor(User user) {
-        this.setUsername(user.getUsername());
-        this.setPassword(user.getPassword());
-        this.setUserRole(UserRole.ROLE_DOCTOR);
-        this.setTelephoneNumber(user.getTelephoneNumber());
-    }
-    @JsonIgnore
-    public String getPassword() {
-        return this.password;
-    }
+  public Doctor(User user) {
+    this.setUsername(user.getUsername());
+    this.setPassword(user.getPassword());
+    this.setUserRole(UserRole.ROLE_DOCTOR);
+    this.setTelephoneNumber(user.getTelephoneNumber());
+    this.setFirstName(user.getFirstName());
+    this.setLastName(user.getLastName());
+  }
 
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  @JsonIgnore
+  public String getPassword() {
+    return this.password;
+  }
 
-    
-    public void addPatient(Patient patient){
-        if(patients == null){
-            patients = new ArrayList<>();
-        }
-        patient.setDoctor(this);
-        patients.add(patient);
+  @JsonProperty
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void addPatient(Patient patient) {
+    if (patients == null) {
+      patients = new ArrayList<>();
     }
-    
-    @Override
-    public String getEntityName() {
-        return "doctor";
-    }
+    patient.setDoctor(this);
+    patients.add(patient);
+  }
+
+  @Override
+  public String getEntityName() {
+    return "doctor";
+  }
 
 }

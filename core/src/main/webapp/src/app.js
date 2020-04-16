@@ -17,12 +17,38 @@ class AuthenticationMiddleware {
   constructor() {}
   //this is what the auth function needs to look like
   exec(currentView, nextView, params) {
-    // if (window.auth == false) {
-    //   return "signin";
-    // } else {
-    //   return nextView;
-    // }
+     if (window.auth == false) {
+       return "signin";
+     } else {
+       return nextView;
+    }
   }
+}
+
+class AuthorizationMiddleware{
+  constructor(){}
+  
+  exec(currentView,nextView,params){
+    
+    if(nextView =='signin'){
+      return nextView
+    } else if(nextView == 'admin' || nextView =='doctors'){
+      if(window.role=='ROLE_ADMIN'){
+        return nextView
+      }else{
+        alert('You do not have the correct authentication!')
+        return currentView
+      }
+    }else if(nextView =='home' || nextView == 'patients' ||nextView=='patient'){
+       if(window.role=='ROLE_DOCTOR'){
+        return nextView
+      }else{
+        alert('You do not have the correct authentication!')
+        return currentView
+      }
+    }
+  }
+  
 }
 
 const container = el('div.container-fluid')
@@ -36,5 +62,5 @@ const app = new App()
     admin : AdminHome,
     doctors:DoctorList
   })
-  .middlewares([new AuthenticationMiddleware()])
+  .middlewares([new AuthenticationMiddleware(),new AuthorizationMiddleware()])
   .start(container);

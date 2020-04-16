@@ -5,6 +5,7 @@
  */
 package me.kisoft.covid19.infra.core.service.rest.vo;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientUpdateVo {
-    
-    private Long patientId;
+    private long patientId;
+    private long entityId;
+    private String patientName;
     private PatientUpdateType type;
-    private Long entityId;
-    private String value;
+    private Date time;
+    private String note;
 }

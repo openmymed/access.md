@@ -82,15 +82,12 @@ class LoginForm {
         }
       })
       .then((json) => {
-        let fullname = json.firstName + " " + json.lastName;
         window.role = json.userRole;
         if (json.userRole == "ROLE_DOCTOR") {
           window.auth = true;
-          sessionStorage.setItem("name", fullname);
           goto("home");
         } else if (json.userRole == "ROLE_ADMIN") {
           window.auth = true;
-          sessionStorage.setItem("name", fullname);
           goto("admin");
         } else {
           window.auth = false;

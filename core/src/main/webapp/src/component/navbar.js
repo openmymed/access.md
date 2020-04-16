@@ -9,25 +9,9 @@ import { AddPatient } from "./add-patient";
 import { AddDoctor } from "./add-doctor";
 export class NavBar {
   constructor(attr, text) {
-    <div this="el" class="col-xl-2 col-lg-3 col-md-4">
-      <nav class="navbar navbar-expand-md navbar-light">
-        <button
-          class="navbar-toggler mb-2 bg-light"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <div class="container-fluid">
-            <div class="row">
-              <TopNavBar></TopNavBar>
-              <SideBar></SideBar>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div this="el" class="col-12">
+      <TopNavBar></TopNavBar>
+      <SideBar></SideBar>
     </div>;
   }
 
@@ -36,26 +20,19 @@ export class NavBar {
 
 class TopNavBar {
   constructor() {
-    <div
-      this="el"
-      class="col-xl-10 col-lg-9 col-md-8 ml-auto fixed-top py-2 top-navbar"
-    >
-      <div class="row align-items-center">
-        <div class="col-md float-right">
-          <div class="d-flex flex-row-reverse justify-content-center justify-content-md-start p-2 align-items-center">
-            <h6 this="name" id="profile-name" class="align-middle ml-2">
-              Majed Nuss
-            </h6>
-            <img
-              id="profile-pic"
-              class="profile-img"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/768px-Circle-icons-profile.svg.png"
-              alt="profile-pic"
-            />
-          </div>
-        </div>
+    <nav this="el" class="navbar navbar-expand-lg navbar-light bg-transparent">
+      <div class="d-flex col-12 flex-row-reverse justify-content-center justify-content-md-start p-2 align-items-center">
+        <h6 id="profile-name" class="align-middle ml-2">
+          Majed Nuss
+        </h6>
+        <img
+          id="profile-pic"
+          class="profile-img"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/768px-Circle-icons-profile.svg.png"
+          alt="profile-pic"
+        />
       </div>
-    </div>;
+    </nav>;
   }
   update() {
     // let name = sessionStorage.getItem("name");
@@ -65,25 +42,9 @@ class TopNavBar {
 
 export class AdminNavBar {
   constructor() {
-    <div this="el" class="col-xl-2 col-lg-3 col-md-4">
-      <nav class="navbar navbar-expand-md navbar-light">
-        <button
-          class="navbar-toggler mb-2 bg-light"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <div class="container-fluid">
-            <div class="row">
-              <TopNavBar></TopNavBar>
-              <AdminSideBar></AdminSideBar>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div this="el" class="col-12">
+      <TopNavBar></TopNavBar>
+      <AdminSideBar></AdminSideBar>
     </div>;
   }
   update() {
