@@ -162,3 +162,12 @@ table {
   color: #3ba8b3;
   background-color: #3ba8b3;
 } */
+
+div.d-flex .svg-inline--fa{
+  height:auto;
+}
+
+div.card-body .symptom-note,
+div.card-body .answer-note{
+  text-align:start
+}

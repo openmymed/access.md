@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import { el, text, mount, list,unmount } from "redom";
+import { el, text, mount, list, unmount } from "redom";
 import {getTitle} from "../utils/icpc"
 export class Answers {
   constructor(attr, text) {
@@ -19,27 +19,26 @@ export class Answers {
   }
 
   update(patientId) {
-    this._getPatientAnswers(patientId).then((data)=>{
-      this.answers.update(data,{"patientId":patientId});
+    this._getPatientAnswers(patientId).then((data) => {
+      this.answers.update(data, {"patientId": patientId});
     })
-    
+
   }
-  
-  
-  _getPatientAnswers(patientId){
-    return  fetch("/doctor/patient/"+patientId+"/answer", {
+
+  _getPatientAnswers(patientId) {
+    return  fetch("/doctor/patient/" + patientId + "/answer", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          alert("Wrong username or password");
-        }
-      })
-    
+      if (res.ok) {
+        return res.json();
+      } else {
+        alert("Wrong username or password");
+      }
+    })
+
   }
 }
 
@@ -48,13 +47,19 @@ class Answer {
     <div this="el" class="row">
       <div class="card card-common rounded-lg w-100">
         <div class="card-header d-flex justify-content-start">
-          <h5 this="name"></h5>
+          <h6 this="name"></h6>
         </div>
-        <div class="card-body">
-          <p this="note"></p>
+        <div class="card-body w-100">
+          <div class="answer-note" this="note"></div>
           <p>
           <div class="d-flex justify-content-between w-100">
-            <p this="date"></p>
+            <div>
+              <div this="date"></div>
+              <div class="d-flex">
+                <i class="fa fa-clock"></i>&nbsp;
+                <div this="time" ></div>
+              </div>
+            </div>
             <button this="dismiss" class="btn btn-danger">Dismiss</button>
           </div>
           </p>
@@ -68,27 +73,28 @@ class Answer {
     this.patientId = context.patientId;
     this.name.textContent = getTitle(data.answerCode);
     this.note.textContent = data.note;
-    this.date.textContent = data.creationDate;
-    this.dismiss.onclick = (e) =>{
-     this._dismiss().then((res)=>{
-       unmount(this.el.parentNode,this)
-     })
+    this.date.textContent = new Date(data.creationDate).toLocaleDateString()
+    this.time.textContent = new Date(data.creationDate).toLocaleTimeString()
+    this.dismiss.onclick = (e) => {
+      this._dismiss().then((res) => {
+        unmount(this.el.parentNode, this)
+      })
     }
   }
-  
-  _dismiss(){
-     return  fetch("/doctor/patient/"+this.patientId+"/answer/"+this.data.id+"/seen", {
+
+  _dismiss() {
+    return  fetch("/doctor/patient/" + this.patientId + "/answer/" + this.data.id + "/seen", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-        if (res.ok) {
-          return "ok"
-        } else {
-          alert("Wrong username or password");
-        }
-      })
+      if (res.ok) {
+        return "ok"
+      } else {
+        alert("Wrong username or password");
+      }
+    })
   }
 
 }
