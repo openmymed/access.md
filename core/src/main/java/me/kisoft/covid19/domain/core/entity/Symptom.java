@@ -30,7 +30,7 @@ public class Symptom extends DomainEntity {
   private Patient patient;
 
   private String note;
-  private boolean seen;
+  private boolean seen = false;
   private Date seenOn;
 
   public void setSeen(boolean seen) {

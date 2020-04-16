@@ -17,28 +17,29 @@ import me.kisoft.covid19.domain.entity.DomainEntity;
  *
  * @author tareq
  */
-@Entity(name="Answer")
-@Table(name="ANSWERS")
+@Entity(name = "Answer")
+@Table(name = "ANSWERS")
 @Getter
 @Setter
 public class Answer extends DomainEntity {
-    @ManyToOne
-    private Question question;
-    
-    private String answer;
-    private boolean seen;
-    private Date seenOn;
-    
-    public void setSeen(boolean seen){
-      if(seen == true){
-        seenOn = new Date();
-      }
-      this.seen = seen;
+
+  @ManyToOne
+  private Question question;
+
+  private String answer;
+  private boolean seen = false;
+  private Date seenOn;
+
+  public void setSeen(boolean seen) {
+    if (seen == true) {
+      seenOn = new Date();
     }
-    @Override
-    public String getEntityName() {
-        return "answer";
-    }
-    
-    
+    this.seen = seen;
+  }
+
+  @Override
+  public String getEntityName() {
+    return "answer";
+  }
+
 }
