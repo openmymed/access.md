@@ -36,18 +36,20 @@ class LoginForm {
             }}
           >
             <div class="form-group">
-              <label>Username</label>
+              <label for="username">Username</label>
               <input
                 this="username"
+                id="username"
                 type="text"
                 class="form-control"
                 placeholder="Username"
               ></input>
             </div>
             <div class="form-group">
-              <label>Password</label>
+              <label for="password">Password</label>
               <input
                 this="password"
+                id="password"
                 type="password"
                 class="form-control"
                 placeholder="Password"
