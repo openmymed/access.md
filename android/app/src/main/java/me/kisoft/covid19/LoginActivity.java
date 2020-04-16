@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import io.paperdb.Paper;
 import me.kisoft.covid19.models.Patient;
+import me.kisoft.covid19.models.UserRole;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
 import me.kisoft.covid19.utils.Keys;
@@ -79,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
     private void login(final String username, final String password) {
         new AsyncTask<Void, Void, Patient>() {
             ProgressDialog dialog;
@@ -101,14 +104,19 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Patient p) {
                 if (p != null) {
-                    tvLoginWarning.setVisibility(View.GONE);
-                    if (chkRememberMe.isChecked()) {
-                        Paper.book().write(Keys.PHONE_KEY, username);
-                        Paper.book().write(Keys.PASSWORD_KEY, password);
+                    if (p.getUserRole() == UserRole.ROLE_PATIENT) {
+                        tvLoginWarning.setVisibility(View.GONE);
+                        if (chkRememberMe.isChecked()) {
+                            Paper.book().write(Keys.PHONE_KEY, username);
+                            Paper.book().write(Keys.PASSWORD_KEY, password);
+                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        tvLoginWarning.setText(getString(R.string.sigin_auth_account));
+                        tvLoginWarning.setVisibility(View.VISIBLE);
                     }
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
                 } else {
                     tvLoginWarning.setText(getString(R.string.sign_in_incorrect));
                     tvLoginWarning.setVisibility(View.VISIBLE);

@@ -20,6 +20,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtPhone;
     private EditText edtPassword;
     private EditText edtConfirmPassword;
+    private EditText edtFirstName;
+    private EditText edtLastName;
     private Button btnSignUp;
     private TextView tvGoToSignIn;
     private PatientService service;
@@ -39,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
         //init screen components
         edtPhone = findViewById(R.id.edt_phone);
         edtPassword = findViewById(R.id.edt_password);
+        edtFirstName = findViewById(R.id.et_first_name);
+        edtLastName = findViewById(R.id.et_last_name);
         edtConfirmPassword = findViewById(R.id.edt_confirm_password);
         btnSignUp = findViewById(R.id.btn_sign_up);
         tvGoToSignIn = findViewById(R.id.tv_goto_sign_in);
@@ -56,12 +60,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String firstName = edtFirstName.getText().toString();
+                String lastName = edtLastName.getText().toString();
                 String phone = edtPhone.getText().toString();
                 String password = edtPassword.getText().toString();
                 String confirmPassword = edtConfirmPassword.getText().toString();
-                if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirmPassword)) {
+                if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirmPassword) && !TextUtils.isEmpty(firstName)&& !TextUtils.isEmpty(lastName)) {
                     if (password.equals(confirmPassword)) {
-                        Patient patient = new Patient(phone, password, phone);
+                        Patient patient = new Patient(phone, password, phone,firstName,lastName);
                         register(patient);
                     }
                 } else {

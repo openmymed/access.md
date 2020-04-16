@@ -22,6 +22,7 @@
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="dont_have_account">Don\'t have an account? Sign up</string>
+    <string name="sigin_auth_account">You do not have the authorization</string>
 
     <!--  Main screen  -->
     <string name="title_activity_main">MainActivity</string>
@@ -70,7 +71,12 @@
     <string name="notes">Notes</string>
 
     <!--  Security Code Screen  -->
-    <string name="security_code_title">Security Code</string>
+    <string name="security_code_title">Secret Code</string>
+
+    <!--  Profile Fragment  -->
+    <string name="logout">Logout</string>
+    <string name="account">Account</string>
+
 
 
 </resources>
