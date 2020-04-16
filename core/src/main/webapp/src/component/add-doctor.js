@@ -38,7 +38,7 @@ export class AddDoctor {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body container-fluid">
+          <div class="modal-body text-left container-fluid">
             <div class="form-group container-fluid">
               <label for="username">Username</label>
               <input

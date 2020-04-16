@@ -10,8 +10,8 @@ import { el, text, mount } from "redom";
 import { Page } from "../component/page";
 export class PatientDetails {
   constructor(attr, text) {
-    <Page this="el" class="mt-5">
-      <h4 class="ml-4 mt-5">Patient Profile</h4>
+    <Page this="el" class="mt-2">
+      <h4 class="ml-4">Patient Profile</h4>
       <div class="row m-3 border bg-light">
         <MedicalProfile this="medicalProfile" />
         <div class="col-lg-8 bg-light">

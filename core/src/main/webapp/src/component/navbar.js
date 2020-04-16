@@ -20,10 +20,11 @@ export class NavBar {
 
 class TopNavBar {
   constructor() {
+    let name = sessionStorage.getItem("name");
     <nav this="el" class="navbar navbar-expand-lg navbar-light bg-transparent">
       <div class="d-flex col-12 flex-row-reverse justify-content-center justify-content-md-start p-2 align-items-center">
         <h6 id="profile-name" class="align-middle ml-2">
-          Majed Nuss
+          {name}
         </h6>
         <img
           id="profile-pic"
@@ -34,10 +35,6 @@ class TopNavBar {
       </div>
     </nav>;
   }
-  update() {
-    // let name = sessionStorage.getItem("name");
-    // this.name.textContent = name;
-  }
 }
 
 export class AdminNavBar {
@@ -46,10 +43,6 @@ export class AdminNavBar {
       <TopNavBar></TopNavBar>
       <AdminSideBar></AdminSideBar>
     </div>;
-  }
-  update() {
-    // let name = sessionStorage.getItem("name");
-    // this.name.textContent = name;
   }
 }
 
