@@ -32,8 +32,6 @@ public class MedicalFlagsFragment extends Fragment {
     private CheckBox chkDiabetes;
     private CheckBox chkRespiratory;
     private CheckBox chkCardiovascular;
-    private List<String> diseases;
-    private CheckBox[] checkBoxes;
     private MedicalProfile profile;
     private PatientService service;
 
@@ -54,10 +52,8 @@ public class MedicalFlagsFragment extends Fragment {
         chkDiabetes = view.findViewById(R.id.chk_diabetes);
         chkObesity = view.findViewById(R.id.chk_obesity);
         service = new PatientServiceDelegate();
-        checkBoxes = new CheckBox[]{chkG6PD, chkCardiovascular, chkRespiratory, chkDiabetes, chkObesity};
 
         profile = Paper.book().read(Keys.MED_PROFILE_KEY);
-        diseases = new ArrayList<>();
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,13 +96,21 @@ public class MedicalFlagsFragment extends Fragment {
     }
 
     private void addDiseaseToList() {
-        diseases.clear();
-        for (int i = 0; i < checkBoxes.length; i++) {
-            if (checkBoxes[i].isChecked()) {
-                diseases.add(checkBoxes[i].getText().toString());
-            }
+        if(chkG6PD.isChecked()){
+            profile.setG6pdDeficiency(true);
         }
-        profile.setMedicalFlags(diseases);
+        if(chkRespiratory.isChecked()){
+            profile.setRespiratoryDiseases(true);
+        }
+        if(chkCardiovascular.isChecked()){
+            profile.setCardiovascularDiseases(true);
+        }
+        if(chkDiabetes.isChecked()){
+            profile.setDiabetes(true);
+        }
+        if(chkObesity.isChecked()){
+            profile.setObesity(true);
+        }
         Paper.book().write(Keys.MED_PROFILE_KEY, profile);
     }
 }

@@ -9,18 +9,26 @@ public class MedicalProfile implements Serializable {
     private double weight;
     private Sex sex;
     private List<String> medications;
-    private List<String> medicalFlags;
+    private boolean g6pdDeficiency;
+    private boolean respiratoryDiseases;
+    private boolean diabetes;
+    private boolean cardiovascularDiseases;
+    private boolean obesity;
 
     public MedicalProfile() {
     }
 
-    public MedicalProfile(int age, int height, int weight, Sex sex, List<String> medications, List<String> medicalFlags) {
+    public MedicalProfile(int age, double height, double weight, Sex sex, List<String> medications, boolean g6pdDeficiency, boolean respiratoryDiseases, boolean diabetes, boolean cardiovascularDiseases, boolean obesity) {
         this.age = age;
         this.height = height;
         this.weight = weight;
         this.sex = sex;
         this.medications = medications;
-        this.medicalFlags = medicalFlags;
+        this.g6pdDeficiency = g6pdDeficiency;
+        this.respiratoryDiseases = respiratoryDiseases;
+        this.diabetes = diabetes;
+        this.cardiovascularDiseases = cardiovascularDiseases;
+        this.obesity = obesity;
     }
 
     public int getAge() {
@@ -63,12 +71,44 @@ public class MedicalProfile implements Serializable {
         this.medications = medications;
     }
 
-    public List<String> getMedicalFlags() {
-        return medicalFlags;
+    public boolean isG6pdDeficiency() {
+        return g6pdDeficiency;
     }
 
-    public void setMedicalFlags(List<String> medicalFlags) {
-        this.medicalFlags = medicalFlags;
+    public void setG6pdDeficiency(boolean g6pdDeficiency) {
+        this.g6pdDeficiency = g6pdDeficiency;
+    }
+
+    public boolean isRespiratoryDiseases() {
+        return respiratoryDiseases;
+    }
+
+    public void setRespiratoryDiseases(boolean respiratoryDiseases) {
+        this.respiratoryDiseases = respiratoryDiseases;
+    }
+
+    public boolean isDiabetes() {
+        return diabetes;
+    }
+
+    public void setDiabetes(boolean diabetes) {
+        this.diabetes = diabetes;
+    }
+
+    public boolean isCardiovascularDiseases() {
+        return cardiovascularDiseases;
+    }
+
+    public void setCardiovascularDiseases(boolean cardiovascularDiseases) {
+        this.cardiovascularDiseases = cardiovascularDiseases;
+    }
+
+    public boolean isObesity() {
+        return obesity;
+    }
+
+    public void setObesity(boolean obesity) {
+        this.obesity = obesity;
     }
 
     @Override
@@ -79,7 +119,6 @@ public class MedicalProfile implements Serializable {
                 ", weight=" + weight +
                 ", sex=" + sex +
                 ", medications=" + medications +
-                ", medicalFlags=" + medicalFlags +
                 '}';
     }
 }
