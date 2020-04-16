@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class ProfileFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         profileListView = root.findViewById(R.id.profile_listview);
 
         List<String> dataList = new ArrayList<>(Arrays.asList(getString(R.string.account), getString(R.string.security_code_title), getString(R.string.logout)));

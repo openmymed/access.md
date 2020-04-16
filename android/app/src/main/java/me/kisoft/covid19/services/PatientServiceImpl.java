@@ -62,6 +62,7 @@ public class PatientServiceImpl implements PatientService {
     public Boolean register(Patient patient) {
         Gson gson = new Gson();
         String json = gson.toJson(patient);
+        Log.e("",json);
         try (Response response = RestClient.post(RestClient.REGISTER_URL, json)) {
             Log.i("Register", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
