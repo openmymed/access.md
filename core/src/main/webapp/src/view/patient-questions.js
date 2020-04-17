@@ -233,11 +233,13 @@ class AddEditQuestionModal {
       this.toDate.value = new Date(data.endDate).toLocaleDateString()
       this.questionText.value = data.question;
       this.questionType.value = data.type;
-      if (data.recurrance == true) {
+      if (data.recurring == true) {
         this.data.recurrance = data.recurrance;
+        this.repetitions.update(data.recurrance);
       }
       this.recurring.checked = data.recurring;
       this.recurring.dispatchEvent(new Event("change"));
+      
     }
   }
 
@@ -296,7 +298,7 @@ class Repetition {
     this.index = index;
     this.items = items;
     this.indexText.textContent = index + 1;
-    this.timeInput.value = this.data.hourOfDay + ":" + this.data.minuteOfHour
+    this.timeInput.value = (""+this.data.hourOfDay).padStart(2, '0') + ":" +(""+this.data.minuteOfHour).padStart(2, '0')
   }
 }
 
