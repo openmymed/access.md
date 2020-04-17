@@ -1,8 +1,4 @@
-import "@fortawesome/fontawesome-free/js/all";
-import "bootstrap/dist/js/bootstrap.js";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "jquery-ui/themes/base/all.css";
-import "./style/app.css";
+import './global-imports'
 import { el, text, mount, setChildren } from "redom";
 import { App } from "redom-app";
 import { PatientList } from "./view/patient-list";
@@ -12,10 +8,7 @@ import { Signin } from "./view/signin";
 import { Home } from "./view/home";
 import { AdminHome } from "./view/admin";
 import {PatientQuestions} from "./view/patient-questions";
-import $ from  'jquery';
-window.$ = window.jQuery = window.jquery = $;
-import 'jquery-ui-bundle';
-import 'jquery-ui-bundle/jquery-ui.css';
+
 
 class AuthenticationMiddleware {
   constructor() {}
