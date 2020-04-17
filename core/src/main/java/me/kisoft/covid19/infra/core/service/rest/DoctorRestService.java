@@ -29,6 +29,26 @@ public class DoctorRestService {
   private DoctorService doctorService = DoctorServiceFactory.getInstance().get();
   private SecurityCodeService securityCodeService = SecurityCodeServiceFactory.getInstance().get();
 
+  public void getUnseenAnswerCount(Context ctx){
+    User user = ctx.sessionAttribute("user");
+    HashMap map = new HashMap();
+    map.put("count",doctorService.getAllPatientsUnseenAnswers(user.getId()).size());
+    ctx.json(map);
+  }
+  
+  public void getUnseenSymptomCount(Context ctx){
+    User user = ctx.sessionAttribute("user");
+    HashMap map = new HashMap();
+    map.put("count",doctorService.getAllPatientsUnseenSymptoms(user.getId()).size());
+    ctx.json(map);
+  }
+  
+  public void getPatientCount(Context ctx){
+    User user = ctx.sessionAttribute("user");
+    HashMap map = new HashMap();
+    map.put("count",doctorService.getDoctorPatients(user.getId()).size());
+    ctx.json(map);
+  }
   public void getPatientsFeed(Context ctx) {
     User user = ctx.sessionAttribute("user");
     List<Answer> answers = doctorService.getAllPatientsUnseenAnswers(user.getId());

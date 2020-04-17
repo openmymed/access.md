@@ -29,7 +29,7 @@ public class PatientUpdateVo {
   private String patientName;
   private PatientUpdateType type;
   private Date time;
-  private String note;
+  private String value;
 
   public PatientUpdateVo(Patient p, Answer answer) {
     patientId = p.getId();
@@ -37,13 +37,15 @@ public class PatientUpdateVo {
     patientName = p.getFirstName() + " " + p.getLastName();
     type = PatientUpdateType.UNSEEN_ANSWER;
     time = answer.getCreationDate();
+    value = answer.getQuestion().getQuestion();
   }
 
   public PatientUpdateVo(Patient p, Symptom symptom) {
     patientId = p.getId();
     entityId = symptom.getId();
     patientName = p.getFirstName() + " " + p.getLastName();
-    type = PatientUpdateType.UNSEEN_UPDATE;
+    type = PatientUpdateType.UNSEEN_SYMPTOM;
     time = symptom.getCreationDate();
+    value = symptom.getSymptomCode();
   }
 }

@@ -139,7 +139,7 @@ public class App {
         });
       });
       path("patient", () -> {
-        
+
         path("signup", () -> {
           post(patientService::signUp, roles(NONE));
         });
@@ -170,28 +170,41 @@ public class App {
           get(doctorService::getPatientsFeed, roles(ROLE_DOCTOR));
         });
         path("patient", () -> {
-          get(doctorService::listPatients,roles(ROLE_DOCTOR));
-          path("add",()->{
+          path("symptom", () -> {
+            path("count", () -> {
+              get(doctorService::getUnseenSymptomCount, roles(ROLE_DOCTOR));
+            });
+          });
+          path("answer", () -> {
+            path("count", () -> {
+              get(doctorService::getUnseenAnswerCount, roles(ROLE_DOCTOR));
+            });
+          });
+          path("count", () -> {
+            get(doctorService::getPatientCount, roles(ROLE_DOCTOR));
+          });
+          get(doctorService::listPatients, roles(ROLE_DOCTOR));
+          path("add", () -> {
             post(doctorService::consumePatientCode, roles(ROLE_DOCTOR));
           });
           path(":id", () -> {
-            get(doctorService::getPatient,roles(ROLE_DOCTOR));
+            get(doctorService::getPatient, roles(ROLE_DOCTOR));
             path("profile", () -> {
               get(doctorService::getPatientProfile, roles(ROLE_DOCTOR));
             });
             path("symptom", () -> {
               get(doctorService::listPatientSymptoms, roles(ROLE_DOCTOR));
-              path(":symptom_id",()->{
-                path("seen",()->{
-                  put(doctorService::markSymptomSeen,roles(ROLE_DOCTOR));
+              path(":symptom_id", () -> {
+                path("seen", () -> {
+                  put(doctorService::markSymptomSeen, roles(ROLE_DOCTOR));
                 });
               });
             });
             path("answer", () -> {
               get(doctorService::listPatientAnswers, roles(ROLE_DOCTOR));
-              path(":answer_id",()->{
-                path("seen",()->{
-                  put(doctorService::markAnswerSeen,roles(ROLE_DOCTOR));
+              path(":answer_id", () -> {
+                path("seen", () -> {
+                  put(doctorService::markAnswerSeen, roles(ROLE_DOCTOR));
                 });
               });
             });

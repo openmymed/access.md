@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import { el, text, mount, list} from 'redom';
+import { el, text, mount, list,unmount} from 'redom';
+import {getTitle} from "../utils/icpc"
 export class PatientUpdates {
   constructor(attr, text) {
     <div this="el" class="container-fluid mt-3">
@@ -24,10 +25,22 @@ export class PatientUpdates {
   }
 
   update() {
-
+    fetch("/doctor/feed", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        alert("Wrong username or password");
+      }
+    }).then((json) => {
+      this.updates.update(json);
+    });
   }
 
- 
 }
 
 
@@ -40,10 +53,10 @@ class PatientUpdate {
       </td>
       <td this="time"  class="text-center">
       </td>
-      <td this="note"  class="text-center">
+      <td this="value"  class="text-center">
       </td>
       <td  class="text-right">
-        <button this="dismiss" class="btn btn-danger btn-sm">Dismiss</button>
+        <button this="dismissButton" class="btn btn-danger btn-sm">Dismiss</button>
         <a this="patient" class="btn btn-primary btn-sm">Profile</a>
       </td>
     </tr>
@@ -51,14 +64,54 @@ class PatientUpdate {
 
   update(data) {
     this.data = data;
-    this.name.textContent = data.name
-    this.updateType.textContent = data.updateType
-    this.time.textContent = data.time;
-    this.note.textContent = data.note;
-    this.dissmiss.onclick = (e) => {
-      console.log(e, data);
+    this.name.textContent = data.patientName
+    this.time.textContent = new Date(data.time).toLocaleDateString() + " @ " + new Date(data.time).toLocaleTimeString();
+    if (data.type == "UNSEEN_SYMPTOM") {
+      this.updateType.textContent = "Symptom"
+      this.value.textContent = getTitle(data.value);
+      this._dismiss = this._dismissSymptom;
+    } else if (data.type == "UNSEEN_ANSWER") {
+      this.updateType.textContent = "Answer"
+      this.value.textContent = data.value
+      this._dismiss =  _dismissAnswer;
     }
-    this.patient.href = "#patient/" + data.id
+    this.dismissButton.onclick = (e) => {
+      this._dismiss().then(()=>{
+        unmount(this.el.parentNode,this)
+      });
+     
+    }
+    this.patient.href = "#patient/" + data.patientId
+  }
+  
+  _dismissSymptom() {
+    return  fetch("/doctor/patient/" + this.data.patientId + "/symptom/" + this.data.entityId + "/seen", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return "ok"
+      } else {
+        alert("Wrong username or password");
+      }
+    })
+  }
+  
+  _dismissAnswer() {
+    return  fetch("/doctor/patient/" + this.data.patientId + "/answer/" + this.data.entityId + "/seen", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return "ok"
+      } else {
+        alert("Wrong username or password");
+      }
+    })
   }
 
 }

@@ -14,8 +14,8 @@ export class Card {
         <div class="card-body">
           <div class="d-flex justify-content-center">
             <div class="flex-column">
-              <h6 class="font-weight-bold">{title}</h6>
-              <h1 class="pt-2 text-info font-weight-bold">{number}</h1>
+              <h6 class="font-weight-bold">{attr.title}</h6>
+              <h1 this="number" class="pt-2 text-info font-weight-bold"></h1>
             </div>
           </div>
         </div>
@@ -23,5 +23,8 @@ export class Card {
     </div>;
   }
 
-  update(data) {}
+  update(data) {
+    
+    this.number.textContent = data;
+  }
 }

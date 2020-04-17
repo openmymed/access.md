@@ -79,8 +79,8 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Override
   public void addQuestionForPatient(Long doctorId, Long patientId, Question question) {
-    try(PatientRepository repo = PatientRepositoryFactory.getInstance().get()){
-      Patient p =  repo.getPatientByDoctorAndId(patientId, doctorId);
+    try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+      Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
       p.addQuestion(question);
       repo.save(p);
     }
@@ -88,17 +88,18 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Override
   public List<Answer> getAllPatientsUnseenAnswers(Long doctorId) {
-    return new ArrayList<>();
+    return this.getDoctorPatients(doctorId).stream().flatMap(patient -> patient.getUnseenAnswers().stream()).collect(Collectors.toList());
   }
 
   @Override
   public List<Symptom> getAllPatientsUnseenSymptoms(Long doctorId) {
-    return new ArrayList<>();
+    return this.getDoctorPatients(doctorId).stream().flatMap(patient -> patient.getUnseenSymptoms().stream()).collect(Collectors.toList());
+
   }
 
   @Override
   public List<Question> getPatientQuestions(Long doctorId, Long patientId) {
-    try(PatientRepository repo = PatientRepositoryFactory.getInstance().get()){
+    try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
       return repo.getPatientByDoctorAndId(patientId, doctorId).getQuestions();
     }
   }

@@ -11,5 +11,5 @@ package me.kisoft.covid19.infra.core.service.rest.vo;
  */
 public enum PatientUpdateType {
     UNSEEN_ANSWER,
-    UNSEEN_UPDATE
+    UNSEEN_SYMPTOM
 }
