@@ -38,6 +38,10 @@ public class PatientRestService {
         }
     }
 
+    public void getDoctor(Context ctx){
+       User user = ctx.sessionAttribute("user");
+       ctx.json(patientService.getPatientDoctor(user.getId()));
+    }
     public void updateMedicalProfile(Context ctx) {
         User user = ctx.sessionAttribute("user");
         patientService.updatePatientMedicalProfile(user.getId(), ctx.bodyAsClass(MedicalProfile.class));

@@ -139,7 +139,9 @@ public class App {
         });
       });
       path("patient", () -> {
-
+        path("doctor",() ->{
+          get(patientService::getDoctor, roles(ROLE_PATIENT));
+        });
         path("signup", () -> {
           post(patientService::signUp, roles(NONE));
         });
