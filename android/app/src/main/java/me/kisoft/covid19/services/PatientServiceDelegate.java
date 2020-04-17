@@ -3,6 +3,9 @@ package me.kisoft.covid19.services;
 
 import java.util.List;
 
+import me.kisoft.covid19.Exceptions.UnauthorizedException;
+import me.kisoft.covid19.models.Answer;
+import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
@@ -40,8 +43,8 @@ public class PatientServiceDelegate implements PatientService {
     }
 
     @Override
-    public Boolean answerQuestion(Question question) {
-        return service.answerQuestion(question);
+    public Boolean answerQuestion(Answer answer, Long questionId) {
+        return service.answerQuestion(answer,questionId);
     }
 
 
@@ -53,5 +56,10 @@ public class PatientServiceDelegate implements PatientService {
     @Override
     public SecurityCode getSecurityCode() {
         return service.getSecurityCode();
+    }
+
+    @Override
+    public Doctor getDoctor() {
+        return service.getDoctor();
     }
 }

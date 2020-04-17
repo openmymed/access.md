@@ -10,6 +10,7 @@ package me.kisoft.covid19.utils;
  */
 
 import android.content.Context;
+import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -33,7 +34,8 @@ public class RestClient {
     public static final String CHANGE_PASSWORD = BASE_URL + "user/password";
     public static final String SECURITY_CODE_URL = BASE_URL + "patient/code";
     public static final String QUESTIONS_URL = BASE_URL + "patient/question";
-    public static final String ANSWER_URL = BASE_URL + "patient/question/{question_id}/answer";//TODO remember to change question_id
+    public static final String ANSWER_URL = BASE_URL + "patient/question/%s/answer";
+    public static final String DOCTOR_URL = BASE_URL + "patient/doctor";
     public static final String RECOMMENDATION_URL = BASE_URL + "patient/recommendation";
     public static final String GET_ICPC_URL = BASE_URL + "symptom/codes";
     public static final String POST_SYMPTOMS_URL = BASE_URL + "patient/symptom";

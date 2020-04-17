@@ -1,26 +1,26 @@
 package me.kisoft.covid19.models;
 
+
 public class Question {
-    private transient int id;
+    private Long id;
     private String question;
-    private String answer;
-    private QuestionType type;
     private boolean answered;
+    private QuestionType type;
 
     public Question() {
     }
 
-    public Question(String question, String answer, QuestionType type) {
+    public Question(Long id, String question, QuestionType type) {
+        this.id = id;
         this.question = question;
-        this.answer = answer;
         this.type = type;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,14 +32,6 @@ public class Question {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
     public QuestionType getType() {
         return type;
     }
@@ -48,12 +40,21 @@ public class Question {
         this.type = type;
     }
 
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
-                "question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                ", type='" + type + '\'' +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answered=" + answered +
+                ", type=" + type +
                 '}';
     }
 }

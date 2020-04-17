@@ -93,6 +93,7 @@
         android:drawableLeft="@drawable/chat"
         android:drawableTint="@color/colorAccent"
         android:padding="8dp"
+        android:visibility="gone"
         android:text="@string/title_chat"
         android:textSize="11sp"
         android:textColor="@color/colorAccent"
