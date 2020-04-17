@@ -171,3 +171,13 @@ div.card-body .symptom-note,
 div.card-body .answer-note{
   text-align:start
 }
+
+.hidden-recurrence{
+  display:none;
+}
+
+.repetition-time{
+  width:70%;
+  text-align:center;
+  height: 1.75rem;
+}

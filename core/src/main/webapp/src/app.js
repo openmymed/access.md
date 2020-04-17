@@ -1,4 +1,9 @@
-import { el, text, mount,setChildren } from "redom";
+import "@fortawesome/fontawesome-free/js/all";
+import "bootstrap/dist/js/bootstrap.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "jquery-ui/themes/base/all.css";
+import "./style/app.css";
+import { el, text, mount, setChildren } from "redom";
 import { App } from "redom-app";
 import { PatientList } from "./view/patient-list";
 import { DoctorList } from "./view/doctor-list";
@@ -6,61 +11,61 @@ import { PatientDetails } from "./view/patient-details";
 import { Signin } from "./view/signin";
 import { Home } from "./view/home";
 import { AdminHome } from "./view/admin";
-import "@fortawesome/fontawesome-free/js/all";
-import "bootstrap/dist/js/bootstrap.js";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./style/app.css";
-import * as $ from "jquery";
+import {PatientQuestions} from "./view/patient-questions";
+import $ from  'jquery';
+window.$ = window.jQuery = window.jquery = $;
+import 'jquery-ui-bundle';
+import 'jquery-ui-bundle/jquery-ui.css';
 
-window.auth = false;
 class AuthenticationMiddleware {
   constructor() {}
   //this is what the auth function needs to look like
   exec(currentView, nextView, params) {
-     if (window.auth == false) {
-       return "signin";
-     } else {
-       return nextView;
+    if (sessionStorage.getItem("auth") != "true") {
+      return "signin";
+    } else {
+      return nextView;
     }
   }
 }
 
-class AuthorizationMiddleware{
-  constructor(){}
-  
-  exec(currentView,nextView,params){
-    
-    if(nextView =='signin'){
+class AuthorizationMiddleware {
+  constructor() {}
+
+  exec(currentView, nextView, params) {
+
+    if (nextView == 'signin') {
       return nextView
-    } else if(nextView == 'admin' || nextView =='doctors'){
-      if(window.role=='ROLE_ADMIN'){
+    } else if (nextView == 'admin' || nextView == 'doctors') {
+      if (sessionStorage.getItem("role") == 'ROLE_ADMIN') {
         return nextView
-      }else{
+      } else {
         alert('You do not have the correct authentication!')
         return currentView
       }
-    }else if(nextView =='home' || nextView == 'patients' ||nextView=='patient'){
-       if(window.role=='ROLE_DOCTOR'){
+    } else if (nextView == 'home' || nextView == 'patients' || nextView == 'patient') {
+      if (sessionStorage.getItem("role") == 'ROLE_DOCTOR') {
         return nextView
-      }else{
+      } else {
         alert('You do not have the correct authentication!')
         return currentView
       }
     }
   }
-  
+
 }
 
 const container = el('div.container-fluid')
-mount(document.body,container)
+mount(document.body, container)
 const app = new App()
-  .routes({
-    home: Home,
-    default: Signin,
-    patients: PatientList,
-    patient: PatientDetails,
-    admin : AdminHome,
-    doctors:DoctorList
-  })
-  .middlewares([new AuthenticationMiddleware(),new AuthorizationMiddleware()])
-  .start(container);
+        .routes({
+          home: Home,
+          default: Signin,
+          patients: PatientList,
+          patient: PatientDetails,
+          admin: AdminHome,
+          doctors: DoctorList,
+          ask: PatientQuestions
+        })
+        .middlewares([new AuthenticationMiddleware(), new AuthorizationMiddleware()])
+        .start(container);

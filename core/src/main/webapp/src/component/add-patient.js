@@ -5,7 +5,6 @@
  */
 
 import { el, text, mount } from 'redom';
-import * as $ from "jquery"
 
 
 export class AddPatient {

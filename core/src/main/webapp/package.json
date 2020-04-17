@@ -50,6 +50,7 @@
         "bootstrap": "^4.4.1",
         "eventbusjs": "^0.2.0",
         "jquery": "^3.4.1",
+        "jquery-ui-bundle": "^1.12.1-migrate",
         "popper.js": "^1.16.1",
         "redom": "^3.26.0",
         "redom-app": "^1.0.0"

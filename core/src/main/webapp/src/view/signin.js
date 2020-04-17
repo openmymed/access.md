@@ -85,19 +85,19 @@ class LoginForm {
         }
       })
       .then((json) => {
-        window.role = json.userRole;
+        sessionStorage.setItem("role",json.userRole);
         let fullName = json.firstName + " " + json.lastName;
         if (json.userRole == "ROLE_DOCTOR") {
-          window.auth = true;
+          sessionStorage.setItem("auth",true)
           loadIcpc();
           sessionStorage.setItem("name", fullName);
           goto("home");
         } else if (json.userRole == "ROLE_ADMIN") {
-          window.auth = true;
+          sessionStorage.setItem("auth",true)
           sessionStorage.setItem("name", fullName);
           goto("admin");
         } else {
-          window.auth = false;
+          sessionStorage.setItem("auth",false)
           alert("You do not have the authorization for this page");
         }
       });

@@ -9,8 +9,11 @@ import {getTitle} from "../utils/icpc"
 export class Answers {
   constructor(attr, text) {
     <div this="el" class="col-lg-6">
-      <div class="bg-light-grey mx-2 my-4">
-        <h5 class="p-3 text-info font-weight-bold">Patient Answers</h5>
+      <div class="bg-light-grey mx-2 my-4 ">
+        <div class="col-12 d-flex justify-content-between">
+          <h5 class="p-3 text-info font-weight-bold">Patient Answers</h5>
+          <a this="questionsButton" class="btn btn-primary">Questions</a>
+        </div>
         <div class="col-12">
           {this.answers = list('div.container-fluid', Answer) }
         </div>
@@ -22,6 +25,7 @@ export class Answers {
     this._getPatientAnswers(patientId).then((data) => {
       this.answers.update(data, {"patientId": patientId});
     })
+    this.questionsButton.href="#ask/"+patientId
 
   }
 
