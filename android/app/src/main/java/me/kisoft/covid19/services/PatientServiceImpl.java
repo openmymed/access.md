@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import me.kisoft.covid19.Exceptions.UnauthorizedException;
+import me.kisoft.covid19.models.Answer;
+import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
@@ -62,7 +65,7 @@ public class PatientServiceImpl implements PatientService {
     public Boolean register(Patient patient) {
         Gson gson = new Gson();
         String json = gson.toJson(patient);
-        Log.e("",json);
+        Log.e("", json);
         try (Response response = RestClient.post(RestClient.REGISTER_URL, json)) {
             Log.i("Register", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
@@ -134,11 +137,19 @@ public class PatientServiceImpl implements PatientService {
         return false;
     }
 
-    //not tested yet.
     @Override
     public List<Question> getQuestions() {
         List<Question> questions = new ArrayList<>();
-        Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+
+        //  Register an adapter to manage the date types as long values
+        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return new Date(json.getAsJsonPrimitive().getAsLong());
+            }
+        });
+        Gson gson = builder.create();
+
         try (Response response = RestClient.get(RestClient.QUESTIONS_URL)) {
             Log.i("Question Code", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
@@ -148,19 +159,21 @@ public class PatientServiceImpl implements PatientService {
                     questions.add(question);
                 }
                 return questions;
+//            } else {
+//                if (response.code() == 401)
+//                    throw new UnauthorizedException();
             }
-        } catch (IOException | JSONException e) {
+        } catch (IOException | JSONException e) {//
             Log.e("GET Questions", e.toString());
         }
         return questions;
     }
 
-    //not implemented.
     @Override
-    public Boolean answerQuestion(Question question) {
+    public Boolean answerQuestion(Answer answer, Long questionId) {
         Gson gson = new Gson();
-        String json = gson.toJson(question);
-        try (Response response = RestClient.put("change url later", json)) { //todo change url later
+        String json = gson.toJson(answer);
+        try (Response response = RestClient.put(String.format(RestClient.ANSWER_URL,questionId), json)) {
             Log.i("Answer Question", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
                 return true;
@@ -196,6 +209,23 @@ public class PatientServiceImpl implements PatientService {
             }
         } catch (IOException e) {
             Log.e("GET Security Code", e.toString());
+        }
+        return null;
+    }
+
+    @Override
+    public Doctor getDoctor() {
+        Gson gson = new Gson();
+        try (Response response = RestClient.get(RestClient.DOCTOR_URL)) {
+            Log.i("GET DOCTOR", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+               Doctor doctor = gson.fromJson(response.body().string(),Doctor.class);
+               return doctor;
+            } else {
+                return null;
+            }
+        } catch (IOException e) {
+            Log.e("GET DOCTOR", e.toString());
         }
         return null;
     }

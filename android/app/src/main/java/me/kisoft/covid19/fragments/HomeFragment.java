@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +30,14 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.paperdb.Paper;
 import me.kisoft.covid19.ChatActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.adapters.QuestionsAdapter;
+import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.Symptom;
@@ -45,13 +50,28 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvHome;
     private QuestionsAdapter questionsAdapter;
     private List<Question> questions;
-    PatientService service;
+    private PatientService service;
     private LinearLayoutManager linearLayoutManager;
     private ImageView imgDoctor;
     private TextView tvDoctorName;
     private TextView tvNoQuestions;
     private Button btnChat;
     private FloatingActionButton fabAddSymptoms;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDoctor();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                getQuestions();
+            }
+        };
+
+        timer.schedule(task, 0l, 1000 * 5 * 60);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -69,6 +89,20 @@ public class HomeFragment extends Fragment {
 
         questions = new ArrayList<>();
         questionsAdapter = new QuestionsAdapter(questions);
+        questionsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (questions.isEmpty()) {
+                    rvHome.setVisibility(View.GONE);
+                    tvNoQuestions.setVisibility(View.VISIBLE);
+                } else {
+                    tvNoQuestions.setVisibility(View.GONE);
+                    rvHome.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvHome.setAdapter(questionsAdapter);
         rvHome.setLayoutManager(linearLayoutManager);
@@ -79,8 +113,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getQuestions();
-
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,7 +167,8 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
-    void getQuestions() {
+    private void getQuestions() {
+        Log.e("Calling", "Get Question every 5 mins");
         new AsyncTask<Void, Void, List<Question>>() {
 
             @Override
@@ -145,21 +178,22 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void onPostExecute(List<Question> questionList) {
-                if (questionList.isEmpty()) {
-                    tvNoQuestions.setVisibility(View.VISIBLE);
-                } else {
-                    rvHome.setVisibility(View.VISIBLE);
-                    for (Question q : questionList) {
-                        questions.add(q);
-                    }
-                    questionsAdapter.notifyDataSetChanged();
-                }
-                super.onPostExecute(questions);
+                questions.clear();
+                questions.addAll(questionList);
+                questionsAdapter.notifyDataSetChanged();
+//                if (questions.isEmpty()) {
+//                    tvNoQuestions.setVisibility(View.VISIBLE);
+//                    questionsAdapter.notifyDataSetChanged();
+//                } else {
+//                    rvHome.setVisibility(View.VISIBLE);
+//                    questionsAdapter.notifyDataSetChanged();
+//                }
+                super.onPostExecute(questionList);
             }
         }.execute();
     }
 
-    void addSymptoms(final Symptom symptom) {
+    private void addSymptoms(final Symptom symptom) {
         new AsyncTask<Void, Void, Boolean>() {
 
             @Override
@@ -168,4 +202,23 @@ public class HomeFragment extends Fragment {
             }
         }.execute();
     }
+
+    private void getDoctor() {
+        new AsyncTask<Void, Void, Doctor>() {
+
+            @Override
+            protected Doctor doInBackground(Void... voids) {
+                return service.getDoctor();
+            }
+
+            @Override
+            protected void onPostExecute(Doctor doctor) {
+                super.onPostExecute(doctor);
+                String doctorName = "Dr. " + doctor.getFirstName() + " " + doctor.getLastName();
+                tvDoctorName.setText(doctorName);
+            }
+        }.execute();
+    }
+
+
 }

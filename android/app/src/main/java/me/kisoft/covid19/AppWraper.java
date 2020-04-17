@@ -3,6 +3,7 @@ package me.kisoft.covid19;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -26,13 +27,10 @@ public class AppWraper extends Application {
         RestClient.init(this.getApplicationContext());
         Paper.init(this.getApplicationContext());
         getSymptoms();
-
-        Log.e("TAG","Im in App Class on Create");
         createNotificationChannels();
     }
 
     private void createNotificationChannels() {
-        Log.e("TAG","Im in App create Chanels");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(

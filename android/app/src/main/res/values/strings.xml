@@ -30,6 +30,7 @@
     <string name="title_chat">Chat</string>
     <string name="title_profile">Profile</string>
     <string name="title_notifications">Notifications</string>
+    <string name="notification_question">You have %1$d new questions from your doctor</string>
 
     <!--  Home Fragment  -->
     <string name="no_new_questions">No new questions</string>

@@ -2,6 +2,9 @@ package me.kisoft.covid19.services;
 
 import java.util.List;
 
+import me.kisoft.covid19.Exceptions.UnauthorizedException;
+import me.kisoft.covid19.models.Answer;
+import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
 import me.kisoft.covid19.models.Patient;
@@ -21,9 +24,11 @@ public interface PatientService {
 
     Boolean addSymptom(Symptom symptom);
 
-    Boolean answerQuestion(Question question);
+    Boolean answerQuestion(Answer answer, Long questionId);
 
     Boolean createMedicalProfile(MedicalProfile profile);
 
     SecurityCode getSecurityCode();
+
+    Doctor getDoctor();
 }
