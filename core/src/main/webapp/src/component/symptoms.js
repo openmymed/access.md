@@ -45,7 +45,7 @@ export class Symptoms {
 class Symptom {
   constructor(attr, text) {
     <div this="el" class="row">
-      <div class="card card-common rounded-lg w-100">
+      <div class="symptom-card card card-common rounded-lg w-100">
         <div class="card-header d-flex justify-content-start">
           <h6 this="name"></h6>
         </div>
@@ -60,7 +60,9 @@ class Symptom {
                 <div this="time" ></div>
               </div>
             </div>
-            <button this="dismiss" class="btn btn-danger">Dismiss</button>
+            <div>
+              <button this="dismiss" class="btn btn-danger">Dismiss</button>
+            </div>
           </div>
           </p>
         </div>

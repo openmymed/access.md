@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -33,8 +34,8 @@ public class Question extends DomainEntity {
 
     private String question;
     
-    @OneToMany
     @JsonIgnore
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
     @JsonIgnore
     @ManyToOne

@@ -181,3 +181,16 @@ div.card-body .answer-note{
   text-align:center;
   height: 1.75rem;
 }
+
+.card-common.answer-card,
+.card-common.symptom-card{
+  margin:0px;
+}
+.card-common.answer-card .card-header,
+.card-common.symptom-card .card-header{
+  padding-bottom:1px;
+}
+.card-common.answer-card .card-body,
+.card-common.symptom-card .card-body{
+  padding-bottom:1px;
+}
