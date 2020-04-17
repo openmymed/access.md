@@ -79,7 +79,11 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Override
   public void addQuestionForPatient(Long doctorId, Long patientId, Question question) {
-
+    try(PatientRepository repo = PatientRepositoryFactory.getInstance().get()){
+      Patient p =  repo.getPatientByDoctorAndId(patientId, doctorId);
+      p.addQuestion(question);
+      repo.save(p);
+    }
   }
 
   @Override
@@ -93,8 +97,10 @@ public class DoctorServiceImpl implements DoctorService {
   }
 
   @Override
-  public List<Question> getPatientQuestions(Long id, Long get) {
-    return new ArrayList<>();
+  public List<Question> getPatientQuestions(Long doctorId, Long patientId) {
+    try(PatientRepository repo = PatientRepositoryFactory.getInstance().get()){
+      return repo.getPatientByDoctorAndId(patientId, doctorId).getQuestions();
+    }
   }
 
   @Override

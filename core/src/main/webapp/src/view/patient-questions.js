@@ -43,7 +43,7 @@ export class PatientQuestions {
   _addQuestion() {
     this.editModal = new AddEditQuestionModal();
     mount(this, this.editModal)
-    this.editModal.show();
+    this.editModal.show(undefined, this.patientId);
     $(this.editModal.el).on('hidden.bs.modal', (e) => {
       this.update(this.patientId)
     })
@@ -51,6 +51,23 @@ export class PatientQuestions {
 
   update(params) {
     this.patientId = params[0]
+    this._loadQuestions()
+  }
+
+  _loadQuestions() {
+    fetch("/doctor/patient/" + this.patientId + "/question", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }}).then((res) => {
+      if (res.ok) {
+        return res.json()
+      } else {
+        alert('error getting questions')
+      }
+    }).then((json) => {
+      this.questions.update(json)
+    })
   }
 }
 
@@ -70,7 +87,7 @@ class PatientQuestion {
     </tr>;
 
     this.editButton.onclick = (e) => {
-      edit();
+      this.edit();
     }
   }
 
@@ -83,8 +100,13 @@ class PatientQuestion {
 
   update(data) {
     this.data = data;
-    this.name.textContent = data.firstName + " " + data.lastName;
-    this.number.textContent = data.telephoneNumber;
+    this.question.textContent = data.question
+    this.type = data.type
+    if (data.recurring == true) {
+      this.repetition.textContent = data.recurrance.length  + " Times";
+    } else {
+      this.repetition.textContent = "None";
+    }
   }
 }
 
@@ -158,7 +180,7 @@ class AddEditQuestionModal {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button class="btn btn-primary" this="saveButton" data-dismiss="modal">Save</button>
+            <button class="btn btn-primary" this="saveButton" >Save</button>
           </div>
         </div>
       </div>
@@ -188,16 +210,39 @@ class AddEditQuestionModal {
   }
 
   saveQuestion() {
-    console.log(this.questionText.value)
+    fetch("/doctor/patient/" + this.patientId + "/question", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        question: this.questionText.value,
+        type: this.questionType.value,
+        recurring: this.recurring.checked,
+        recurrance: this.data.recurrance,
+        startDate: Date.parse(this.fromDate.value),
+        endDate: Date.parse(this.toDate.value)
+      })}).then((res) => {
+      this.hide()
+    });
   }
   update(data) {
     if (data) {
-      console.log(data);
+
+      this.fromDate.value = new Date(data.startDate).toLocaleDateString();
+      this.toDate.value = new Date(data.endDate).toLocaleDateString()
+      this.questionText.value = data.question;
+      this.questionType.value = data.type;
+      if (data.recurrance == true) {
+        this.data.recurrance = data.recurrance;
+      }
+      this.recurring.checked = data.recurring;
+      this.recurring.dispatchEvent(new Event("change"));
     }
   }
 
-  show(data) {
-
+  show(data, patientId) {
+    this.patientId = patientId
     $(this.el).modal({backdrop: false})
     $(this.fromDate).datepicker();
     $(this.toDate).datepicker();
@@ -230,6 +275,14 @@ class Repetition {
     this.delete.onclick = (e) => {
       this._delete();
     }
+
+    this.timeInput.oninput = (e) => {
+      if (e.target.value) {
+        let splits = e.target.value.split(":")
+        this.data.hourOfDay = parseInt(splits[0])
+        this.data.minuteOfHour = parseInt(splits[1])
+      }
+    }
   }
 
   _delete() {
@@ -243,7 +296,7 @@ class Repetition {
     this.index = index;
     this.items = items;
     this.indexText.textContent = index + 1;
-    this.timeInput.value = data.hourOfDay + ":" + data.minuteOfHour
+    this.timeInput.value = this.data.hourOfDay + ":" + this.data.minuteOfHour
   }
 }
 

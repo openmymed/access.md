@@ -7,9 +7,8 @@
 import "@fortawesome/fontawesome-free/js/all";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "jquery-ui/themes/base/all.css";
 import "./style/app.css";
 import $ from  'jquery';
 window.$ = window.jQuery = window.jquery = $;
 import 'jquery-ui-bundle';
-import 'jquery-ui-bundle/jquery-ui.css';
+import 'jquery-ui-bundle/jquery-ui.min.css';
