@@ -12,10 +12,10 @@ export class PatientUpdates {
       <div class="col-12">
         <table class="table" this="table">
           <thead>
-          <th scope="col" class="text-left">Details</th>
+          <th scope="col" class="text-left">Patient Name</th>
           <th scope="col" class="text-center">Update Type</th>
           <th scope="col" class="text-center">Time</th>
-          <th scope="col" class="text-center">Note</th>
+          <th scope="col" class="text-center">Details</th>
           <th scope="col" class="text-right"></th>
           </thead>
           {this.updates = list('tbody', PatientUpdate)}
