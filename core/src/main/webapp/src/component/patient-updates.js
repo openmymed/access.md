@@ -12,7 +12,7 @@ export class PatientUpdates {
       <div class="col-12">
         <table class="table" this="table">
           <thead>
-          <th scope="col" class="text-left">Name</th>
+          <th scope="col" class="text-left">Details</th>
           <th scope="col" class="text-center">Update Type</th>
           <th scope="col" class="text-center">Time</th>
           <th scope="col" class="text-center">Note</th>
@@ -72,8 +72,8 @@ class PatientUpdate {
       this._dismiss = this._dismissSymptom;
     } else if (data.type == "UNSEEN_ANSWER") {
       this.updateType.textContent = "Answer"
-      this.value.textContent = data.value
-      this._dismiss =  _dismissAnswer;
+      this.value.textContent = "Question : " +  data.value
+      this._dismiss =  this._dismissAnswer;
     }
     this.dismissButton.onclick = (e) => {
       this._dismiss().then(()=>{
