@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.paperdb.Paper;
 import me.kisoft.covid19.ChatActivity;
@@ -45,7 +48,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvHome;
     private QuestionsAdapter questionsAdapter;
     private List<Question> questions;
-    PatientService service;
+    private PatientService service;
     private LinearLayoutManager linearLayoutManager;
     private ImageView imgDoctor;
     private TextView tvDoctorName;
@@ -79,7 +82,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getQuestions();
+        Timer timer = new Timer();
+        TimerTask hourlyTask = new TimerTask() {
+            @Override
+            public void run() {
+                getQuestionsEveryFiveMin();
+            }
+        };
+
+        timer.schedule(hourlyTask, 0l, 1000 * 5 * 60);
+
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +147,8 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
-    void getQuestions() {
+    void getQuestionsEveryFiveMin() {
+        Log.e("Question 5mins","called");
         new AsyncTask<Void, Void, List<Question>>() {
 
             @Override

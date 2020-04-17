@@ -141,6 +141,7 @@ public class PatientServiceImpl implements PatientService {
         Gson gson = new Gson();
         try (Response response = RestClient.get(RestClient.QUESTIONS_URL)) {
             Log.i("Question Code", String.valueOf(response.code()));//used for testing
+//            Log.e("", response.body().string());//used for testing
             if (response.isSuccessful()) {
                 JSONArray jsonArray = new JSONArray(response.body().string());
                 for (int i = 0; i < jsonArray.length(); i++) {
