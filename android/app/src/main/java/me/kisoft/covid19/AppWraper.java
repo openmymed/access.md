@@ -3,7 +3,6 @@ package me.kisoft.covid19;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -39,7 +38,7 @@ public class AppWraper extends Application {
                     NotificationManager.IMPORTANCE_HIGH
             );
             channel1.setDescription("This is Channel 1");
-            Log.e("Tag","This should be created");
+            Log.e("Tag", "This should be created");
 
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
@@ -47,7 +46,7 @@ public class AppWraper extends Application {
                     NotificationManager.IMPORTANCE_LOW
             );
 
-            Log.e("Tag","This is the desc"+channel1.getDescription());
+            Log.e("Tag", "This is the desc" + channel1.getDescription());
             channel2.setDescription("This is Channel 2");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
@@ -56,7 +55,7 @@ public class AppWraper extends Application {
         }
     }
 
-    private void getSymptoms(){
+    private void getSymptoms() {
         List<ICPCEntry> icpcEntries = Paper.book().read(Keys.ICPC_KEY);
         if (icpcEntries == null) {
             Log.e("ICPC call", "true");

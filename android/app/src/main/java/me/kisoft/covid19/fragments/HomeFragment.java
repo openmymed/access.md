@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -44,15 +43,15 @@ import me.kisoft.covid19.models.Symptom;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
 import me.kisoft.covid19.utils.Keys;
-//Home has the questions from teh doctor
 
+//Home has the questions from the doctor
 public class HomeFragment extends Fragment {
     private RecyclerView rvHome;
     private QuestionsAdapter questionsAdapter;
     private List<Question> questions;
     private PatientService service;
+    private SwipeRefreshLayout pullToRefresh;
     private LinearLayoutManager linearLayoutManager;
-    private ImageView imgDoctor;
     private TextView tvDoctorName;
     private TextView tvNoQuestions;
     private Button btnChat;
@@ -69,7 +68,6 @@ public class HomeFragment extends Fragment {
                 getQuestions();
             }
         };
-
         timer.schedule(task, 0l, 1000 * 5 * 60);
     }
 
@@ -79,13 +77,15 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         //init screen components
         rvHome = root.findViewById(R.id.rv_home);
-        imgDoctor = root.findViewById(R.id.img_doctor); //todo add doctor name and picture later..
         tvDoctorName = root.findViewById(R.id.tv_doctor_name);
         btnChat = root.findViewById(R.id.btn_chat);
         tvNoQuestions = root.findViewById(R.id.tv_no_questions);
         fabAddSymptoms = root.findViewById(R.id.fab_add_symptoms);
+        pullToRefresh = root.findViewById(R.id.pullToRefresh);
+        pullToRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         //init service
         service = new PatientServiceDelegate();
+
 
         questions = new ArrayList<>();
         questionsAdapter = new QuestionsAdapter(questions);
@@ -124,6 +124,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showAddSymptomDialog(getContext());
+            }
+        });
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getQuestions();
             }
         });
     }
@@ -170,6 +176,11 @@ public class HomeFragment extends Fragment {
     private void getQuestions() {
         Log.e("Calling", "Get Question every 5 mins");
         new AsyncTask<Void, Void, List<Question>>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                pullToRefresh.setRefreshing(true);
+            }
 
             @Override
             protected List<Question> doInBackground(Void... voids) {
@@ -178,16 +189,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void onPostExecute(List<Question> questionList) {
+                pullToRefresh.setRefreshing(false);
                 questions.clear();
                 questions.addAll(questionList);
                 questionsAdapter.notifyDataSetChanged();
-//                if (questions.isEmpty()) {
-//                    tvNoQuestions.setVisibility(View.VISIBLE);
-//                    questionsAdapter.notifyDataSetChanged();
-//                } else {
-//                    rvHome.setVisibility(View.VISIBLE);
-//                    questionsAdapter.notifyDataSetChanged();
-//                }
+
                 super.onPostExecute(questionList);
             }
         }.execute();
@@ -214,8 +220,10 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onPostExecute(Doctor doctor) {
                 super.onPostExecute(doctor);
-                String doctorName = "Dr. " + doctor.getFirstName() + " " + doctor.getLastName();
-                tvDoctorName.setText(doctorName);
+                if(doctor != null){
+                    String doctorName = "Dr. " + doctor.getFirstName() + " " + doctor.getLastName();
+                    tvDoctorName.setText(doctorName);
+                }
             }
         }.execute();
     }

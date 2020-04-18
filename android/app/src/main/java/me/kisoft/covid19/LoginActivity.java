@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +18,7 @@ import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.UserRole;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
+import me.kisoft.covid19.utils.KeyboardUtil;
 import me.kisoft.covid19.utils.Keys;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         service = new PatientServiceDelegate();
-        //check if remember me is activated to login immediately
+//        //check if remember me is activated to login immediately
         String phone = Paper.book().read(Keys.PHONE_KEY);
         String password = Paper.book().read(Keys.PASSWORD_KEY);
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password))
@@ -48,8 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
+
+        KeyboardUtil.showKeyboard(this);
         //init screen components
         etUsername = findViewById(R.id.et_username);
+        etUsername.requestFocus();
         etPassword = findViewById(R.id.et_password);
         btnSignIn = findViewById(R.id.btn_sign_in);
         chkRememberMe = findViewById(R.id.chk_remember_me);
@@ -68,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                KeyboardUtil.hideKeyboard(LoginActivity.this);
                 String phone = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)) {
