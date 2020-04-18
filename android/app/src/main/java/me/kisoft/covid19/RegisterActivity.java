@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
+import me.kisoft.covid19.utils.KeyboardUtil;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText edtPhone;
@@ -38,10 +39,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
+
+        KeyboardUtil.showKeyboard(this);
         //init screen components
         edtPhone = findViewById(R.id.edt_phone);
         edtPassword = findViewById(R.id.edt_password);
         edtFirstName = findViewById(R.id.et_first_name);
+        edtFirstName.requestFocus();
         edtLastName = findViewById(R.id.et_last_name);
         edtConfirmPassword = findViewById(R.id.edt_confirm_password);
         btnSignUp = findViewById(R.id.btn_sign_up);
@@ -60,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                KeyboardUtil.hideKeyboard(RegisterActivity.this);
                 String firstName = edtFirstName.getText().toString();
                 String lastName = edtLastName.getText().toString();
                 String phone = edtPhone.getText().toString();

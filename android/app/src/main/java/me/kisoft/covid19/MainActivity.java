@@ -1,6 +1,10 @@
 package me.kisoft.covid19;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +16,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import io.paperdb.Paper;
+import me.kisoft.covid19.models.Patient;
+import me.kisoft.covid19.models.UserRole;
+import me.kisoft.covid19.services.PatientService;
+import me.kisoft.covid19.services.PatientServiceDelegate;
+import me.kisoft.covid19.utils.Keys;
 import me.kisoft.covid19.utils.NotificationUtility;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +52,5 @@ public class MainActivity extends AppCompatActivity {
     public void notify(View view) {
         notificationUtil.notify(this, "notificationTitle", "notificationMessage", 1);
     }
-
 
 }
