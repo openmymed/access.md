@@ -18,6 +18,8 @@ public class SecurityCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security_code);
+        getSupportActionBar().hide();
+
         tvSecurityCode = findViewById(R.id.tv_security_code);
 
         service = new PatientServiceDelegate();
