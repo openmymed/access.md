@@ -10,6 +10,13 @@ import { AdminHome } from "./view/admin";
 import {PatientQuestions} from "./view/patient-questions";
 
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js', {scope: '.'}).then(registration => {
+    }).catch(registrationError => {
+    });
+  });
+}
 class AuthenticationMiddleware {
   constructor() {}
   //this is what the auth function needs to look like

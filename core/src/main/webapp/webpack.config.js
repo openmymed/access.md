@@ -1,8 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const babel = require("@babel/register");
 const WebpackPwaManifest = require('webpack-pwa-manifest');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = (env) => {
   return{
@@ -15,18 +17,22 @@ module.exports = (env) => {
         title: 'Covid19'
       }),
       new CleanWebpackPlugin(),
+
       new WebpackPwaManifest({
-        name: 'My Progressive Web App',
-        short_name: 'MyPWA',
-        description: 'My awesome Progressive Web App!',
+        name: 'OpenMyMed My Doctor',
+        short_name: 'OMM My Doctor',
+        description: 'Patient Followup and Telemedicine App',
         background_color: '#ffffff',
         icons: [
           {
-            src: path.resolve(__dirname,'src','res','openmymed.png'),
+            src: path.resolve(__dirname, 'src', 'res', 'openmymed.png'),
             sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
           }
         ]
-      })
+      }),
+      new CopyWebpackPlugin([
+        'src/service-worker.js'
+      ])
     ],
     optimization: {
       minimize: env.production
