@@ -1,6 +1,8 @@
 # ACCESS.MD
+[![MIT License](https://img.shields.io/github/license/openmymed/access.md)](https://github.com/openmymed/access.md/blob/master/LICENSE.md)
+[![Discord Chat](https://img.shields.io/discord/698957001509830656)](https://discord.gg/WF9mpwy)
+[![Issues](https://img.shields.io/github/issues/openmymed/access.md)](https://github.com/openmymed/access.md/issues) 
 
-[![Gitter](https://badges.gitter.im/covid19-followup-app/community.svg)](https://gitter.im/covid19-followup-app/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Goal of this application is to reduce the number of hospital/clinic visits during a pandemic for people who do not truly need it. This results in lower spread due to less movement and less risk to frontline workers.
 
