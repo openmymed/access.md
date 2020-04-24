@@ -198,7 +198,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>me.kisoft.accessmd.app.App</mainClass>
+                            <mainClass>org.openmymed.accessmd.app.App</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
                         </manifest>
