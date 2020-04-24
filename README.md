@@ -1,18 +1,22 @@
-# covid19-followup-app
+# ACCESS.MD
+[![MIT License](https://img.shields.io/github/license/openmymed/access.md)](https://github.com/openmymed/access.md/blob/master/LICENSE.md)
+[![Discord Chat](https://img.shields.io/discord/698957001509830656)](https://discord.gg/WF9mpwy)
+[![Issues](https://img.shields.io/github/issues/openmymed/access.md)](https://github.com/openmymed/access.md/issues) 
 
-[![Gitter](https://badges.gitter.im/covid19-followup-app/community.svg)](https://gitter.im/covid19-followup-app/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Goal of this application is to reduce the number of hospital/clinic visits during a pandemic for people who do not truly need it. This results in lower spread due to less movement and less risk to frontline workers.
 
-This application is a web/mobile app that allows doctors and patients to followup their cases for COVID-19 and other pandemic treatment. Doctors follow up a patient's case, checking their symptoms, chatting with them, and providing recommendations.
+This application is a web/mobile app that allows doctors and patients to followup their cases for COVID-19 and other pandemic treatment. Doctors follow up a patient's case, checking their symptoms, vitals, chatting with them, and providing recommendations.
 
-# Links
+Uses code from [HealthWatcher](https://github.com/YahyaOdeh/HealthWatcher) for Vitals Measurement and Reporting.
 
-* [Project Page and Documentation](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:start)
-* [UI Design Guidelines](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:design_guidelines)
-* [General Implementation Guidelines](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:application_architecture)
-* [Sequence Diagrams & Other Designs](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:sequence_diagram)
-* [Meeting Minutes](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:meeting_minutes:start)
+# Links 
+
+* [Project Page and Documentation](https://wiki.kisoft.me/doku.php?id=projects:access_md:start)
+* [UI Design Guidelines](https://wiki.kisoft.me/doku.php?id=projects:access_md:design_specifications:design_guidelines)
+* [General Implementation Guidelines](https://wiki.kisoft.me/doku.php?id=projects:access_md:design_specifications:application_architecture)
+* [Sequence Diagrams & Other Designs](https://wiki.kisoft.me/doku.php?id=projects:access_md:design_specifications:sequence_diagram)
+* [Meeting Minutes](https://wiki.kisoft.me/doku.php?id=projects:access_md:meeting_minutes:start)
 
 
 # Contributors
