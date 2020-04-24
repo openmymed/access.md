@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/HealthWatcher.iml" filepath="$PROJECT_DIR$/HealthWatcher.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/HealthWatcher-app.iml" filepath="$PROJECT_DIR$/app/HealthWatcher-app.iml" group="HealthWatcher/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/covid19-followup-app-HealthWatcher.iml" filepath="$PROJECT_DIR$/covid19-followup-app-HealthWatcher.iml" group="HealthWatcher" />
+      <module fileurl="file://$PROJECT_DIR$/app/covid19-followup-app-HealthWatcher-app.iml" filepath="$PROJECT_DIR$/app/covid19-followup-app-HealthWatcher-app.iml" group="HealthWatcher/app" />
     </modules>
   </component>
 </project>

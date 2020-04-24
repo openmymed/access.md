@@ -1,4 +1,4 @@
-package com.example.yo7a.healthwatcher;
+package me.kisoft.covid19.HealthWatcher;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,44 +13,46 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-public class BloodPressureResult extends AppCompatActivity {
+import me.kisoft.covid19.R;
+
+
+public class HeartRateResult extends AppCompatActivity {
 
     private String user, Date;
-    int SP, DP;
+    int HR;
     DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-    Date today = Calendar.getInstance().getTime();
+    java.util.Date today = Calendar.getInstance().getTime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blood_pressure_result);
-        Log.e("","Blood Pressure Result");
+        setContentView(R.layout.activity_heart_rate_result);
+        Log.e("","Heart Rate Result");
         Date = df.format(today);
-        TextView TBP = (TextView) this.findViewById(R.id.BPT);
-        ImageButton SBP = (ImageButton) this.findViewById(R.id.SendBP);
+        TextView RHR = (TextView) this.findViewById(R.id.HRR);
+        ImageButton SHR = (ImageButton) this.findViewById(R.id.SendHR);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            SP = bundle.getInt("SP");
-            DP = bundle.getInt("DP");
+            HR = bundle.getInt("bpm");
             user = bundle.getString("Usr");
-            TBP.setText(String.valueOf(SP + " / " + DP));
+            Log.d("DEBUG_TAG", "ccccc" + user);
+            RHR.setText(String.valueOf(HR));
         }
 
-        SBP.setOnClickListener(new View.OnClickListener() {
+        SHR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
                 i.putExtra(Intent.EXTRA_EMAIL, new String[]{"recipient@example.com"});
                 i.putExtra(Intent.EXTRA_SUBJECT, "Health Watcher");
-                i.putExtra(Intent.EXTRA_TEXT, user + "'s Blood Pressure " + "\n" + " at " + Date + " is :    " + SP + " / " + DP);
+                i.putExtra(Intent.EXTRA_TEXT, user + "'s Heart Rate " + "\n" + " at " + Date + " is :    " + HR);
                 try {
-                    startActivity(Intent.createChooser(i, "Send mail..."));
+                    HeartRateResult.this.startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(BloodPressureResult.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HeartRateResult.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -59,10 +61,10 @@ public class BloodPressureResult extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(BloodPressureResult.this, Primary.class);
+        super.onBackPressed();
+        Intent i = new Intent(HeartRateResult.this, HealthWatcherActivity.class);
         i.putExtra("Usr", user);
         startActivity(i);
         finish();
-        super.onBackPressed();
     }
 }

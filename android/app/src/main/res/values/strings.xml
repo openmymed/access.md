@@ -78,6 +78,12 @@
     <string name="logout">Logout</string>
     <string name="account">Account</string>
 
+    <!--  Health Watcher  -->
+    <string name="heart_rate">Heart Rate</string>
+    <string name="respiration_rate">Respiration Rate</string>
+    <string name="blood_pressure">Blood Pressure</string>
+    <string name="O2_saturation">Oxygen Saturation</string>
+    <string name="all_vital_signs">All Vital Signs</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.yo7a.healthwatcher;
+package me.kisoft.covid19.HealthWatcher;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,14 +15,17 @@ import android.view.SurfaceView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.yo7a.healthwatcher.Math.Fft;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import me.kisoft.covid19.Math.Fft;
+import me.kisoft.covid19.R;
+import me.kisoft.covid19.utils.ImageProcessing;
+
 import static java.lang.Math.ceil;
 
-public class BloodPressureProcess extends Activity {
+public class HeartRateProcess extends Activity {
 
     // Variables Initialization
     private static final String TAG = "HeartRateMonitor";
@@ -35,27 +38,21 @@ public class BloodPressureProcess extends Activity {
     //Toast
     private Toast mainToast;
 
-    //DataBase
-    public String user;
-    UserDB Data = new UserDB(this);
-
-    //ProgressBar
-    private ProgressBar ProgBP;
-    public int ProgP = 0;
-    public int inc = 0;
-
     //Beats variable
     public int Beats = 0;
     public double bufferAvgB = 0;
 
+    //DataBase
+    public String user;
+
+    //ProgressBar
+    private ProgressBar ProgHeart;
+    public int ProgP = 0;
+    public int inc = 0;
+
     //Freq + timer variable
     private static long startTime = 0;
     private double SamplingFreq;
-
-    //BloodPressure variables
-    public double Gen, Agg, Hei, Wei;
-    public double Q = 4.5;
-    private static int SP = 0, DP = 0;
 
     //Arraylist
     public ArrayList<Double> GreenAvgList = new ArrayList<Double>();
@@ -65,21 +62,12 @@ public class BloodPressureProcess extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blood_pressure_process);
-        Log.e("","Blood Pressure Process");
+        setContentView(R.layout.activity_heart_rate_process);
+        Log.e("","Heart Rate Process");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = extras.getString("Usr");
             //The key argument here must match that used in the other activity
-        }
-
-        Hei = Integer.parseInt(Data.getheight(user));
-        Wei = Integer.parseInt(Data.getweight(user));
-        Agg = Integer.parseInt(Data.getage(user));
-        Gen = Integer.parseInt(Data.getgender(user));
-
-        if (Gen == 1) {
-            Q = 5;
         }
 
         // XML - Java Connecting
@@ -87,8 +75,8 @@ public class BloodPressureProcess extends Activity {
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgBP = (ProgressBar) findViewById(R.id.BPPB);
-        ProgBP.setProgress(0);
+        ProgHeart = (ProgressBar) findViewById(R.id.HRPB);
+        ProgHeart.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -104,7 +92,6 @@ public class BloodPressureProcess extends Activity {
         super.onConfigurationChanged(newConfig);
     }
 
-
     //Wakelock + Open device camera + set orientation to 90 degree
     //store system time as a start time for the analyzing process
     //your activity to start interacting with the user.
@@ -112,13 +99,9 @@ public class BloodPressureProcess extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-
         wakeLock.acquire();
-
         camera = Camera.open();
-
         camera.setDisplayOrientation(90);
-
         startTime = System.currentTimeMillis();
     }
 
@@ -134,9 +117,7 @@ public class BloodPressureProcess extends Activity {
         camera.stopPreview();
         camera.release();
         camera = null;
-
     }
-
 
     //getting frames data from the camera and start the heartbeat process
     private PreviewCallback previewCallback = new PreviewCallback() {
@@ -162,7 +143,7 @@ public class BloodPressureProcess extends Activity {
             double RedAvg;
 
             GreenAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 3); //1 stands for red intensity, 2 for blue, 3 for green
-            RedAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 1);  //1 stands for red intensity, 2 for blue, 3 for green
+            RedAvg = ImageProcessing.decodeYUV420SPtoRedBlueGreenAvg(data.clone(), height, width, 1); //1 stands for red intensity, 2 for blue, 3 for green
 
             GreenAvgList.add(GreenAvg);
             RedAvgList.add(RedAvg);
@@ -175,14 +156,13 @@ public class BloodPressureProcess extends Activity {
                 inc = 0;
                 ProgP = inc;
                 counter = 0;
-                ProgBP.setProgress(ProgP);
+                ProgHeart.setProgress(ProgP);
                 processing.set(false);
             }
 
             long endTime = System.currentTimeMillis();
             double totalTimeInSecs = (endTime - startTime) / 1000d; //to convert time to seconds
             if (totalTimeInSecs >= 30) { //when 30 seconds of measuring passes do the following " we chose 30 seconds to take half sample since 60 seconds is normally a full sample of the heart beat
-
 
                 Double[] Green = GreenAvgList.toArray(new Double[GreenAvgList.size()]);
                 Double[] Red = RedAvgList.toArray(new Double[RedAvgList.size()]);
@@ -205,15 +185,13 @@ public class BloodPressureProcess extends Activity {
                         bufferAvgB = bpm;
                     }
                 } else if ((bpm1 > 45 || bpm1 < 200)) {
-
                     bufferAvgB = bpm1;
-
                 }
 
-                if (bufferAvgB < 45 || bufferAvgB > 200) {
+                if (bufferAvgB < 45 || bufferAvgB > 200) { //if the heart beat wasn't reasonable after all reset the progresspag and restart measuring
                     inc = 0;
                     ProgP = inc;
-                    ProgBP.setProgress(ProgP);
+                    ProgHeart.setProgress(ProgP);
                     mainToast = Toast.makeText(getApplicationContext(), "Measurement Failed", Toast.LENGTH_SHORT);
                     mainToast.show();
                     startTime = System.currentTimeMillis();
@@ -223,41 +201,30 @@ public class BloodPressureProcess extends Activity {
                 }
 
                 Beats = (int) bufferAvgB;
-
-                double ROB = 18.5;
-                double ET = (364.5 - 1.23 * Beats);
-                double BSA = 0.007184 * (Math.pow(Wei, 0.425)) * (Math.pow(Hei, 0.725));
-                double SV = (-6.6 + (0.25 * (ET - 35)) - (0.62 * Beats) + (40.4 * BSA) - (0.51 * Agg));
-                double PP = SV / ((0.013 * Wei - 0.007 * Agg - 0.004 * Beats) + 1.307);
-                double MPP = Q * ROB;
-
-                SP = (int) (MPP + 3 / 2 * PP);
-                DP = (int) (MPP - PP / 3);
-
             }
 
-            if ((SP != 0) && (DP != 0)) {
-                Intent i = new Intent(BloodPressureProcess.this, BloodPressureResult.class);
-                i.putExtra("SP", SP);
-                i.putExtra("DP", DP);
+            if (Beats != 0) { //if beasts were reasonable stop the loop and send HR with the username to results activity and finish this activity
+                Intent i = new Intent(HeartRateProcess.this, HeartRateResult.class);
+                i.putExtra("bpm", Beats);
                 i.putExtra("Usr", user);
                 startActivity(i);
                 finish();
             }
 
 
-            if (RedAvg != 0) {
+            if (RedAvg != 0) { //increment the progresspar
+
                 ProgP = inc++ / 34;
-                ;
-                ProgBP.setProgress(ProgP);
+                ProgHeart.setProgress(ProgP);
             }
+
+            //keeps taking frames tell 30 seconds
             processing.set(false);
 
         }
     };
 
     private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
-
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
@@ -268,7 +235,6 @@ public class BloodPressureProcess extends Activity {
                 Log.e("PreviewDemo-surfaceCallback", "Exception in setPreviewDisplay()", t);
             }
         }
-
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -289,13 +255,11 @@ public class BloodPressureProcess extends Activity {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            // Ignore
         }
     };
 
     private static Camera.Size getSmallestPreviewSize(int width, int height, Camera.Parameters parameters) {
         Camera.Size result = null;
-
         for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
             if (size.width <= width && size.height <= height) {
                 if (result == null) {
@@ -303,22 +267,10 @@ public class BloodPressureProcess extends Activity {
                 } else {
                     int resultArea = result.width * result.height;
                     int newArea = size.width * size.height;
-
                     if (newArea < resultArea) result = size;
                 }
             }
         }
-
         return result;
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(BloodPressureProcess.this, StartVitalSigns.class);
-        i.putExtra("Usr", user);
-        startActivity(i);
-        finish();
-    }
-
 }

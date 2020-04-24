@@ -2,6 +2,7 @@ package com.example.yo7a.healthwatcher;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ public class O2Result extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_o2_result);
-
+        Log.e("","O2 Result");
         Date = df.format(today);
         TextView RO2 = this.findViewById(R.id.O2R);
         ImageButton SO2 = this.findViewById(R.id.SendO2);

@@ -1,4 +1,4 @@
-package com.example.yo7a.healthwatcher;
+package me.kisoft.covid19.HealthWatcher;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,10 +15,12 @@ import android.view.SurfaceView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.yo7a.healthwatcher.Math.Fft;
-
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import me.kisoft.covid19.Math.Fft;
+import me.kisoft.covid19.R;
+import me.kisoft.covid19.utils.ImageProcessing;
 
 import static java.lang.Math.ceil;
 
@@ -37,7 +39,7 @@ public class BloodPressureProcess extends Activity {
 
     //DataBase
     public String user;
-    UserDB Data = new UserDB(this);
+//    UserDB Data = new UserDB(this);
 
     //ProgressBar
     private ProgressBar ProgBP;
@@ -73,10 +75,10 @@ public class BloodPressureProcess extends Activity {
             //The key argument here must match that used in the other activity
         }
 
-        Hei = Integer.parseInt(Data.getheight(user));
-        Wei = Integer.parseInt(Data.getweight(user));
-        Agg = Integer.parseInt(Data.getage(user));
-        Gen = Integer.parseInt(Data.getgender(user));
+//        Hei = Integer.parseInt(Data.getheight(user));
+//        Wei = Integer.parseInt(Data.getweight(user));
+//        Agg = Integer.parseInt(Data.getage(user));
+//        Gen = Integer.parseInt(Data.getgender(user));
 
         if (Gen == 1) {
             Q = 5;

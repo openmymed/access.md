@@ -1,4 +1,4 @@
-package com.example.yo7a.healthwatcher;
+package me.kisoft.covid19.HealthWatcher;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
+import me.kisoft.covid19.R;
 
 public class BloodPressureResult extends AppCompatActivity {
 
     private String user, Date;
     int SP, DP;
     DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-    Date today = Calendar.getInstance().getTime();
+    java.util.Date today = Calendar.getInstance().getTime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class BloodPressureResult extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(BloodPressureResult.this, Primary.class);
+        Intent i = new Intent(BloodPressureResult.this, HealthWatcherActivity.class);
         i.putExtra("Usr", user);
         startActivity(i);
         finish();
