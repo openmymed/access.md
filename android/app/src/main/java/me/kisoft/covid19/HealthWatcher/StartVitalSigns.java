@@ -3,6 +3,7 @@ package me.kisoft.covid19.HealthWatcher;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,55 +25,21 @@ public class StartVitalSigns extends AppCompatActivity {
             p = extras.getInt("Page");
         }
 
-        ImageButton VS = this.findViewById(R.id.StartVS);
+        Button VS = this.findViewById(R.id.StartVS);
 
         VS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //switch is to decide which activity must be opened
-                switch (p) {
 
-                    case 1: {
-                        Intent i = new Intent(v.getContext(), HeartRateProcess.class);
+
+                Intent i = new Intent(v.getContext(), VitalSignsProcess.class);
                         i.putExtra("Usr", user);
                         StartVitalSigns.this.startActivity(i);
                         StartVitalSigns.this.finish();
-                    }
-                    break;
 
-                    case 2: {
-                        Intent i = new Intent(v.getContext(), BloodPressureProcess.class);
-                        i.putExtra("Usr", user);
-                        StartVitalSigns.this.startActivity(i);
-                        StartVitalSigns.this.finish();
-                    }
-                    break;
 
-                    case 3: {
-                        Intent i = new Intent(v.getContext(), RespirationProcess.class);
-                        i.putExtra("Usr", user);
-                        StartVitalSigns.this.startActivity(i);
-                        StartVitalSigns.this.finish();
-                    }
-                    break;
-
-                    case 4: {
-                        Intent i = new Intent(v.getContext(), O2Process.class);
-                        i.putExtra("Usr", user);
-                        StartVitalSigns.this.startActivity(i);
-                        StartVitalSigns.this.finish();
-                    }
-                    break;
-
-                    case 5: {
-                        Intent i = new Intent(v.getContext(), VitalSignsProcess.class);
-                        i.putExtra("Usr", user);
-                        StartVitalSigns.this.startActivity(i);
-                        StartVitalSigns.this.finish();
-                    }
-                    break;
-                }
 
             }
         });
@@ -80,10 +47,10 @@ public class StartVitalSigns extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(StartVitalSigns.this, HealthWatcherActivity.class);
+    /*    Intent i = new Intent(StartVitalSigns.this, HealthWatcherActivity.class);
         startActivity(i);
         finish();
-        super.onBackPressed();
+        super.onBackPressed();*/
     }
 
 

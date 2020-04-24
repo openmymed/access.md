@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg4"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="64dp"
     android:paddingTop="16dp"
     android:paddingRight="64dp"
     android:paddingBottom="16dp"
-    tools:context="com.example.yo7a.healthwatcher.StartVitalSigns">
+    tools:context=".HealthWatcher.StartVitalSigns">
 
-    <ImageView
+  <!--  <Button
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="156dp"
-        app:srcCompat="@mipmap/instruction_img" />
+        app:srcCompat="@mipmap/instruction_img" />-->
 
     <Space
         android:layout_width="match_parent"
@@ -40,13 +39,13 @@
         android:layout_height="20dp"
         android:layout_weight="0.17" />
 
-    <ImageButton
+    <Button
         android:id="@+id/StartVS"
         android:layout_width="wrap_content"
         android:layout_height="90dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        android:background="@android:color/transparent"
-        app:srcCompat="@mipmap/start" />
+        android:text="Click me"
+         />
 </LinearLayout>

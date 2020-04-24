@@ -94,7 +94,10 @@ public class VitalSignsProcess extends AppCompatActivity {
 //        Wei = Integer.parseInt(Data.getweight(user));
 //        Agg = Integer.parseInt(Data.getage(user));
 //        Gen = Integer.parseInt(Data.getgender(user));
-
+        Hei =170;
+        Wei = 65;
+        Agg = 30;
+        Gen = 1;
         if (Gen == 1) {
             Q = 5;
         }
@@ -110,7 +113,7 @@ public class VitalSignsProcess extends AppCompatActivity {
         // WakeLock Initialization : Forces the phone to stay On
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         //TODO Fix this error
-//        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+       wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
     }
 
     //Prevent the system from restarting your activity during certain configuration changes,

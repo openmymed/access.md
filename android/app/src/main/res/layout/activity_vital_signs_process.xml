@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg4"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="64dp"
@@ -10,7 +9,7 @@
     android:paddingRight="64dp"
     android:paddingBottom="16dp"
     android:weightSum="1"
-    tools:context="com.example.yo7a.healthwatcher.VitalSignsProcess">
+    tools:context=".HealthWatcher.VitalSignsProcess">
 
 
     <SurfaceView
@@ -28,6 +27,6 @@
         android:indeterminate="false"
         android:max="26"
         android:progress="1"
-        android:progressDrawable="@drawable/circular_progressbar" />
+        />
 
 </LinearLayout>
