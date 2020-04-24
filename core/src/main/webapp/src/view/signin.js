@@ -7,17 +7,17 @@
 import { el, text, mount } from "redom";
 import { goto } from "redom-app";
 import {loadIcpc} from "../utils/icpc"
+import logo from '../res/openmymed.png'
 export class Signin {
   constructor() {
     const _self = this;
     <div this="el">
       <div class="sidenav">
         <div class="login-main-text">
-          <h2>
-            Covid19
-            <br /> Login Page
-          </h2>
-          <p>Login from here to access.</p>
+          <h1>
+            ACCESS.MD
+          </h1>
+          <img src={logo}  ></img>
         </div>
       </div>
       <LoginForm this="form" />

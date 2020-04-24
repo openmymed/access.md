@@ -1,7 +1,7 @@
 {
-    "name": "covid19-followup-app",
+    "name": "access.md",
     "version": "1.0.0",
-    "description": "A Covid19 Patient Followup Application",
+    "description": "A Remote Patient Followup Application",
     "private": true,
     "scripts": {
         "test": "jest",

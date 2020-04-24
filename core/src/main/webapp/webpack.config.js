@@ -14,13 +14,13 @@ module.exports = (env) => {
       filename: 'app.js'
     },
     plugins: [new HtmlWebpackPlugin({
-        title: 'Covid19'
+        title: 'ACCESS.MD'
       }),
       new CleanWebpackPlugin(),
 
       new WebpackPwaManifest({
-        name: 'OpenMyMed My Doctor',
-        short_name: 'OMM My Doctor',
+        name: 'OpenMyMed ACCESS.MD',
+        short_name: 'ACCESS.MD',
         description: 'Patient Followup and Telemedicine App',
         background_color: '#ffffff',
         icons: [

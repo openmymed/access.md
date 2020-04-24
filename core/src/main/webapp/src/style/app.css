@@ -69,9 +69,10 @@ table {
   margin-top: 20%;
   padding: 60px;
   color: #fff;
+  text-align:center;
 }
 
-.login-main-text h2 {
+.login-main-text h1 {
   font-weight: 300;
 }
 
@@ -193,4 +194,11 @@ div.card-body .answer-note{
 .card-common.answer-card .card-body,
 .card-common.symptom-card .card-body{
   padding-bottom:1px;
+}
+
+.login-main-text img{
+    width:256px;
+    height:256px;
+    
+    
 }

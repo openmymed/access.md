@@ -96,7 +96,7 @@ class SideBar {
         href="#home"
         class="navbar-brand text-white bg-blue-primary d-block mx-auto text-center py-4 mb-5"
       >
-        Covid Dashboard
+        ACCESS.MD
       </a>
       <div class="row">
         <ul class="navbar-nav flex-column text-left col-centered">
