@@ -10,11 +10,11 @@ Uses code from [HealthWatcher](https://github.com/YahyaOdeh/HealthWatcher) for V
 
 # Links 
 
-* [Project Page and Documentation](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:start)
-* [UI Design Guidelines](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:design_guidelines)
-* [General Implementation Guidelines](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:application_architecture)
-* [Sequence Diagrams & Other Designs](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:design_specifications:sequence_diagram)
-* [Meeting Minutes](https://wiki.kisoft.me/doku.php?id=projects:covid_19_app:meeting_minutes:start)
+* [Project Page and Documentation](https://wiki.kisoft.me/doku.php?id=projects:access_md:start)
+* [UI Design Guidelines](https://wiki.kisoft.me/doku.php?id=projects:access_md:design_specifications:design_guidelines)
+* [General Implementation Guidelines](https://wiki.kisoft.me/doku.php?id=projects:access_md:design_specifications:application_architecture)
+* [Sequence Diagrams & Other Designs](https://wiki.kisoft.me/doku.php?id=projects:access_md:design_specifications:sequence_diagram)
+* [Meeting Minutes](https://wiki.kisoft.me/doku.php?id=projects:access_md:meeting_minutes:start)
 
 
 # Contributors
