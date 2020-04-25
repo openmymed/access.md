@@ -28,7 +28,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_chat">Chat</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_settings">Settings</string>
     <string name="title_measurement">Measurement</string>
     <string name="notification_question">You have %1$d new questions from your doctor</string>
 
@@ -74,10 +74,15 @@
     <!--  Security Code Screen  -->
     <string name="security_code_title">Secret Code</string>
 
-    <!--  Profile Fragment  -->
+    <!--  Settings Fragment  -->
     <string name="logout">Logout</string>
-    <string name="account">Account</string>
+    <string name="profile">Profile</string>
 
+    <!--  Profile Activity  -->
+    <string name="title_sex">Sex</string>
+    <string name="title_weight">Weight</string>
+    <string name="title_height">Height</string>
+    <string name="years_old">Y\'Old</string>
     <!--  Measurement Fragment  -->
     <string name="instructions">- Lightly place your index finger on \n   the rear camera.\n- Make sure the camera is fully \n   covered. \n- Measure in a shaded environment. \n- Don\'t move your finger until the \n   measurement is complete. \n- Finally place your finger then press \n   start. </string>
 

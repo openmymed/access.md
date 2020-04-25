@@ -31,4 +31,6 @@ public interface PatientService {
     SecurityCode getSecurityCode();
 
     Doctor getDoctor();
+
+    MedicalProfile getMedicalProfile();
 }

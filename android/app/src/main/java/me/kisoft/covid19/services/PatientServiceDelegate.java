@@ -62,4 +62,11 @@ public class PatientServiceDelegate implements PatientService {
     public Doctor getDoctor() {
         return service.getDoctor();
     }
+
+    @Override
+    public MedicalProfile getMedicalProfile() {
+        return service.getMedicalProfile();
+    }
+
+
 }
