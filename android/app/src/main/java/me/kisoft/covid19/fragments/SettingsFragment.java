@@ -1,6 +1,5 @@
 package me.kisoft.covid19.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -22,21 +20,22 @@ import java.util.List;
 
 import io.paperdb.Paper;
 import me.kisoft.covid19.LoginActivity;
+import me.kisoft.covid19.ProfileActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.SecurityCodeActivity;
 import me.kisoft.covid19.utils.Keys;
 
 
-public class ProfileFragment extends Fragment {
+public class SettingsFragment extends Fragment {
     private ListView profileListView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-        profileListView = root.findViewById(R.id.profile_listview);
+        profileListView = root.findViewById(R.id.settings_listview);
 
-        List<String> dataList = new ArrayList<>(Arrays.asList(getString(R.string.account), getString(R.string.security_code_title), getString(R.string.logout)));
+        List<String> dataList = new ArrayList<>(Arrays.asList(getString(R.string.profile), getString(R.string.security_code_title), getString(R.string.logout)));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,dataList);
         profileListView.setAdapter(adapter);
 
@@ -46,7 +45,8 @@ public class ProfileFragment extends Fragment {
                 Intent intent;
                 switch (position) {
                     case 0:
-                        Log.e("",String.valueOf(position));
+                        intent = new Intent(getContext(), ProfileActivity.class);
+                        startActivity(intent);
                         break;
                     case 1:
                         intent = new Intent(getContext(), SecurityCodeActivity.class);
@@ -55,6 +55,7 @@ public class ProfileFragment extends Fragment {
                     case 2:
                         Paper.book().delete(Keys.PHONE_KEY);
                         Paper.book().delete(Keys.PASSWORD_KEY);
+                        Paper.book().delete(Keys.CURRENT_USER_KEY);
                         intent = new Intent(getContext(), LoginActivity.class);
                         startActivity(intent);
                         getActivity().finish();

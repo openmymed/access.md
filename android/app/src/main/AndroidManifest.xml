@@ -5,9 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.flash" />
+
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <application
         android:name=".AppWraper"
         android:allowBackup="true"
@@ -17,9 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SecurityCodeActivity"></activity>
-        <activity android:name=".HealthWatcher.VitalSignsProcess"></activity>
-        <activity android:name=".HealthWatcher.VitalSignsResults"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".SecurityCodeActivity" />
+        <activity android:name=".HealthWatcher.VitalSignsProcess" />
+        <activity android:name=".HealthWatcher.VitalSignsResults" />
         <activity android:name=".CreateProfileActivity" />
         <activity android:name=".ChatActivity" />
         <activity
@@ -37,7 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

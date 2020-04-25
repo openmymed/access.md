@@ -65,7 +65,6 @@ public class PatientServiceImpl implements PatientService {
     public Boolean register(Patient patient) {
         Gson gson = new Gson();
         String json = gson.toJson(patient);
-        Log.e("", json);
         try (Response response = RestClient.post(RestClient.REGISTER_URL, json)) {
             Log.i("Register", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
@@ -116,6 +115,23 @@ public class PatientServiceImpl implements PatientService {
             Log.e("Medical Profile", e.toString());
         }
         return false;
+    }
+
+    @Override
+    public MedicalProfile getMedicalProfile() {
+        Gson gson = new Gson();
+        try (Response response = RestClient.get(RestClient.PROFILE_URL)) {
+            Log.i("GET Medical Profile", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+                MedicalProfile profile = gson.fromJson(response.body().string(),MedicalProfile.class);
+                return profile;
+            } else {
+                return null;
+            }
+        } catch (IOException e) {
+            Log.e("GET Medical Profile", e.toString());
+        }
+        return null;
     }
 
     @Override
