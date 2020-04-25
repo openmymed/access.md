@@ -10,7 +10,6 @@ package me.kisoft.covid19.utils;
  */
 
 import android.content.Context;
-import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;

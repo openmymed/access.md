@@ -1,6 +1,8 @@
 package me.kisoft.covid19.models;
 
-public class Vitals {
+import java.io.Serializable;
+
+public class Vitals implements Serializable {
 
     //Breathing Rate
     private int  breathingRate;
