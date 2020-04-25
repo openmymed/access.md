@@ -1,9 +1,7 @@
 package me.kisoft.covid19.HealthWatcher;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -14,18 +12,18 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import me.kisoft.covid19.MainActivity;
+import io.paperdb.Paper;
 import me.kisoft.covid19.Math.Fft;
 import me.kisoft.covid19.Math.Fft2;
 import me.kisoft.covid19.R;
+import me.kisoft.covid19.models.Patient;
+import me.kisoft.covid19.models.Sex;
 import me.kisoft.covid19.utils.ImageProcessing;
+import me.kisoft.covid19.utils.Keys;
 
 import static java.lang.Math.ceil;
 import static java.lang.Math.sqrt;
@@ -68,7 +66,8 @@ public class VitalSignsProcess extends AppCompatActivity {
     public double bufferAvgBr = 0;
 
     //BloodPressure variables
-    public double Gen, Agg, Hei, Wei;
+    public Sex sex;
+    public double age, height, weight;
     public double Q = 4.5;
     private static int SP = 0, DP = 0;
 
@@ -79,38 +78,21 @@ public class VitalSignsProcess extends AppCompatActivity {
     public int counter = 0;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vital_signs_process);
 
-        preview = (SurfaceView) findViewById(R.id.preview);
-        previewHolder = preview.getHolder();
+        Patient patient = Paper.book().read(Keys.CURRENT_USER_KEY);
 
-        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
-        ProgHeart.setProgress(0);
-
-
-        //TODO Replace all database stuff.
-        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            user = extras.getString("Usr");
-//            //The key argument here must match that used in the other activity
-//        }
-
-        //Get parameters from Db
-//        Hei = Integer.parseInt(Data.getheight(user));
-//        Wei = Integer.parseInt(Data.getweight(user));
-//        Agg = Integer.parseInt(Data.getage(user));
-//        Gen = Integer.parseInt(Data.getgender(user));
-        Hei = 170;
-        Wei = 65;
-        Agg = 30;
-        Gen = 1;
-        if (Gen == 1) {
+        height = patient.getProfile().getHeight();
+        weight = patient.getProfile().getWeight();
+        age = patient.getProfile().getAge();
+        sex = patient.getProfile().getSex();
+        if (sex == Sex.Male) {
             Q = 5;
-        }// XML - Java Connecting
+        }
+        // XML - Java Connecting
         preview = (SurfaceView) findViewById(R.id.preview);
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
@@ -305,9 +287,9 @@ public class VitalSignsProcess extends AppCompatActivity {
                 //estimations to estimate the blood pressure
                 double ROB = 18.5;
                 double ET = (364.5 - 1.23 * Beats);
-                double BSA = 0.007184 * (Math.pow(Wei, 0.425)) * (Math.pow(Hei, 0.725));
-                double SV = (-6.6 + (0.25 * (ET - 35)) - (0.62 * Beats) + (40.4 * BSA) - (0.51 * Agg));
-                double PP = SV / ((0.013 * Wei - 0.007 * Agg - 0.004 * Beats) + 1.307);
+                double BSA = 0.007184 * (Math.pow(weight, 0.425)) * (Math.pow(height, 0.725));
+                double SV = (-6.6 + (0.25 * (ET - 35)) - (0.62 * Beats) + (40.4 * BSA) - (0.51 * age));
+                double PP = SV / ((0.013 * weight - 0.007 * age - 0.004 * Beats) + 1.307);
                 double MPP = Q * ROB;
 
                 SP = (int) (MPP + 3 / 2 * PP);

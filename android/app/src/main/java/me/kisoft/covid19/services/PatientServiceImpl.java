@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import me.kisoft.covid19.Exceptions.UnauthorizedException;
 import me.kisoft.covid19.models.Answer;
 import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
@@ -28,6 +27,7 @@ import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
+import me.kisoft.covid19.models.Vitals;
 import me.kisoft.covid19.utils.RestClient;
 import okhttp3.Response;
 
@@ -60,7 +60,22 @@ public class PatientServiceImpl implements PatientService {
         }
         return null;
     }
-
+    @Override
+    public Boolean postVitals(Vitals vitals) {
+        Gson gson = new Gson();
+        String json = gson.toJson(vitals);
+        try (Response response = RestClient.post(RestClient.POST_VITALS, json)) {
+            Log.i("PostVitals", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            Log.e("PostVitals ", e.toString());
+        }
+        return false;
+    }
     @Override
     public Boolean register(Patient patient) {
         Gson gson = new Gson();

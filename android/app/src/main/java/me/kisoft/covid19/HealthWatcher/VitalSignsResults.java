@@ -1,7 +1,10 @@
 package me.kisoft.covid19.HealthWatcher;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,15 +16,27 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import me.kisoft.covid19.CreateProfileActivity;
 import me.kisoft.covid19.R;
+import me.kisoft.covid19.RegisterActivity;
+import me.kisoft.covid19.models.Patient;
+import me.kisoft.covid19.models.Vitals;
+import me.kisoft.covid19.services.PatientService;
+import me.kisoft.covid19.services.PatientServiceDelegate;
 
 public class VitalSignsResults extends AppCompatActivity {
-
+    Vitals vitals;
     private String user, Date;
     DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     java.util.Date today = Calendar.getInstance().getTime();
     int VBP1, VBP2, VRR, VHR, VO2;
+    private PatientService service;
 
+    @Override
+    protected void onStart() {
+        service = new PatientServiceDelegate();
+        super.onStart();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +56,8 @@ public class VitalSignsResults extends AppCompatActivity {
             VBP1 = bundle.getInt("SP");
             VBP2 = bundle.getInt("DP");
             VO2 = bundle.getInt("O2R");
+            vitals = new Vitals(VRR,VHR,VBP1,VBP2,VO2);
+            postVitalsResults(vitals);
             user = bundle.getString("Usr");
             VSRR.setText(String.valueOf(VRR));
             VSHR.setText(String.valueOf(VHR));
@@ -74,4 +91,38 @@ public class VitalSignsResults extends AppCompatActivity {
         startActivity(i);
         finish();
     }*/
+ private void postVitalsResults(final Vitals vitals) {
+     new AsyncTask<Void, Void, Boolean>() {
+
+         @Override
+         protected void onPreExecute() {
+             super.onPreExecute();
+         }
+
+         @Override
+         protected Boolean doInBackground(Void... voids) {
+             Boolean result = service.postVitals(vitals);
+             if (result) {
+                 Log.i("PostVital","PostVital is sucessful");
+             } else {
+                 Log.i("PostVital","PostVital is sucessful");
+             }
+             return result;
+         }
+
+         @Override
+         protected void onPostExecute(Boolean result) {
+             if (result) {
+                 Log.i("PostVital","PostVital is sucessful");
+             } else {
+                 Log.i("PostVital","PostVital is sucessful");
+
+                 //TODO Error handiling in post
+             /*    tvRegisterWarning.setText(R.string.error_sign_up);
+                 tvRegisterWarning.setVisibility(View.VISIBLE);*/
+             }
+             super.onPostExecute(result);
+         }
+     }.execute();
+ }
 }

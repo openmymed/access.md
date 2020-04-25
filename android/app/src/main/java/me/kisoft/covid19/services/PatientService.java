@@ -11,6 +11,7 @@ import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
+import me.kisoft.covid19.models.Vitals;
 
 public interface PatientService {
 
@@ -33,4 +34,7 @@ public interface PatientService {
     Doctor getDoctor();
 
     MedicalProfile getMedicalProfile();
+
+    Boolean postVitals(Vitals vitals);
+
 }
