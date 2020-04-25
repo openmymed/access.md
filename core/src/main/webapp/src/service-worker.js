@@ -5,7 +5,7 @@
  */
 
 
-self.addEventListener('install',  (e) => {
+self.addEventListener('install',  (event) => {
   event.waitUntil(
     caches.open(PRECACHE)
       .then(cache => cache.addAll(PRECACHE_URLS))
@@ -13,7 +13,7 @@ self.addEventListener('install',  (e) => {
   );
 });
 
-self.addEventListener('fetch', (e) =>{
+self.addEventListener('fetch', (event) =>{
  if (event.request.url.startsWith(self.location.origin)) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {

@@ -202,3 +202,16 @@ div.card-body .answer-note{
     
     
 }
+
+.patient-vitals-expander{
+    background-color : var(--accent);
+    color:white;
+}
+
+.oxygenation-chart,
+.heart-beats-chart,
+.breathing-rate-chart,
+.blood-pressure-chart{
+    width:100%;
+    height:35vh
+}

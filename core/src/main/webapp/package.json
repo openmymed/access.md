@@ -50,9 +50,13 @@
         "@fortawesome/fontawesome-free": "^5.13.0",
         "babel-plugin-transform-react-jsx": "^6.24.1",
         "bootstrap": "^4.4.1",
+        "chart.js": "^2.9.3",
+        "chartjs-adapter-moment": "^0.1.1",
         "eventbusjs": "^0.2.0",
+        "install": "^0.13.0",
         "jquery": "^3.4.1",
         "jquery-ui-bundle": "^1.12.1-migrate",
+        "moment": "^2.24.0",
         "popper.js": "^1.16.1",
         "redom": "^3.26.0",
         "redom-app": "^1.0.0"
