@@ -33,9 +33,9 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-    if (event.request.url.startsWith(self.location.origin) 
+    if (event.request.url.startsWith(self.location.origin)
             && event.request.method === "GET"
-            &&(event.request.url.match(/.*\.(js|html|css|png|jpeg)/g) !== null)) {
+            && (event.request.url.match(/.*\.(js|html|css|png|jpeg)/g) !== null)) {
         event.respondWith(
                 caches.match(event.request).then(cachedResponse => {
             if (cachedResponse && cachedResponse.ok) {
