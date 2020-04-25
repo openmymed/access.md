@@ -85,12 +85,16 @@ public class VitalSignsProcess extends AppCompatActivity {
             //The key argument here must match that used in the other activity
         }
 
-        //Get parameters from Db
+   /*     //Get parameters from Db
         Hei = Integer.parseInt(Data.getheight(user));
         Wei = Integer.parseInt(Data.getweight(user));
         Agg = Integer.parseInt(Data.getage(user));
-        Gen = Integer.parseInt(Data.getgender(user));
-
+        Gen = Integer.parseInt(Data.getgender(user));*/
+     //Get parameters from Db
+        Hei =170;
+        Wei = 65;
+        Agg = 30;
+        Gen = 1;
         if (Gen == 1) {
             Q = 5;
         }
@@ -307,7 +311,7 @@ public class VitalSignsProcess extends AppCompatActivity {
                 i.putExtra("bpm", Beats);
                 i.putExtra("SP", SP);
                 i.putExtra("DP", DP);
-                i.putExtra("Usr", user);
+               // i.putExtra("Usr", user);
                 startActivity(i);
                 finish();
             }

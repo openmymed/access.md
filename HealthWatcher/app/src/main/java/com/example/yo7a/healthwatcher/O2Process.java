@@ -67,7 +67,7 @@ public class O2Process extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_o2_process);
-
+        Log.e("","O2 Process");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = extras.getString("Usr");

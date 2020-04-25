@@ -3,6 +3,7 @@ package com.example.yo7a.healthwatcher;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,7 +29,7 @@ public class First extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-
+        Log.e("","First");
         Meas = findViewById(R.id.prime);
         acc = findViewById(R.id.newacc);
         ed1 = findViewById(R.id.edtu1);
