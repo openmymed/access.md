@@ -31,7 +31,6 @@ import static java.lang.Math.ceil;
 import static java.lang.Math.sqrt;
 
 public class VitalSignsProcess extends AppCompatActivity {
-    private static final int CAMERA_PERMISSION_REQUEST_CODE = 01;
 
     //Variables Initialization
     private static final AtomicBoolean processing = new AtomicBoolean(false);
@@ -79,32 +78,7 @@ public class VitalSignsProcess extends AppCompatActivity {
     public ArrayList<Double> BlueAvgList = new ArrayList<>();
     public int counter = 0;
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case CAMERA_PERMISSION_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // camera-related task you need to do.
 
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    previewHolder.addCallback(surfaceCallback);
-                    previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-                    camera = Camera.open();
-                    camera.setDisplayOrientation(90);
-
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,7 +91,6 @@ public class VitalSignsProcess extends AppCompatActivity {
         ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
         ProgHeart.setProgress(0);
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
 
         //TODO Replace all database stuff.
         Bundle extras = getIntent().getExtras();
@@ -137,12 +110,16 @@ public class VitalSignsProcess extends AppCompatActivity {
         Gen = 1;
         if (Gen == 1) {
             Q = 5;
-        }
-
+        }// XML - Java Connecting
+        preview = (SurfaceView) findViewById(R.id.preview);
+        previewHolder = preview.getHolder();
+        previewHolder.addCallback(surfaceCallback);
+        previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
+        ProgHeart.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        //TODO Fix this error
         wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
     }
 
@@ -163,6 +140,11 @@ public class VitalSignsProcess extends AppCompatActivity {
         super.onResume();
 
         wakeLock.acquire();
+
+        camera = Camera.open();
+
+        camera.setDisplayOrientation(90);
+
         startTime = System.currentTimeMillis();
     }
 
@@ -174,12 +156,10 @@ public class VitalSignsProcess extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         wakeLock.release();
-        if (camera != null) {
-            camera.setPreviewCallback(null);
-            camera.stopPreview();
-            camera.release();
-            camera = null;
-        }
+        camera.setPreviewCallback(null);
+        camera.stopPreview();
+        camera.release();
+        camera = null;
 
     }
 
@@ -342,7 +322,6 @@ public class VitalSignsProcess extends AppCompatActivity {
                 i.putExtra("bpm", Beats);
                 i.putExtra("SP", SP);
                 i.putExtra("DP", DP);
-//                i.putExtra("Usr", user);
                 startActivity(i);
                 finish();
             }
@@ -409,8 +388,5 @@ public class VitalSignsProcess extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(VitalSignsProcess.this, MainActivity.class);
-        startActivity(i);
-        finish();
     }
 }
