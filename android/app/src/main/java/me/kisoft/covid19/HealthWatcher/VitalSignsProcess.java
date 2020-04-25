@@ -83,12 +83,6 @@ public class VitalSignsProcess extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vital_signs_process);
 
-        preview = (SurfaceView) findViewById(R.id.preview);
-        previewHolder = preview.getHolder();
-
-        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
-        ProgHeart.setProgress(0);
-
         Patient patient = Paper.book().read(Keys.CURRENT_USER_KEY);
 
         height = patient.getProfile().getHeight();

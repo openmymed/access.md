@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import me.kisoft.covid19.Exceptions.UnauthorizedException;
 import me.kisoft.covid19.models.Answer;
 import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
