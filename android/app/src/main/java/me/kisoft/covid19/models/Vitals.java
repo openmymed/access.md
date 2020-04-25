@@ -17,16 +17,16 @@ public class Vitals implements Serializable {
     private int  diastolicPressure;
 
     //Blood Oxygination
-    private int  bloodOxygination;
+    private int  bloodOxygenation;
 
     Vitals(){}
 
-    public Vitals(int breathingRate, int heartBeatsPerMinute, int systolicPressure, int diastolicPressure, int bloodOxygination) {
+    public Vitals(int breathingRate, int heartBeatsPerMinute, int systolicPressure, int diastolicPressure, int bloodOxygenation) {
         this.breathingRate = breathingRate;
         this.heartBeatsPerMinute = heartBeatsPerMinute;
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
-        this.bloodOxygination = bloodOxygination;
+        this.bloodOxygenation = bloodOxygenation;
     }
 
     public int getBreathingRate() {
@@ -61,11 +61,22 @@ public class Vitals implements Serializable {
         this.diastolicPressure = diastolicPressure;
     }
 
-    public int getBloodOxygination() {
-        return bloodOxygination;
+    public int getBloodOxygenation() {
+        return bloodOxygenation;
     }
 
-    public void setBloodOxygination(int bloodOxygination) {
-        this.bloodOxygination = bloodOxygination;
+    public void setBloodOxygenation(int bloodOxygenation) {
+        this.bloodOxygenation = bloodOxygenation;
+    }
+
+    @Override
+    public String toString() {
+        return "Vitals{" +
+                "breathingRate=" + breathingRate +
+                ", heartBeatsPerMinute=" + heartBeatsPerMinute +
+                ", systolicPressure=" + systolicPressure +
+                ", diastolicPressure=" + diastolicPressure +
+                ", bloodOxygination=" + bloodOxygenation +
+                '}';
     }
 }

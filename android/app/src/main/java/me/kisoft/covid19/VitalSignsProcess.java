@@ -1,13 +1,12 @@
-package me.kisoft.covid19.HealthWatcher;
+package me.kisoft.covid19;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import io.paperdb.Paper;
 import me.kisoft.covid19.Math.Fft;
 import me.kisoft.covid19.Math.Fft2;
-import me.kisoft.covid19.R;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Sex;
 import me.kisoft.covid19.utils.ImageProcessing;
@@ -35,7 +33,6 @@ public class VitalSignsProcess extends AppCompatActivity {
     private SurfaceView preview = null;
     private static SurfaceHolder previewHolder = null;
     private static Camera camera = null;
-    private static PowerManager.WakeLock wakeLock = null;
 
     //Toast
     private Toast mainToast;
@@ -82,7 +79,8 @@ public class VitalSignsProcess extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vital_signs_process);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getSupportActionBar().setTitle(R.string.vital_title);
         Patient patient = Paper.book().read(Keys.CURRENT_USER_KEY);
 
         height = patient.getProfile().getHeight();
@@ -100,9 +98,6 @@ public class VitalSignsProcess extends AppCompatActivity {
         ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
         ProgHeart.setProgress(0);
 
-        // WakeLock Initialization : Forces the phone to stay On
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
     }
 
     //Prevent the system from restarting your activity during certain configuration changes,
@@ -120,13 +115,8 @@ public class VitalSignsProcess extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-        wakeLock.acquire();
-
         camera = Camera.open();
-
         camera.setDisplayOrientation(90);
-
         startTime = System.currentTimeMillis();
     }
 
@@ -137,7 +127,6 @@ public class VitalSignsProcess extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        wakeLock.release();
         camera.setPreviewCallback(null);
         camera.stopPreview();
         camera.release();
@@ -365,10 +354,5 @@ public class VitalSignsProcess extends AppCompatActivity {
         }
 
         return result;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }
