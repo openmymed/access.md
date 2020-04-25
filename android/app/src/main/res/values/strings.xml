@@ -84,6 +84,8 @@
     <string name="title_height">Height</string>
     <string name="years_old">Y\'Old</string>
     <!--  Measurement Fragment  -->
+    <string name="vital_title">Vital Measurement</string>
+    <string name="vital_result_title">Vital Measurement Results</string>
     <string name="instructions">- Lightly place your index finger on \n   the rear camera.\n- Make sure the camera is fully \n   covered. \n- Measure in a shaded environment. \n- Don\'t move your finger until the \n   measurement is complete. \n- Finally place your finger then press \n   start. </string>
 
     <!--  Health Watcher  -->

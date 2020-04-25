@@ -11,7 +11,7 @@
     android:paddingRight="64dp"
     android:paddingBottom="16dp"
     android:weightSum="1"
-    tools:context=".HealthWatcher.VitalSignsResults">
+    tools:context=".VitalSignsResults">
 
     <LinearLayout
         android:layout_width="match_parent"

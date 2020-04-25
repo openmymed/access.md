@@ -22,8 +22,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".SecurityCodeActivity" />
-        <activity android:name=".HealthWatcher.VitalSignsProcess" />
-        <activity android:name=".HealthWatcher.VitalSignsResults" />
+        <activity android:name=".VitalSignsProcess" />
+        <activity android:name=".VitalSignsResults" />
         <activity android:name=".CreateProfileActivity" />
         <activity android:name=".ChatActivity" />
         <activity

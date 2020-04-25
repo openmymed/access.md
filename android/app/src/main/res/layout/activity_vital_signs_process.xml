@@ -9,7 +9,7 @@
     android:paddingRight="64dp"
     android:paddingBottom="16dp"
     android:weightSum="1"
-    tools:context=".HealthWatcher.VitalSignsProcess">
+    tools:context=".VitalSignsProcess">
 
 
     <SurfaceView
