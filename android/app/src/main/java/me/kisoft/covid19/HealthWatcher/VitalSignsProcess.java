@@ -1,7 +1,9 @@
 package me.kisoft.covid19.HealthWatcher;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -12,11 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import me.kisoft.covid19.MainActivity;
 import me.kisoft.covid19.Math.Fft;
 import me.kisoft.covid19.Math.Fft2;
 import me.kisoft.covid19.R;
@@ -26,6 +31,7 @@ import static java.lang.Math.ceil;
 import static java.lang.Math.sqrt;
 
 public class VitalSignsProcess extends AppCompatActivity {
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 01;
 
     //Variables Initialization
     private static final AtomicBoolean processing = new AtomicBoolean(false);
@@ -36,10 +42,6 @@ public class VitalSignsProcess extends AppCompatActivity {
 
     //Toast
     private Toast mainToast;
-
-    //DataBase
-//    public String user;
-//    UserDB Data = new UserDB(this);
 
     //ProgressBar
     private ProgressBar ProgHeart;
@@ -78,9 +80,44 @@ public class VitalSignsProcess extends AppCompatActivity {
     public int counter = 0;
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case CAMERA_PERMISSION_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // camera-related task you need to do.
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    previewHolder.addCallback(surfaceCallback);
+                    previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+                    camera = Camera.open();
+                    camera.setDisplayOrientation(90);
+
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vital_signs_process);
+
+        preview = (SurfaceView) findViewById(R.id.preview);
+        previewHolder = preview.getHolder();
+
+        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
+        ProgHeart.setProgress(0);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
 
         //TODO Replace all database stuff.
         Bundle extras = getIntent().getExtras();
@@ -94,7 +131,7 @@ public class VitalSignsProcess extends AppCompatActivity {
 //        Wei = Integer.parseInt(Data.getweight(user));
 //        Agg = Integer.parseInt(Data.getage(user));
 //        Gen = Integer.parseInt(Data.getgender(user));
-        Hei =170;
+        Hei = 170;
         Wei = 65;
         Agg = 30;
         Gen = 1;
@@ -102,18 +139,11 @@ public class VitalSignsProcess extends AppCompatActivity {
             Q = 5;
         }
 
-        // XML - Java Connecting
-        preview = (SurfaceView) findViewById(R.id.preview);
-        previewHolder = preview.getHolder();
-        previewHolder.addCallback(surfaceCallback);
-        previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
-        ProgHeart.setProgress(0);
 
         // WakeLock Initialization : Forces the phone to stay On
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         //TODO Fix this error
-       wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
     }
 
     //Prevent the system from restarting your activity during certain configuration changes,
@@ -133,11 +163,6 @@ public class VitalSignsProcess extends AppCompatActivity {
         super.onResume();
 
         wakeLock.acquire();
-
-        camera = Camera.open();
-
-        camera.setDisplayOrientation(90);
-
         startTime = System.currentTimeMillis();
     }
 
@@ -149,10 +174,12 @@ public class VitalSignsProcess extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         wakeLock.release();
-        camera.setPreviewCallback(null);
-        camera.stopPreview();
-        camera.release();
-        camera = null;
+        if (camera != null) {
+            camera.setPreviewCallback(null);
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
 
     }
 
@@ -382,8 +409,7 @@ public class VitalSignsProcess extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(VitalSignsProcess.this, StartVitalSigns.class);
-//        i.putExtra("Usr", user);
+        Intent i = new Intent(VitalSignsProcess.this, MainActivity.class);
         startActivity(i);
         finish();
     }
