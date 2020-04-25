@@ -12,6 +12,7 @@ import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
+import me.kisoft.covid19.models.Vitals;
 
 public class PatientServiceDelegate implements PatientService {
 
@@ -67,6 +68,10 @@ public class PatientServiceDelegate implements PatientService {
     public MedicalProfile getMedicalProfile() {
         return service.getMedicalProfile();
     }
+
+    @Override
+    public Boolean postVitals(Vitals vitals) {
+        return service.postVitals(vitals);    }
 
 
 }
