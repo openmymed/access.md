@@ -2,6 +2,7 @@ package com.example.yo7a.healthwatcher;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,7 +17,7 @@ public class Primary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_primary);
-
+        Log.e("","Primary");
         ImageButton HeartRate = this.findViewById(R.id.HR);
         ImageButton BloodPressure = this.findViewById(R.id.BP);
         ImageButton Ox2 = this.findViewById(R.id.O2);

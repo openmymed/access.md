@@ -60,7 +60,7 @@ public class HeartRateProcess extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heart_rate_process);
-
+        Log.e("","Heart Rate Process");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = extras.getString("Usr");

@@ -27,7 +27,7 @@ public class HeartRateResult extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heart_rate_result);
-
+        Log.e("","Heart Rate Result");
         Date = df.format(today);
         TextView RHR = (TextView) this.findViewById(R.id.HRR);
         ImageButton SHR = (ImageButton) this.findViewById(R.id.SendHR);

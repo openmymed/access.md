@@ -2,6 +2,7 @@ package com.example.yo7a.healthwatcher;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ public class BloodPressureResult extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_pressure_result);
-
+        Log.e("","Blood Pressure Result");
         Date = df.format(today);
         TextView TBP = (TextView) this.findViewById(R.id.BPT);
         ImageButton SBP = (ImageButton) this.findViewById(R.id.SendBP);

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HealthWatcher.HealthWatcherActivity">
+
+    <TextView
+        android:id="@+id/tv_heart_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/roundedbutton"
+        android:gravity="center"
+        android:paddingVertical="5dp"
+        android:text="@string/heart_rate"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_respiration_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/roundedbutton"
+        android:paddingVertical="5dp"
+        android:text="@string/respiration_rate"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_heart_rate"
+        app:layout_constraintStart_toStartOf="@+id/tv_heart_rate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_heart_rate" />
+
+    <TextView
+        android:id="@+id/tv_blood_pressure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/roundedbutton"
+        android:paddingVertical="5dp"
+        android:text="@string/blood_pressure"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_respiration_rate"
+        app:layout_constraintStart_toStartOf="@+id/tv_respiration_rate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_respiration_rate" />
+
+    <TextView
+        android:id="@+id/tv_o2_saturation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/roundedbutton"
+        android:paddingVertical="5dp"
+        android:text="@string/O2_saturation"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_blood_pressure"
+        app:layout_constraintStart_toStartOf="@+id/tv_blood_pressure"
+        app:layout_constraintTop_toBottomOf="@+id/tv_blood_pressure" />
+
+    <TextView
+        android:id="@+id/tv_vital_signs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/roundedbutton"
+        android:paddingVertical="5dp"
+        android:text="@string/all_vital_signs"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_o2_saturation"
+        app:layout_constraintStart_toStartOf="@+id/tv_o2_saturation"
+        app:layout_constraintTop_toBottomOf="@+id/tv_o2_saturation" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
