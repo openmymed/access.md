@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="me.kisoft.covid19.fragments.ProfileFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/navigation_settings"
+        android:name="me.kisoft.covid19.fragments.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/navigation_measurements"

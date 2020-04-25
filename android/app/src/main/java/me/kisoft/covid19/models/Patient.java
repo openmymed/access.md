@@ -11,7 +11,7 @@ public class Patient implements Serializable {
     private String lastName;
     private UserRole userRole;
     private String telephoneNumber;
-    private transient MedicalProfile profile;
+    private MedicalProfile profile;
 
     public Patient() {
     }

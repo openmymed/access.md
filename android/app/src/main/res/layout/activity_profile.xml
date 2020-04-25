@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_user"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/ic_account_circle_white_24dp"
+            app:civ_border_color="#FFF"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_user_full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Majed Nuseibeh"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@+id/img_user"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_user_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="22 Y'Old"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_user_full_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_full_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+        <LinearLayout
+            android:id="@+id/ll_user_sex"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_sex"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_user_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_user_weight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_weight"
+                android:textAlignment="center"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_user_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="75 kg"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_user_height"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_height"
+                android:textAlignment="center"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_user_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="175 cm"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
