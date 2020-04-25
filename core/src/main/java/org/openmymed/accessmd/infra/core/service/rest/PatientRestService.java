@@ -14,6 +14,7 @@ import org.openmymed.accessmd.domain.core.service.PatientService;
 import org.openmymed.accessmd.domain.core.entity.MedicalProfile;
 import org.openmymed.accessmd.domain.core.entity.Question;
 import org.openmymed.accessmd.domain.core.entity.Symptom;
+import org.openmymed.accessmd.domain.core.entity.VitalsMeasurment;
 import org.openmymed.accessmd.infra.auth.factory.SecurityCodeServiceFactory;
 import org.openmymed.accessmd.infra.auth.factory.UserRepositoryFactory;
 import org.openmymed.accessmd.infra.core.factory.PatientServiceFactory;
@@ -26,6 +27,7 @@ public class PatientRestService {
 
     PatientService patientService = PatientServiceFactory.getInstance().get();
     SecurityCodeService securityCodeService = SecurityCodeServiceFactory.getInstance().get();
+
     public void signUp(Context ctx) throws Exception {
         try ( UserRepository repo = UserRepositoryFactory.getInstance().get()) {
             User toCreate = ctx.bodyAsClass(User.class);
@@ -38,10 +40,11 @@ public class PatientRestService {
         }
     }
 
-    public void getDoctor(Context ctx){
-       User user = ctx.sessionAttribute("user");
-       ctx.json(patientService.getPatientDoctor(user.getId()));
+    public void getDoctor(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        ctx.json(patientService.getPatientDoctor(user.getId()));
     }
+
     public void updateMedicalProfile(Context ctx) {
         User user = ctx.sessionAttribute("user");
         patientService.updatePatientMedicalProfile(user.getId(), ctx.bodyAsClass(MedicalProfile.class));
@@ -65,24 +68,30 @@ public class PatientRestService {
         ctx.json(patientService.getPatientReccomendations(user.getId()));
         ctx.res.setStatus(200);
     }
-    
-    public void answerQuestion(Context ctx){
-          User user = ctx.sessionAttribute("user");
-          Long questionId = ctx.pathParam("id", Long.class).get();
-          Answer answer = ctx.bodyAsClass(Answer.class);
-          patientService.answerPatientQuestion(user.getId(), questionId,answer.getAnswer());
-          ctx.status(200);
+
+    public void answerQuestion(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        Long questionId = ctx.pathParam("id", Long.class).get();
+        Answer answer = ctx.bodyAsClass(Answer.class);
+        patientService.answerPatientQuestion(user.getId(), questionId, answer.getAnswer());
+        ctx.status(200);
     }
-    
-    public void addSymptom(Context ctx){
-          User user = ctx.sessionAttribute("user");
-          patientService.addNewPatientSymptom(user.getId(), ctx.bodyAsClass(Symptom.class));
-          ctx.status(200);
+
+    public void addSymptom(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        patientService.addNewPatientSymptom(user.getId(), ctx.bodyAsClass(Symptom.class));
+        ctx.status(200);
     }
-    
-    public void getSecurityCode(Context ctx){
+
+    public void getSecurityCode(Context ctx) {
         User user = ctx.sessionAttribute("user");
         ctx.json(securityCodeService.createSecurityCode(user.getId()));
-         ctx.status(200);
+        ctx.status(200);
+    }
+
+    public void addVitalsMeasurment(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+        patientService.addNewVitalsMeasurment(user.getId(), ctx.bodyAsClass(VitalsMeasurment.class));
+        ctx.json(200);
     }
 }

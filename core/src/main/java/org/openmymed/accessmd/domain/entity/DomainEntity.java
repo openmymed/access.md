@@ -5,7 +5,9 @@
  */
 package org.openmymed.accessmd.domain.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,36 +32,45 @@ import org.hibernate.envers.Audited;
  */
 @MappedSuperclass
 @Audited
-@Getter
-@Setter
 public abstract class DomainEntity {
 
     protected static transient final String DELETED_EVENT = "%sDeleted";
     protected static transient final String CREATED_EVENT = "%sCreated";
     protected static transient final String UPDATED_EVENT = "%sUpdated";
+    @Transient
+    private final transient List<DomainEvent> eventQueue = new ArrayList<>();
 
     @Id
+    @Getter
+    @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
 
+    @Getter
+    @Setter
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date creationDate;
 
+    @Getter
+    @Setter
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private Date updateDate;
 
     public void postDeleted() {
-        EventBus.getInstance().post(new DomainEvent(String.format(DELETED_EVENT, getEntityName()), this));
+        this.queueEvent(String.format(DELETED_EVENT, getEntityName()),this);
+        this.postAllEvents();
     }
 
     public void postCreated() {
-        EventBus.getInstance().post(new DomainEvent(String.format(CREATED_EVENT, getEntityName()), this));
+        this.queueEvent(String.format(CREATED_EVENT, getEntityName()),this);
+        this.postAllEvents();
     }
 
     public void postUpdated() {
-        EventBus.getInstance().post(new DomainEvent(String.format(UPDATED_EVENT, getEntityName()), this));
+        this.queueEvent(String.format(UPDATED_EVENT, getEntityName()),this);
+        this.postAllEvents();
     }
 
     @PostPersist
@@ -75,6 +86,19 @@ public abstract class DomainEntity {
     @PostRemove
     public void postRemove() {
         postDeleted();
+    }
+
+    /**
+     * Queues events to be sent after the database transactions are complete and the transaction succeeds
+     * @param name the name of the event
+     * @param data the data to send
+     */
+    protected void queueEvent(String name, Object data) {
+        eventQueue.add(new DomainEvent(name, this, data));
+    }
+
+    private void postAllEvents() {
+        eventQueue.stream().forEach(event -> EventBus.getInstance().post(event));
     }
 
     @Transient

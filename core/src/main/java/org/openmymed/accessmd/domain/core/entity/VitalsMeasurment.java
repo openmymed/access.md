@@ -6,12 +6,8 @@
 package org.openmymed.accessmd.domain.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.openmymed.accessmd.domain.entity.DomainEntity;
@@ -20,30 +16,24 @@ import org.openmymed.accessmd.domain.entity.DomainEntity;
  *
  * @author tareq
  */
-@Entity(name="Reccomendation")
-@Table(name= "RECCOMENDATION")
+@Entity
 @Getter
 @Setter
-public class Reccomendation extends DomainEntity{
+public class VitalsMeasurment extends DomainEntity {
 
-    private String reccomendation;
-    
-    @OneToMany
-    private List<Question> questions = new ArrayList<>();
-    
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     private Patient patient;
+    private double heartBeatsPerMinute;
+    private double systolicPressure;
+    private double diastolicPressure;
+    private double bloodOxygenation;
+    private double breathingRate;
     
-    public void inResponseToQuestion(Question question){
-        if(questions == null){
-            questions = new ArrayList<>();
-        }
-        questions.add(question);
-    }
+    
     @Override
     public String getEntityName() {
-       return "reccomendation";
+        return "vitalsMeasurment";
     }
     
 }

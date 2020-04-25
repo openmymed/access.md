@@ -10,8 +10,9 @@ import org.openmymed.accessmd.domain.auth.entity.User;
 import org.openmymed.accessmd.domain.core.entity.Doctor;
 import org.openmymed.accessmd.domain.core.entity.MedicalProfile;
 import org.openmymed.accessmd.domain.core.entity.Question;
-import org.openmymed.accessmd.domain.core.entity.Reccomendation;
+import org.openmymed.accessmd.domain.core.entity.Reply;
 import org.openmymed.accessmd.domain.core.entity.Symptom;
+import org.openmymed.accessmd.domain.core.entity.VitalsMeasurment;
 
 /**
  *
@@ -27,12 +28,14 @@ public interface PatientService {
 
   public List<Question> getPatientUnansweredQuestions(Long id);
 
-  public List<Reccomendation> getPatientReccomendations(Long id);
+  public List<Reply> getPatientReccomendations(Long id);
 
   public void answerPatientQuestion(Long id, Long questionId, String answer);
 
   public void addNewPatientSymptom(Long patientId, Symptom symptom);
 
   public Doctor getPatientDoctor(Long patientId);
+
+ public void addNewVitalsMeasurment(Long patientId, VitalsMeasurment vitalsMeasurment);
 
 }

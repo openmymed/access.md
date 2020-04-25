@@ -5,9 +5,13 @@
  */
 package org.openmymed.accessmd.domain.core.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,23 +27,31 @@ import org.openmymed.accessmd.domain.entity.DomainEntity;
 @Setter
 public class Answer extends DomainEntity {
 
-  @ManyToOne
-  private Question question;
+    @ManyToOne
+    private Question question;
 
-  private String answer;
-  private boolean seen = false;
-  private Date seenOn;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Reply> replies = new ArrayList<>(); 
+    private String answer;
+    private boolean archived = false;
+    private Date archiveDate;
 
-  public void setSeen(boolean seen) {
-    if (seen == true) {
-      seenOn = new Date();
+    public void archive() {
+        archiveDate = new Date();
+        this.archived = true;
+        this.queueEvent("answerArchived", archiveDate);
     }
-    this.seen = seen;
-  }
 
-  @Override
-  public String getEntityName() {
-    return "answer";
-  }
+    public void reply(String doctorsReply) {
+        Reply reply = new Reply();
+        reply.setReply(doctorsReply);
+        replies.add(reply);
+        queueEvent("answerRepliedTo",reply);
+    }
+
+    @Override
+    public String getEntityName() {
+        return "answer";
+    }
 
 }

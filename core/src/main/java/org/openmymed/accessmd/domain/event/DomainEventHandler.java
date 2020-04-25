@@ -9,24 +9,21 @@ import java.util.logging.Level;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.dizitart.jbus.Subscribe;
+import org.openmymed.accessmd.domain.entity.DomainEntity;
 
 /**
  *
  * @author tareq
  */
 @Log
-public abstract class DomainEventHandler<T> {
+public abstract class DomainEventHandler<T extends DomainEntity, O> {
 
   @Subscribe(async = true)
   public void handleEvent(DomainEvent event) throws Throwable {
     log.log(Level.FINEST, "Event Thrown : {0}", event.getEventName());
     try {
       if (StringUtils.equals(getEventName(), event.getEventName())) {
-        if (event.getEventData() != null) {
-          doHandle(event.getAsClass(getType()));
-        } else {
-          doHandle(null);
-        }
+          doHandle(event.getTargetAsClass(getDomainEntityType()), event.getDataAsClass(getDataType()));
       }
     } catch (Throwable ex) {
       log.severe(ex.getMessage());
@@ -36,8 +33,10 @@ public abstract class DomainEventHandler<T> {
 
   public abstract String getEventName();
 
-  public abstract void doHandle(T eventData) throws Exception;
+  public abstract void doHandle(T target, O data) throws Exception;
 
-  public abstract Class<T> getType();
+  public abstract Class<T> getDomainEntityType();
+  
+  public abstract Class<O> getDataType();
 
 }

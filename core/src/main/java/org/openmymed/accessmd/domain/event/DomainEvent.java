@@ -5,9 +5,9 @@
  */
 package org.openmymed.accessmd.domain.event;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.openmymed.accessmd.domain.entity.DomainEntity;
 
 /**
  *
@@ -18,17 +18,20 @@ import lombok.Setter;
 public class DomainEvent {
 
   private String eventName;
-  private Object eventData;
-
-    public DomainEvent(String eventName, Object eventData) {
+  private DomainEntity target;
+  private Object data;
+    public DomainEvent(String eventName, DomainEntity target,Object data) {
         this.eventName = eventName;
-        this.eventData = eventData;
+        this.target = target;
+        this.data = data;
     }
   
-  
+  public <T extends DomainEntity> T getTargetAsClass(Class<T> clazz){
+      return clazz.cast(target);
+  }
 
-  public <T> T getAsClass(Class<T> clazz) {
-    return clazz.cast(eventData);
+  public <T> T getDataAsClass(Class<T> clazz) {
+    return clazz.cast(data);
   }
 
   public void post() {

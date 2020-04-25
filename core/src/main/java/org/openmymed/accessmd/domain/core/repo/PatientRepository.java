@@ -8,7 +8,7 @@ package org.openmymed.accessmd.domain.core.repo;
 import java.util.List;
 import org.openmymed.accessmd.domain.core.entity.Patient;
 import org.openmymed.accessmd.domain.core.entity.Question;
-import org.openmymed.accessmd.domain.core.entity.Reccomendation;
+import org.openmymed.accessmd.domain.core.entity.Reply;
 import org.openmymed.accessmd.domain.repo.CrudRepository;
 
 /**
@@ -21,7 +21,7 @@ public interface PatientRepository extends CrudRepository<Patient>{
       
      List<Question> getUnAnsweredPatientQuestions(Long patientId);
      
-     List<Reccomendation> getPatientReccomendations(Long patientId);
+     List<Reply> getPatientReccomendations(Long patientId);
      
      Patient getPatientByDoctorAndId(Long patientId, Long doctorId);
      

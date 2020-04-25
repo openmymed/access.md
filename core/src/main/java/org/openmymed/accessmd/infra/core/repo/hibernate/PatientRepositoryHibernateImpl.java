@@ -11,7 +11,7 @@ import javax.persistence.NoResultException;
 import org.openmymed.accessmd.domain.core.repo.PatientRepository;
 import org.openmymed.accessmd.domain.core.entity.Patient;
 import org.openmymed.accessmd.domain.core.entity.Question;
-import org.openmymed.accessmd.domain.core.entity.Reccomendation;
+import org.openmymed.accessmd.domain.core.entity.Reply;
 import org.openmymed.accessmd.infra.repo.hiberante.HibernateCrudRepository;
 
 /**
@@ -36,7 +36,7 @@ public class PatientRepositoryHibernateImpl extends HibernateCrudRepository<Pati
     }
 
     @Override
-    public List<Reccomendation> getPatientReccomendations(Long patientId) {
+    public List<Reply> getPatientReccomendations(Long patientId) {
         return  this.findById(patientId).getReccomendations();
     }
 

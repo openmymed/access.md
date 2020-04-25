@@ -69,6 +69,7 @@ public class Doctor extends DomainEntity {
     }
     patient.setDoctor(this);
     patients.add(patient);
+    this.queueEvent("patientAdded", patient);
   }
 
   @Override
