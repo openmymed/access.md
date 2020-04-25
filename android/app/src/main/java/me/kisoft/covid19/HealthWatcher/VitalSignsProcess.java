@@ -1,7 +1,9 @@
 package me.kisoft.covid19.HealthWatcher;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -12,11 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import me.kisoft.covid19.MainActivity;
 import me.kisoft.covid19.Math.Fft;
 import me.kisoft.covid19.Math.Fft2;
 import me.kisoft.covid19.R;
@@ -36,10 +41,6 @@ public class VitalSignsProcess extends AppCompatActivity {
 
     //Toast
     private Toast mainToast;
-
-    //DataBase
-//    public String user;
-//    UserDB Data = new UserDB(this);
 
     //ProgressBar
     private ProgressBar ProgHeart;
@@ -77,10 +78,19 @@ public class VitalSignsProcess extends AppCompatActivity {
     public ArrayList<Double> BlueAvgList = new ArrayList<>();
     public int counter = 0;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vital_signs_process);
+
+        preview = (SurfaceView) findViewById(R.id.preview);
+        previewHolder = preview.getHolder();
+
+        ProgHeart = (ProgressBar) findViewById(R.id.VSPB);
+        ProgHeart.setProgress(0);
+
 
         //TODO Replace all database stuff.
         Bundle extras = getIntent().getExtras();
@@ -94,15 +104,13 @@ public class VitalSignsProcess extends AppCompatActivity {
 //        Wei = Integer.parseInt(Data.getweight(user));
 //        Agg = Integer.parseInt(Data.getage(user));
 //        Gen = Integer.parseInt(Data.getgender(user));
-        Hei =170;
+        Hei = 170;
         Wei = 65;
         Agg = 30;
         Gen = 1;
         if (Gen == 1) {
             Q = 5;
-        }
-
-        // XML - Java Connecting
+        }// XML - Java Connecting
         preview = (SurfaceView) findViewById(R.id.preview);
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
@@ -112,8 +120,7 @@ public class VitalSignsProcess extends AppCompatActivity {
 
         // WakeLock Initialization : Forces the phone to stay On
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        //TODO Fix this error
-       wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
     }
 
     //Prevent the system from restarting your activity during certain configuration changes,
@@ -315,7 +322,6 @@ public class VitalSignsProcess extends AppCompatActivity {
                 i.putExtra("bpm", Beats);
                 i.putExtra("SP", SP);
                 i.putExtra("DP", DP);
-//                i.putExtra("Usr", user);
                 startActivity(i);
                 finish();
             }
@@ -382,9 +388,5 @@ public class VitalSignsProcess extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(VitalSignsProcess.this, StartVitalSigns.class);
-//        i.putExtra("Usr", user);
-        startActivity(i);
-        finish();
     }
 }
