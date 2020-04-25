@@ -1,4 +1,4 @@
-const PRECACHE = 'precache-v2';
+const PRECACHE = 'precache-v3';
 const RUNTIME = 'runtime';
 
 const PRECACHE_URLS = [
@@ -29,7 +29,10 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-    if (event.request.url.startsWith(self.location.origin) && event.request.method === "GET") {
+    if (event.request.url.startsWith(self.location.origin) 
+            && event.request.method === "GET"
+            && event.request.headers.get('Sec-Fetch-Dest').indexOf('document') !== -1
+            && event.request.headers.get('Sec-Fetch-Dest').indexOf('script') !== -1) {
         event.respondWith(
                 caches.match(event.request).then(cachedResponse => {
             if (cachedResponse && cachedResponse.ok) {
