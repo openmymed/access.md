@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">covid19</string>
+    <string name="app_name">Access.md</string>
     <!--  Sign up screen  -->
     <string name="sign_up_first_name">First Name<font color="#FF0000">*</font></string>
     <string name="sign_up_last_name">Last Name<font fgcolor="red">*</font></string>
@@ -36,6 +36,10 @@
     <string name="no_new_questions">No new questions</string>
     <string name="questions">Questions:</string>
     <string name="btn_search">Search</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+    <string name="btn_measure">Measure</string>
+    <string name="btn_answer">Answer</string>
     <string name="select_symptom">Select Symptom</string>
 
     <!-- General Info Fragment -->
@@ -83,17 +87,17 @@
     <string name="title_weight">Weight</string>
     <string name="title_height">Height</string>
     <string name="years_old">Y\'Old</string>
+
     <!--  Measurement Fragment  -->
     <string name="vital_title">Vital Measurement</string>
-    <string name="vital_result_title">Vital Measurement Results</string>
     <string name="instructions">- Lightly place your index finger on \n   the rear camera.\n- Make sure the camera is fully \n   covered. \n- Measure in a shaded environment. \n- Don\'t move your finger until the \n   measurement is complete. \n- Finally place your finger then press \n   start. </string>
 
-    <!--  Health Watcher  -->
+    <!--  Vitals Result Activity  -->
+    <string name="vital_result_title">Vital Measurement Results</string>
     <string name="heart_rate">Heart Rate</string>
     <string name="respiration_rate">Respiration Rate</string>
     <string name="blood_pressure">Blood Pressure</string>
     <string name="O2_saturation">O2 Saturation</string>
-    <string name="all_vital_signs">All Vital Signs</string>
 
 
 </resources>
