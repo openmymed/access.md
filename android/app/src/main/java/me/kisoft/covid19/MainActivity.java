@@ -1,21 +1,14 @@
 package me.kisoft.covid19;
 
 import android.Manifest;
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.SurfaceHolder;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,19 +16,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import io.paperdb.Paper;
-import me.kisoft.covid19.fragments.MeasurementFragment;
-import me.kisoft.covid19.models.Patient;
-import me.kisoft.covid19.models.UserRole;
-import me.kisoft.covid19.services.PatientService;
-import me.kisoft.covid19.services.PatientServiceDelegate;
-import me.kisoft.covid19.utils.Keys;
-import me.kisoft.covid19.utils.NotificationUtility;
+import me.kisoft.covid19.services.BackIntentService;
 
 public class MainActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 01;
     private BottomNavigationView navView;
-    @Override
+
+   public  static Activity activity;
+   @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case CAMERA_PERMISSION_REQUEST_CODE: {
@@ -75,5 +63,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        // New trieal
+        Intent serviceIntent = new Intent(this, BackIntentService.class );
+        ContextCompat.startForegroundService(this,serviceIntent);
     }
 }

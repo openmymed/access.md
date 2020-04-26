@@ -34,20 +34,17 @@ public class AppWraper extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,
-                    "Channel 1",
+                    "Questions Channel",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            channel1.setDescription("This is Channel 1");
-            Log.e("Tag", "This should be created");
-
+            channel1.setDescription("New questions from Doctor");
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
-                    "Channel 2",
-                    NotificationManager.IMPORTANCE_LOW
+                    "Health Conenection Channel",
+                    NotificationManager.IMPORTANCE_HIGH
             );
 
-            Log.e("Tag", "This is the desc" + channel1.getDescription());
-            channel2.setDescription("This is Channel 2");
+            channel2.setDescription("Foreground check");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
