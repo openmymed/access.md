@@ -13,3 +13,5 @@ nbactions.xml
 .workspace/
 .project/
 /app_db_dev/
+notification.db
+/data/
