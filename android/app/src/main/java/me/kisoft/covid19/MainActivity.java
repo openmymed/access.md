@@ -18,12 +18,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.concurrent.TimeUnit;
 
 import io.paperdb.Paper;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.UserRole;
+import me.kisoft.covid19.services.BackgroundTask;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
 import me.kisoft.covid19.utils.Keys;
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
+                BackgroundTask.class,20, TimeUnit.MINUTES
+        ).build();
+        WorkManager.getInstance().enqueue(periodicWorkRequest);
 
     }
 
