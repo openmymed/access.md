@@ -8,7 +8,7 @@ import { Signin } from "./view/signin";
 import { Home } from "./view/home";
 import { AdminHome } from "./view/admin";
 import {PatientQuestions} from "./view/patient-questions";
-
+import './utils/notifications'
 const check = () => {
     if (!("serviceWorker" in navigator)) {
         throw new Error("No Service Worker support!");

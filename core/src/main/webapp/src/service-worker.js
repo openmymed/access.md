@@ -1,7 +1,7 @@
 const PRECACHE = 'precache-5';
 
 
-//SPACE LEFT HERE SO JENKINS CAN REPLACE THE FIRST STRING WITH A CACHE WITH THE
+//SPACE LEFT HERE SO JENKINS CAN REPLACE THE NAME OF THE CACHE  WITH THE
 //BUILD NUMBER. DO NOT TOUCH THIS.
 const RUNTIME = 'runtime';
 
@@ -9,6 +9,7 @@ const PRECACHE_URLS = [
     'index.html',
     'app.js'
 ];
+const channel = new BroadcastChannel('sw-messages');
 
 self.addEventListener('install', event => {
     event.waitUntil(
@@ -20,6 +21,27 @@ self.addEventListener('install', event => {
 
 // The activate handler takes care of cleaning up old caches.
 self.addEventListener('activate', event => {
+    self.pollNotifications = () => {
+        fetch("/notification", {
+            method: "GET",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Failed to fetch");
+            }
+        }).then((json) => {
+            channel.postMessage({type: "NOTIFICATIONS", notifications: json});
+        }).catch((e) => {/*do nothing*/
+        });
+        self.setTimeout(() => {
+            self.pollNotifications();
+        }, 30000);
+    }
     const currentCaches = [PRECACHE, RUNTIME];
     event.waitUntil(
             caches.keys().then(cacheNames => {
@@ -30,6 +52,7 @@ self.addEventListener('activate', event => {
         }));
     }).then(() => self.clients.claim())
             );
+    self.pollNotifications();
 });
 
 self.addEventListener('fetch', event => {
@@ -51,4 +74,18 @@ self.addEventListener('fetch', event => {
         })
                 );
     }
+});
+
+self.addEventListener('notificationclick', (e) => {
+    // Close the notification popout
+    e.notification.close();
+    clients.matchAll({type: 'window'}).then(clients => {
+        if (clients.length > 0) {
+            if (e.notification.data) {
+                channel.postMessage({type: "REDIRECT", view: e.notification.data.view, params: e.notification.data.params});
+            }
+        } else {
+            return clients.openWindow("./")
+        }
+    })
 });
