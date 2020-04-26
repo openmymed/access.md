@@ -120,5 +120,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="mmHg"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_VSBP"
+        app:layout_constraintStart_toEndOf="@+id/tv_VSBP" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="bpm"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_VSHR"
+        app:layout_constraintStart_toEndOf="@+id/tv_VSHR" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="%"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_VSO2"
+        app:layout_constraintStart_toEndOf="@+id/tv_VSO2" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Breaths per minute"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_VSRR"
+        app:layout_constraintStart_toEndOf="@+id/tv_VSRR" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
