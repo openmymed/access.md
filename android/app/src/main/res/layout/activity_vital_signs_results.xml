@@ -11,7 +11,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="100dp"
         android:text="@string/blood_pressure"
         android:textColor="@color/colorAccent"
@@ -24,7 +24,7 @@
         android:id="@+id/tv_VSBP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:background="@android:color/transparent"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -154,6 +154,8 @@
         android:layout_marginStart="8dp"
         android:text="Breaths per minute"
         app:layout_constraintBottom_toBottomOf="@+id/tv_VSRR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tv_VSRR" />
 
 
