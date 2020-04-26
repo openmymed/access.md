@@ -61,14 +61,14 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getDoctor();
-        Timer timer = new Timer();
+      /*  Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 getQuestions();
             }
-        };
-        timer.schedule(task, 0l, 1000 * 5 * 60);
+        };*/
+     //   timer.schedule(task, 0l, 1000 * 5 * 60);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,7 +129,8 @@ public class HomeFragment extends Fragment {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getQuestions();
+        //        getQuestions();
+                Log.e("refresh","on refresh");
             }
         });
     }
@@ -173,7 +174,7 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
-    private void getQuestions() {
+/*    private void getQuestions() {
         Log.e("Calling", "Get Question every 5 mins");
         new AsyncTask<Void, Void, List<Question>>() {
             @Override
@@ -197,7 +198,7 @@ public class HomeFragment extends Fragment {
                 super.onPostExecute(questionList);
             }
         }.execute();
-    }
+    }*/
 
     private void addSymptoms(final Symptom symptom) {
         new AsyncTask<Void, Void, Boolean>() {

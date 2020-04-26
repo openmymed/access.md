@@ -47,7 +47,7 @@ public class AppWraper extends Application {
             );
 
             Log.e("Tag", "This is the desc" + channel1.getDescription());
-            channel2.setDescription("This is Channel 2");
+            channel2.setDescription("Updates");
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);

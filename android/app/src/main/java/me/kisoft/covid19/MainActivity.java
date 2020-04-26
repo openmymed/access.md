@@ -1,6 +1,7 @@
 package me.kisoft.covid19;
 
 import android.Manifest;
+import android.app.IntentService;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -28,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import io.paperdb.Paper;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.UserRole;
+import me.kisoft.covid19.services.BackIntentService;
 import me.kisoft.covid19.services.BackgroundTask;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
@@ -80,11 +83,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
                 BackgroundTask.class,20, TimeUnit.MINUTES
         ).build();
         WorkManager.getInstance().enqueue(periodicWorkRequest);
 
+
+
+        // New trieal
+        Intent serviceIntent = new Intent(this, BackIntentService.class );
+        ContextCompat.startForegroundService(this,serviceIntent);
     }
 
     // This is just a mock button to test Notifications
