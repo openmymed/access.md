@@ -21,7 +21,6 @@ import org.openmymed.accessmd.domain.entity.DomainEntity;
 @Setter
 public class VitalsMeasurment extends DomainEntity {
 
-    @JsonIgnore
     @ManyToOne
     private Patient patient;
     private double heartBeatsPerMinute;
@@ -29,11 +28,10 @@ public class VitalsMeasurment extends DomainEntity {
     private double diastolicPressure;
     private double bloodOxygenation;
     private double breathingRate;
-    
-    
+
     @Override
     public String getEntityName() {
         return "vitalsMeasurment";
     }
-    
+
 }

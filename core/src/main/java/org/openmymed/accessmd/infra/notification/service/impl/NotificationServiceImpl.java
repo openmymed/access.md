@@ -5,6 +5,7 @@
  */
 package org.openmymed.accessmd.infra.notification.service.impl;
 
+import java.io.File;
 import java.util.List;
 import lombok.extern.java.Log;
 import org.dizitart.no2.Nitrite;
@@ -19,10 +20,20 @@ import org.openmymed.accessmd.infra.notification.vo.Notification;
 @Log
 public class NotificationServiceImpl implements NotificationService {
 
-    private static Nitrite db = Nitrite.builder()
-            .compressed()
-            .filePath("./data/notification.db")
-            .openOrCreate();
+    private static Nitrite db;
+
+    static {
+        File file = new File("./data");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        db = Nitrite.builder()
+                .compressed()
+                .filePath("./data/notification.db")
+                .enableOffHeapStorage()
+                .openOrCreate();
+    }
+
     private static final String USER_COLLECTION = "%s_notifications_";
 
     private ObjectRepository<Notification> getUserRepository(Long userId) {

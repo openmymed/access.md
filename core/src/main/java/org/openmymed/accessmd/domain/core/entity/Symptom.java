@@ -30,7 +30,6 @@ public class Symptom extends DomainEntity {
 
     private String symptomCode;
     @ManyToOne
-    @JsonIgnore
     private Patient patient;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
