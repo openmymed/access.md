@@ -37,18 +37,21 @@ public class NotificationUtility extends AppCompatActivity {
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setContentText(notificationMessage);
 
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, notificationRequestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
+        /*Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent contentIntent = getActivity(context, notificationRequestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);*/
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
 
     public void newNotification(Context c,String notificationTitle, String notificationMessage ){
-
+        Intent resultIntent = new Intent(this.context,MainActivity.class);
+        PendingIntent pendingIntent =    PendingIntent.getActivity(this.context,1,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new NotificationCompat.Builder(c, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationMessage)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

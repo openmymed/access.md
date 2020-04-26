@@ -58,10 +58,10 @@ public static final String TAG="BackIntentService";
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d(TAG,"onHandleIntent");
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 300; i++) {
             getNotifications();
             Log.d(TAG,"Work  happening "+i);
-            SystemClock.sleep(5000);
+            SystemClock.sleep(30000);
         }
         //we should delete this once the background process is ready.
  /*      Timer timer = new Timer();
@@ -97,6 +97,7 @@ public static final String TAG="BackIntentService";
                 if (notifications != null && !notifications.isEmpty()) {
                     NotificationUtility notificationUtil = new NotificationUtility(context);
                     notificationUtil.notify(context, "Access.md Notification", getString(R.string.notification_question, notifications.size()), 1);
+                    Log.e(TAG, "onPostExecute: "+getString(R.string.notification_question) );
                 }
             }
         }.execute();
