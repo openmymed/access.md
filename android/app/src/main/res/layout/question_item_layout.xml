@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:background="@drawable/rounded_text_border"
             android:padding="10dp"
-            android:text="Yes"
+            android:text="@string/btn_yes"
             android:textAlignment="center"
             android:textColor="@color/colorAccent" />
 
@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:background="@drawable/rounded_text_border"
             android:padding="10dp"
-            android:text="No"
+            android:text="@string/btn_no"
             android:textAlignment="center"
             android:textColor="@color/colorAccent" />
 
@@ -82,7 +82,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="response"
             android:inputType="textPersonName" />
 
         <Button
@@ -91,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/rounded_text_border"
-            android:text="Answer"
+            android:text="@string/btn_answer"
             android:textColor="@color/colorAccent"
             android:textSize="12sp" />
     </LinearLayout>
@@ -138,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/rounded_text_border"
-            android:text="Answer"
+            android:text="@string/btn_answer"
             android:textColor="@color/colorAccent"
             android:textSize="12sp" />
     </LinearLayout>
@@ -164,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/rounded_text_border"
-            android:text="Measure"
+            android:text="@string/btn_measure"
             android:textColor="@color/colorAccent"
             android:textSize="12sp" />
     </LinearLayout>
