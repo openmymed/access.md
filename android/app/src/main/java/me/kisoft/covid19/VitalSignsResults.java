@@ -1,8 +1,11 @@
 package me.kisoft.covid19;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,19 +25,23 @@ public class VitalSignsResults extends AppCompatActivity {
     java.util.Date today = Calendar.getInstance().getTime();
     private int VBP1, VBP2, VRR, VHR, VO2;
     private PatientService service;
+    private Button btnFinish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vital_signs_results);
+        getSupportActionBar().show();
         getSupportActionBar().setTitle(R.string.vital_result_title);
         service = new PatientServiceDelegate();
 
         date = df.format(today);
-        TextView VSRR = findViewById(R.id.RRV);
-        TextView VSBPS = findViewById(R.id.BP2V);
-        TextView VSHR = findViewById(R.id.HRV);
-        TextView VSO2 = findViewById(R.id.O2V);
+        //init screen contents
+        TextView tvVSRR = findViewById(R.id.tv_VSRR);
+        TextView tvVSBPS = findViewById(R.id.tv_VSBP);
+        TextView tvVSHR = findViewById(R.id.tv_VSHR);
+        TextView tvVSO2 = findViewById(R.id.tv_VSO2);
+        btnFinish = findViewById(R.id.btn_finish);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -45,11 +52,20 @@ public class VitalSignsResults extends AppCompatActivity {
             VO2 = bundle.getInt("O2R");
             vitals = new Vitals(VRR, VHR, VBP1, VBP2, VO2);
             postVitalsResults(vitals);
-            VSRR.setText(String.valueOf(VRR));
-            VSHR.setText(String.valueOf(VHR));
-            VSBPS.setText(VBP1 + " / " + VBP2);
-            VSO2.setText(String.valueOf(VO2));
+            tvVSRR.setText(String.valueOf(VRR));
+            tvVSHR.setText(String.valueOf(VHR));
+            tvVSBPS.setText(VBP1 + " / " + VBP2);
+            tvVSO2.setText(String.valueOf(VO2));
         }
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(VitalSignsResults.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 

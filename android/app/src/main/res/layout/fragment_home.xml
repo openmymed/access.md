@@ -22,7 +22,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Dr. Samer Asdasdasd"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"

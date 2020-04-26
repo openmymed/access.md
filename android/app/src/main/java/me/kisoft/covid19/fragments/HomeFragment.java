@@ -74,7 +74,6 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         //init screen components
         rvHome = root.findViewById(R.id.rv_home);
-        service = new PatientServiceDelegate();
         tvDoctorName = root.findViewById(R.id.tv_doctor_name);
         btnChat = root.findViewById(R.id.btn_chat);
         tvNoQuestions = root.findViewById(R.id.tv_no_questions);
@@ -82,6 +81,7 @@ public class HomeFragment extends Fragment {
         pullToRefresh = root.findViewById(R.id.pullToRefresh);
         pullToRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         //init service
+        service = new PatientServiceDelegate();
 
 
         questions = new ArrayList<>();
@@ -126,8 +126,7 @@ public class HomeFragment extends Fragment {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-        //        getQuestions();
-                Log.e("refresh","on refresh");
+                getQuestions();
             }
         });
     }
@@ -172,7 +171,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void getQuestions() {
-        Log.e("Calling", "Get Question every 5 mins");
         new AsyncTask<Void, Void, List<Question>>() {
             @Override
             protected void onPreExecute() {
