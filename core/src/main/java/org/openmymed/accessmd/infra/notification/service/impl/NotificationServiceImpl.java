@@ -31,7 +31,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void addNotification(Long userId, String name, Object data) {
-        log.info(name);
         Notification n = new Notification();
         n.setName(name);
         n.setData(data);
