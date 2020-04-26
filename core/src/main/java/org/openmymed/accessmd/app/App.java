@@ -49,6 +49,8 @@ import org.eclipse.jetty.server.session.DefaultSessionCache;
 import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionCache;
 import org.eclipse.jetty.server.session.SessionHandler;
+import org.openmymed.accessmd.domain.event.DomainEventHandler;
+import org.openmymed.accessmd.infra.notification.service.rest.NotificationRestService;
 
 /**
  *
@@ -67,9 +69,9 @@ public class App {
         }
         EntityManagerFactory.getInstance().setPersistenceUnit(persistenceUnitName);
         readICPCCodes();
+        registerDomainHandlers();
         startBackgroundServices();
         startServer();
-        registerDomainHandlers();
         registerDerbyShutdownHook();
         createAdminIfNotFound();
     }
@@ -93,7 +95,7 @@ public class App {
     }
 
     private static void registerDomainHandlers() throws Throwable {
-        EventBus.getInstance().searchForHandlers();
+        DomainEventHandler.subscribeHandlers();
     }
 
     private static void registerDerbyShutdownHook() {
@@ -129,6 +131,7 @@ public class App {
         PatientRestService patientService = new PatientRestService();
         ICPCRestService icpcService = new ICPCRestService();
         DoctorRestService doctorService = new DoctorRestService();
+        NotificationRestService notificationService = new NotificationRestService();
         app.routes(() -> {
             path("login", () -> {
                 post(userService::signIn, roles(NONE));
@@ -137,6 +140,9 @@ public class App {
                 path("codes", () -> {
                     get(icpcService::getICPCSymptoms, roles(NONE));
                 });
+            });
+            path("notification", () ->{
+                get(notificationService::getNotifications, roles(ROLE_PATIENT,ROLE_DOCTOR));
             });
             path("patient", () -> {
                 path("doctor", () -> {
@@ -237,7 +243,6 @@ public class App {
                 });
             });
         });
-
         app.exception(Exception.class, (e, ctx) -> {
             e.printStackTrace();
             ctx.status(500);

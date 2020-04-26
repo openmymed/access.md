@@ -104,7 +104,6 @@ public class Patient extends DomainEntity {
         }
         question.setPatient(this);
         questions.add(question);
-        this.queueEvent("questionAdded", question);
     }
     
     public void answerQuestion(String answer, Long questionId) {
@@ -153,7 +152,6 @@ public class Patient extends DomainEntity {
         }
         symptom.setPatient(this);
         symptoms.add(symptom);
-        this.queueEvent("symptomAdded", symptom);
         
     }
     
@@ -163,7 +161,6 @@ public class Patient extends DomainEntity {
         }
         vitalsMeasurment.setPatient(this);
         vitalsMeasurments.add(vitalsMeasurment);
-        this.queueEvent("vitalsMeasurmentAdded", vitalsMeasurment);
     }
     
     @Override

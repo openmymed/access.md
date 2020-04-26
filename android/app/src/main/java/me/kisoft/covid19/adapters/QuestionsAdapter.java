@@ -1,8 +1,8 @@
 package me.kisoft.covid19.adapters;
 
-import android.database.DataSetObserver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import me.kisoft.covid19.MainActivity;
 import me.kisoft.covid19.R;
+import me.kisoft.covid19.fragments.MeasurementFragment;
 import me.kisoft.covid19.models.Answer;
-import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.QuestionType;
 import me.kisoft.covid19.services.PatientService;
@@ -27,10 +28,12 @@ import me.kisoft.covid19.services.PatientServiceDelegate;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.ViewHolder> {
     private List<Question> questions;
+    private Context context;
     private PatientService service;
 
-    public QuestionsAdapter(List<Question> questions) {
+    public QuestionsAdapter(List<Question> questions, Context context) {
         this.questions = questions;
+        this.context = context;
     }
 
     @NonNull
@@ -49,7 +52,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         final String questionText = questions.get(position).getQuestion();
         QuestionType type = questions.get(position).getType();
         holder.setData(questionText, type);
-        //This method is used to answer the text questions only..
+
+        //This event is used to handle the answer for text questions only..
         holder.btnTextAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +61,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
                 holder.createAnswer(answer, question);
             }
         });
-
         holder.tvAnswerNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +74,19 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
             }
         });
 
-        //This method is used to answer the scale questions only..
+        //This event is used to answer the vital question only..
+        holder.btnVitalAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("fragment",1);
+                context.startActivity(intent);
+                //sending empty answer object.
+                holder.createAnswer(new Answer(), question);
+            }
+        });
+
+        //This event is used to answer the scale questions only..
         holder.btnScaleAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +94,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
                 holder.createAnswer(answer, question);
             }
         });
-        //this is used to change the value of the text of seekbar.
+
+        //This event used to change the value of the text of seekbar.
         holder.sbAnswer.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -108,6 +124,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         TextView tvAnswerYes;
         Button btnTextAnswer;
         Button btnScaleAnswer;
+        Button btnVitalAnswer;
         TextView tvScaleValue;
         EditText etAnswer;
         SeekBar sbAnswer;
@@ -115,6 +132,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         private LinearLayout llBinaryAnswer;
         private LinearLayout llTextAnswer;
         private LinearLayout llScaleAnswer;
+        private LinearLayout llVitalAnswer;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -123,12 +141,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
             llBinaryAnswer = itemView.findViewById(R.id.ll_binary_answer);
             llTextAnswer = itemView.findViewById(R.id.ll_text_answer);
             llScaleAnswer = itemView.findViewById(R.id.ll_scale_answer);
+            llVitalAnswer = itemView.findViewById(R.id.ll_vital_answer);
             etAnswer = itemView.findViewById(R.id.et_answer);
             tvAnswerNo = itemView.findViewById(R.id.tv_answer_no);
             tvAnswerYes = itemView.findViewById(R.id.tv_answer_yes);
             sbAnswer = itemView.findViewById(R.id.sb_answer);
             btnTextAnswer = itemView.findViewById(R.id.btn_text_answer);
             btnScaleAnswer = itemView.findViewById(R.id.btn_scale_answer);
+            btnVitalAnswer = itemView.findViewById(R.id.btn_vital_answer);
             tvScaleValue = itemView.findViewById(R.id.tv_scale_value);
         }
 
@@ -141,6 +161,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
                 llTextAnswer.setVisibility(View.VISIBLE);
             } else if (type == QuestionType.Scale) {
                 llScaleAnswer.setVisibility(View.VISIBLE);
+            } else if (type == QuestionType.Vitals) {
+                llVitalAnswer.setVisibility(View.VISIBLE);
             }
         }
 

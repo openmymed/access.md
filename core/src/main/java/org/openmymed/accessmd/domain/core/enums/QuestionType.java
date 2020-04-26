@@ -10,5 +10,5 @@ package org.openmymed.accessmd.domain.core.enums;
  * @author tareq
  */
 public enum QuestionType {
-     Scale, Binary, Text,
+     Scale, Binary, Text,Vitals
 }

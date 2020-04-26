@@ -9,9 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.extern.java.Log;
-import org.openmymed.accessmd.domain.event.EventBus;
 import org.reflections.Reflections;
 
 /**
@@ -27,7 +25,8 @@ public abstract class BackgroundService {
     private static final List<BackgroundService> SERVICES = new ArrayList<>();
 
     public static final void startBackgroundServices() {
-        Reflections r = new Reflections(BackgroundService.class);
+        
+        Reflections r = new Reflections("org.openmymed");
         for (Class clazz : r.getTypesAnnotatedWith(Service.class)) {
             try {
                 Object o = clazz.getConstructor().newInstance();
@@ -37,7 +36,7 @@ public abstract class BackgroundService {
                     log.log(Level.INFO, "Started Background Service : {0}", clazz.getSimpleName());
                 }
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                Logger.getLogger(EventBus.class.getName()).log(Level.SEVERE, null, ex);
+                log.log(Level.SEVERE, null, ex);
             }
         }
     }

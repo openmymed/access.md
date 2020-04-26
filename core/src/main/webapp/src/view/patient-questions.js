@@ -136,8 +136,8 @@ class AddEditQuestionModal {
                   <option value="Scale" >Scale</option>
                   <option value="Binary" >Binary</option>
                   <option value="Text" >Text</option>
+                  <option value="Vitals">Vitals</option>
                 </select>
-    
               </div>
               <div class="col-6 form-group" >
                 <label></label>

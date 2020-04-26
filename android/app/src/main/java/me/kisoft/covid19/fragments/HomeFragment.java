@@ -1,6 +1,7 @@
 package me.kisoft.covid19.fragments;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,11 +40,13 @@ import me.kisoft.covid19.R;
 import me.kisoft.covid19.adapters.QuestionsAdapter;
 import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
+import me.kisoft.covid19.models.Notification;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.Symptom;
 import me.kisoft.covid19.services.PatientService;
 import me.kisoft.covid19.services.PatientServiceDelegate;
 import me.kisoft.covid19.utils.Keys;
+import me.kisoft.covid19.utils.NotificationUtility;
 
 //Home has the questions from the doctor
 public class HomeFragment extends Fragment {
@@ -61,14 +65,16 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getDoctor();
-      /*  Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                getQuestions();
-            }
-        };*/
-     //   timer.schedule(task, 0l, 1000 * 5 * 60);
+        getQuestions();
+        //we should delete this once the background process is ready.
+//        Timer timer = new Timer();
+//        TimerTask task = new TimerTask() {
+//            @Override
+//            public void run() {
+//                getQuestions();
+//            }
+//        };
+//        timer.schedule(task, 0l, 1000 * 5 * 60);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,10 +91,10 @@ public class HomeFragment extends Fragment {
         pullToRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         //init service
         service = new PatientServiceDelegate();
-
+        getNotifications();
 
         questions = new ArrayList<>();
-        questionsAdapter = new QuestionsAdapter(questions);
+        questionsAdapter = new QuestionsAdapter(questions, getContext());
         questionsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -174,7 +180,7 @@ public class HomeFragment extends Fragment {
         dialog.show();
     }
 
-/*    private void getQuestions() {
+    private void getQuestions() {
         Log.e("Calling", "Get Question every 5 mins");
         new AsyncTask<Void, Void, List<Question>>() {
             @Override
@@ -198,7 +204,27 @@ public class HomeFragment extends Fragment {
                 super.onPostExecute(questionList);
             }
         }.execute();
-    }*/
+    }
+
+    //todo we need to move this method into the background process...
+    private void getNotifications() {
+        new AsyncTask<Void, Void, List<Notification>>() {
+
+            @Override
+            protected List<Notification> doInBackground(Void... voids) {
+                return service.getNotification();
+            }
+
+            @Override
+            protected void onPostExecute(List<Notification> notifications) {
+                super.onPostExecute(notifications);
+                if (notifications != null && !notifications.isEmpty()) {
+                    NotificationUtility notificationUtil = new NotificationUtility(getContext());
+                    notificationUtil.notify(getContext(), "Access.md Notification", getString(R.string.notification_question, notifications.size()), 1);
+                }
+            }
+        }.execute();
+    }
 
     private void addSymptoms(final Symptom symptom) {
         new AsyncTask<Void, Void, Boolean>() {
@@ -221,7 +247,7 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onPostExecute(Doctor doctor) {
                 super.onPostExecute(doctor);
-                if(doctor != null){
+                if (doctor != null) {
                     String doctorName = "Dr. " + doctor.getFirstName() + " " + doctor.getLastName();
                     tvDoctorName.setText(doctorName);
                 }
