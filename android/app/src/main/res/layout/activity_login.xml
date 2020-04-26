@@ -89,12 +89,13 @@
         android:id="@+id/chk_remember_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
         android:checked="false"
         android:text="@string/remember_me"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_goto_sign_up"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_goto_sign_up"
+        app:layout_constraintTop_toBottomOf="@+id/tv_goto_sign_up" />
 
     <TextView
         android:id="@+id/tv_login_warning"
