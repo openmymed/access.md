@@ -14,6 +14,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,6 +24,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import io.paperdb.Paper;
+import me.kisoft.covid19.fragments.MeasurementFragment;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.UserRole;
 import me.kisoft.covid19.services.PatientService;
@@ -32,8 +35,6 @@ import me.kisoft.covid19.utils.NotificationUtility;
 public class MainActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 01;
     private BottomNavigationView navView;
-    private NotificationManagerCompat notificationManager;
-    NotificationUtility notificationUtil;
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -43,28 +44,26 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // camera-related task you need to do.
-
-
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-
-
                 }
                 return;
             }
-
             // other 'case' lines to check for other
             // permissions this app might request.
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int fragment = getIntent().getIntExtra("fragment", 0);
+        if(fragment == 1){
+            Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.navigation_measurements);
+        }
         navView = findViewById(R.id.nav_view);
-        notificationManager = NotificationManagerCompat.from(this);
-        notificationUtil = new NotificationUtility(this);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
 
         // Passing each menu ID as a set of Ids because each
@@ -77,10 +76,4 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
     }
-
-    // This is just a mock button to test Notifications
-    public void notify(View view) {
-        notificationUtil.notify(this, "notificationTitle", "notificationMessage", 1);
-    }
-
 }

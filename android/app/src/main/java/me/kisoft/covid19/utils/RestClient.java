@@ -37,6 +37,7 @@ public class RestClient {
     public static final String DOCTOR_URL = BASE_URL + "patient/doctor";
     public static final String RECOMMENDATION_URL = BASE_URL + "patient/recommendation";
     public static final String GET_ICPC_URL = BASE_URL + "symptom/codes";
+    public static final String GET_NOTIFICATION = BASE_URL + "notification";
     public static final String POST_SYMPTOMS_URL = BASE_URL + "patient/symptom";
     public static final String POST_VITALS = BASE_URL + "patient/vitals";
     static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
