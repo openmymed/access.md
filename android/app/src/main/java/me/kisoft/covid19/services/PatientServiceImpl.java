@@ -2,6 +2,8 @@ package me.kisoft.covid19.services;
 
 import android.util.Log;
 
+import androidx.core.app.NotificationManagerCompat;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -23,11 +25,13 @@ import me.kisoft.covid19.models.Answer;
 import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
+import me.kisoft.covid19.models.Notification;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
 import me.kisoft.covid19.models.Vitals;
+import me.kisoft.covid19.utils.NotificationUtility;
 import me.kisoft.covid19.utils.RestClient;
 import okhttp3.Response;
 
@@ -76,6 +80,29 @@ public class PatientServiceImpl implements PatientService {
         }
         return false;
     }
+
+    @Override
+    public List<Notification> getNotification() {
+        List<Notification> notifications = new ArrayList<>();
+        Gson gson = new Gson();
+        try (Response response = RestClient.get(RestClient.GET_NOTIFICATION)) {
+            Log.i("GET Notification", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+                JSONArray jsonArray = new JSONArray(response.body().string());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Notification notification = gson.fromJson(jsonArray.get(i).toString(), Notification.class);
+                    notifications.add(notification);
+                }
+                return notifications;
+            }else{
+                return null;
+            }
+        } catch (IOException | JSONException e) {
+            Log.e("GET Notification", e.toString());
+        }
+        return null;
+    }
+
     @Override
     public Boolean register(Patient patient) {
         Gson gson = new Gson();
