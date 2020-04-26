@@ -46,7 +46,6 @@ public class Answer extends DomainEntity {
         Reply reply = new Reply();
         reply.setReply(doctorsReply);
         replies.add(reply);
-        queueEvent("answerRepliedTo",reply);
     }
 
     @Override

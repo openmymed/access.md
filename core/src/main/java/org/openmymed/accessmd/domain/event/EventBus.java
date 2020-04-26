@@ -19,44 +19,31 @@ import org.reflections.Reflections;
 @Log
 public class EventBus {
 
-  private static EventBus instance = getInstance();
+    private static EventBus instance = getInstance();
 
-  private EventBus() {
-    jbus = new JBus();
-  }
-
-  public static final EventBus getInstance() {
-    if (instance == null) {
-      instance = new EventBus();
+    private EventBus() {
+        jbus = new JBus();
     }
-    return instance;
-  }
-  private JBus jbus;
 
-  public void searchForHandlers() {
-    Reflections r = new Reflections(DomainEventHandler.class);
-    for (Class clazz : r.getTypesAnnotatedWith(EventHandler.class)) {
-      try {
-        Object o = clazz.getConstructor().newInstance();
-        if (o instanceof DomainEventHandler) {
-          EventBus.getInstance().subscribe((DomainEventHandler) o);
-          log.info("Added Event Handler " + clazz.getSimpleName());
+    public static final EventBus getInstance() {
+        if (instance == null) {
+            instance = new EventBus();
         }
-      } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-        Logger.getLogger(EventBus.class.getName()).log(Level.SEVERE, null, ex);
-      }
+        return instance;
     }
-  }
+    private JBus jbus;
 
-  public void removeHandlers() {
-    jbus = new JBus();
-  }
 
-  public void post(DomainEvent event) {
-    jbus.post(event);
-  }
 
-  public void subscribe(DomainEventHandler handler) {
-    jbus.register(handler);
-  }
+    public void removeHandlers() {
+        jbus = new JBus();
+    }
+
+    public void post(DomainEvent event) {
+        jbus.post(event);
+    }
+
+    public void subscribe(DomainEventHandler handler) {
+        jbus.register(handler);
+    }
 }

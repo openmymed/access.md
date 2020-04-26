@@ -38,7 +38,7 @@ public abstract class DomainEntity {
     protected static transient final String CREATED_EVENT = "%sCreated";
     protected static transient final String UPDATED_EVENT = "%sUpdated";
     @Transient
-    private final transient List<DomainEvent> eventQueue = new ArrayList<>();
+    private transient List<DomainEvent> eventQueue = new ArrayList<>();
 
     @Id
     @Getter
@@ -59,20 +59,21 @@ public abstract class DomainEntity {
     private Date updateDate;
 
     public void postDeleted() {
-        this.queueEvent(String.format(DELETED_EVENT, getEntityName()),this);
+        this.queueEvent(String.format(DELETED_EVENT, getEntityName()), this);
         this.postAllEvents();
     }
 
     public void postCreated() {
-        this.queueEvent(String.format(CREATED_EVENT, getEntityName()),this);
+        this.queueEvent(String.format(CREATED_EVENT, getEntityName()), this);
         this.postAllEvents();
     }
 
     public void postUpdated() {
-        this.queueEvent(String.format(UPDATED_EVENT, getEntityName()),this);
+        this.queueEvent(String.format(UPDATED_EVENT, getEntityName()), this);
         this.postAllEvents();
     }
 
+    
     @PostPersist
     public void postPersist() {
         postCreated();
@@ -89,16 +90,21 @@ public abstract class DomainEntity {
     }
 
     /**
-     * Queues events to be sent after the database transactions are complete and the transaction succeeds
+     * Queues events to be sent after the database transactions are complete and
+     * the transaction succeeds
+     *
      * @param name the name of the event
      * @param data the data to send
      */
     protected void queueEvent(String name, Object data) {
-        eventQueue.add(new DomainEvent(name, this, data));
+        DomainEvent event = new DomainEvent(name, this, data);
+        this.eventQueue.add(event);
     }
 
     private void postAllEvents() {
-        eventQueue.stream().forEach(event -> EventBus.getInstance().post(event));
+        for (DomainEvent event : eventQueue) {
+            EventBus.getInstance().post(event);
+        }
     }
 
     @Transient
