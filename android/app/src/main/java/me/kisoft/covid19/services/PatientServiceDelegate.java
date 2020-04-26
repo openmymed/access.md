@@ -3,11 +3,11 @@ package me.kisoft.covid19.services;
 
 import java.util.List;
 
-import me.kisoft.covid19.Exceptions.UnauthorizedException;
 import me.kisoft.covid19.models.Answer;
 import me.kisoft.covid19.models.Doctor;
 import me.kisoft.covid19.models.ICPCEntry;
 import me.kisoft.covid19.models.MedicalProfile;
+import me.kisoft.covid19.models.Notification;
 import me.kisoft.covid19.models.Patient;
 import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.SecurityCode;
@@ -45,7 +45,7 @@ public class PatientServiceDelegate implements PatientService {
 
     @Override
     public Boolean answerQuestion(Answer answer, Long questionId) {
-        return service.answerQuestion(answer,questionId);
+        return service.answerQuestion(answer, questionId);
     }
 
 
@@ -71,7 +71,13 @@ public class PatientServiceDelegate implements PatientService {
 
     @Override
     public Boolean postVitals(Vitals vitals) {
-        return service.postVitals(vitals);    }
+        return service.postVitals(vitals);
+    }
+
+    @Override
+    public List<Notification> getNotification() {
+        return service.getNotification();
+    }
 
 
 }

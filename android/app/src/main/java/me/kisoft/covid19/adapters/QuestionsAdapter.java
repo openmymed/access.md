@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import me.kisoft.covid19.MainActivity;
 import me.kisoft.covid19.R;
 import me.kisoft.covid19.fragments.MeasurementFragment;
 import me.kisoft.covid19.models.Answer;
@@ -77,8 +78,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         holder.btnVitalAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo check if this works
-                Intent intent = new Intent(context, MeasurementFragment.class);
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("fragment",1);
                 context.startActivity(intent);
                 //sending empty answer object.
                 holder.createAnswer(new Answer(), question);
