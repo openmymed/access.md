@@ -93,7 +93,6 @@ class LoginForm {
                 loadIcpc();
                 sessionStorage.setItem("name", fullName);
                 goto("home");
-                displayNotification("HELLO", {body: "THERE"});
             } else if (json.userRole == "ROLE_ADMIN") {
                 sessionStorage.setItem("auth", true)
                 sessionStorage.setItem("name", fullName);
