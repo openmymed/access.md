@@ -7,6 +7,7 @@ package org.openmymed.accessmd.domain.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Access;
@@ -41,7 +42,7 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "Patient.byDoctorAndId", query = "SELECT p  from Patient p WHERE p.id=(:patient_id) AND p.doctor.id=(:doctor_id)")
 })
 public class Patient extends DomainEntity {
-    
+
     @JsonIgnore
     private String password;
     private String username;
@@ -54,27 +55,27 @@ public class Patient extends DomainEntity {
     @Access(AccessType.PROPERTY)
     @JsonIgnore
     private Doctor doctor;
-    
+
     @Access(AccessType.PROPERTY)
     @OneToOne(cascade = CascadeType.ALL)
     MedicalProfile profile = new MedicalProfile();
-    
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<Reply> reccomendations = new ArrayList<>();
-    
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
-    
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<VitalsMeasurment> vitalsMeasurments = new ArrayList<>();
-    
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<Symptom> symptoms = new ArrayList<>();
-    
+
     public Patient(User user) {
         this.setUsername(user.getUsername());
         this.setPassword(user.getPassword());
@@ -83,21 +84,21 @@ public class Patient extends DomainEntity {
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
     }
-    
+
     public Patient() {
-        
+
     }
-    
+
     @JsonIgnore
     public String getPassword() {
         return this.password;
     }
-    
+
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public void addQuestion(Question question) {
         if (questions == null) {
             questions = new ArrayList<>();
@@ -105,7 +106,7 @@ public class Patient extends DomainEntity {
         question.setPatient(this);
         questions.add(question);
     }
-    
+
     public void answerQuestion(String answer, Long questionId) {
         Question foundQuestion = questions.stream()
                 .filter(question -> Objects.equals(questionId, question.getId())).findFirst().orElse(null);
@@ -115,7 +116,7 @@ public class Patient extends DomainEntity {
             foundQuestion.answerQuestion(questionAnswer);
         }
     }
-    
+
     public void archiveAnswer(Long answerId) {
         this.getQuestions()
                 .stream()
@@ -123,14 +124,14 @@ public class Patient extends DomainEntity {
                 .filter(answer -> Objects.equals(answer.getId(), answerId))
                 .findFirst().orElse(new Answer()).archive();
     }
-    
+
     public void replyToSymptom(Long symptomId, String reply) {
         this.getSymptoms()
                 .stream()
                 .filter(symptom -> Objects.equals(symptom.getId(), symptomId))
                 .findFirst().orElse(new Symptom()).reply(reply);
     }
-    
+
     public void replyToAnswer(Long answerId, String reply) {
         this.getQuestions()
                 .stream()
@@ -145,38 +146,43 @@ public class Patient extends DomainEntity {
                 .filter(symptom -> Objects.equals(symptom.getId(), symptomId))
                 .findFirst().orElse(new Symptom()).archive();
     }
-    
+
     public void addSymptom(Symptom symptom) {
         if (symptoms == null) {
             symptoms = new ArrayList<>();
         }
         symptom.setPatient(this);
         symptoms.add(symptom);
-        
+
     }
-    
-    public void addVitalsMesurment(VitalsMeasurment vitalsMeasurment){
+
+    public void addVitalsMesurment(VitalsMeasurment vitalsMeasurment) {
         if (vitalsMeasurments == null) {
             vitalsMeasurments = new ArrayList<>();
         }
         vitalsMeasurment.setPatient(this);
         vitalsMeasurments.add(vitalsMeasurment);
     }
-    
+
     @Override
     public String getEntityName() {
         return "patient";
     }
-    
+
+    @JsonIgnore
+    @Transient
     public List<Answer> getUnarchivedAnswers() {
         return this.getQuestions().stream()
                 .flatMap(question -> question.getAnswers().stream())
                 .filter(answer -> !answer.isArchived()).collect(Collectors.toList());
     }
-    
+
+    @JsonIgnore
+    @Transient
+
     public List<Symptom> getUnarchivedSymptoms() {
         return this.getSymptoms().stream()
                 .filter(symptom -> !symptom.isArchived()).collect(Collectors.toList());
     }
-    
+
 }
