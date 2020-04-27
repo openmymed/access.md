@@ -7,7 +7,6 @@ package org.openmymed.accessmd.domain.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Access;
@@ -29,6 +28,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
 
 /**
  *
@@ -179,7 +179,6 @@ public class Patient extends DomainEntity {
 
     @JsonIgnore
     @Transient
-
     public List<Symptom> getUnarchivedSymptoms() {
         return this.getSymptoms().stream()
                 .filter(symptom -> !symptom.isArchived()).collect(Collectors.toList());
