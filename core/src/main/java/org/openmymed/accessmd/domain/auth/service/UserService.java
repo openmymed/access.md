@@ -13,7 +13,18 @@ import org.openmymed.accessmd.domain.auth.entity.User;
  */
 public interface UserService {
 
+  /**
+   * Signs in a user using their username and password
+   * @param username the username to sign in with
+   * @param password the password to match
+   * @return  the user, if the login succeeds, null otherwise.
+   */
   public User signIn(String username, String password);
 
+  /**
+   * Adds a new user account
+   * @param user the user to add
+   * @return the created user
+   */
   public User signUp(User user);
 }

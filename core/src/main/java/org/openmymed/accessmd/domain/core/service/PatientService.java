@@ -20,22 +20,68 @@ import org.openmymed.accessmd.domain.core.entity.VitalsMeasurment;
  */
 public interface PatientService {
 
-  void updatePatientMedicalProfile(Long patientId, MedicalProfile profile);
+    /**
+     * Updates a patient's medical profile
+     *
+     * @param patientId the id of the patient
+     * @param profile the updated patient profile
+     */
+    void updatePatientMedicalProfile(Long patientId, MedicalProfile profile);
 
-  void createPatient(User user);
+    /**
+     *
+     * @param user the user to create the patient from
+     */
+    void createPatient(User user);
 
-  public MedicalProfile getPatientMedicalProfile(Long id);
+    /**
+     * Get the medical profile of the patient
+     * @param patientId the id of the patient 
+     * @return the medical profile to the patient
+     */
+    public MedicalProfile getPatientMedicalProfile(Long patientId);
 
-  public List<Question> getPatientUnansweredQuestions(Long id);
+    /**
+     * Get the unanswered questions for a patient
+     * @param patientId the id of the patient
+     * @return  the list of unanswered questions
+     */
+    public List<Question> getPatientUnansweredQuestions(Long patientId);
 
-  public List<Reply> getPatientReccomendations(Long id);
+    /**
+     * Get the list of doctor replies for patient
+     * @param patientId the id of the patient
+     * @return a list of replies
+     */
+    public List<Reply> getDoctorRepliesForPatient(Long patientId);
 
-  public void answerPatientQuestion(Long id, Long questionId, String answer);
+    /**
+     * Answer a question, provided it was asked to this patient
+     * @param patientId the id of the patient 
+     * @param questionId the id of the question
+     * @param answer  the answer as a string
+     */
+    public void answerPatientQuestion(Long patientId, Long questionId, String answer);
 
-  public void addNewPatientSymptom(Long patientId, Symptom symptom);
+    /**
+     * Reports a new symptom by a patient
+     * @param patientId the patient reporting the symptoim
+     * @param symptom the symptom to be reported
+     */
+    public void reportNewPatientSymptom(Long patientId, Symptom symptom);
 
-  public Doctor getPatientDoctor(Long patientId);
+    /**
+     * Gets the doctor assigned to this patient
+     * @param patientId the id of the patient
+     * @return  the assigned doctor
+     */
+    public Doctor getPatientAssignedDoctor(Long patientId);
 
- public void addNewVitalsMeasurment(Long patientId, VitalsMeasurment vitalsMeasurment);
+    /**
+     *  Reports a new vitals measurement by a patient
+     * @param patientId the patientId
+     * @param vitalsMeasurment  the reported vitals measurement
+     */
+    public void reportNewVitalsMeasurment(Long patientId, VitalsMeasurment vitalsMeasurment);
 
 }

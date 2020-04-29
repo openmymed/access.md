@@ -101,6 +101,9 @@ public abstract class DomainEntity {
         this.eventQueue.add(event);
     }
 
+    /**
+     * Post all events to the message bus
+     */
     private void postAllEvents() {
         for (DomainEvent event : eventQueue) {
             EventBus.getInstance().post(event);

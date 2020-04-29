@@ -63,13 +63,17 @@ public class Doctor extends DomainEntity {
     this.password = password;
   }
 
-  public void addPatient(Patient patient) {
+  /**
+   * Assign a patient to a doctor
+   * @param patient the patient to assign to this doctor
+   */
+  public void assignPatient(Patient patient) {
     if (patients == null) {
       patients = new ArrayList<>();
     }
     patient.setDoctor(this);
     patients.add(patient);
-    this.queueEvent("patientAdded", patient);
+    this.queueEvent("patientAssigned", patient);
   }
 
   @Override

@@ -20,10 +20,22 @@ import org.reflections.Reflections;
 @Log
 public abstract class DomainEventHandler {
 
+    /**
+     * Gets the name of the event this handler is responsible for
+     * @return a string with the event name
+     */
     public abstract String getEventName();
 
+    /**
+     * Handles the event if it matches the name of the event
+     * @param event the event to handle
+     * @throws Exception 
+     */
     public abstract void doHandle(DomainEvent event) throws Exception;
 
+    /**
+     * Searches for event handlers in this app base package and registers them to the event bus
+     */
     public static final void subscribeHandlers() {
         Reflections r = new Reflections("org.openmymed");
         for (Class clazz : r.getTypesAnnotatedWith(EventHandler.class)) {
@@ -39,6 +51,11 @@ public abstract class DomainEventHandler {
         }
     }
 
+    /**
+     * handles an event by matching its name
+     * @param event the  event to handle
+     * @throws Throwable 
+     */
     @Subscribe(async = true)
     public final void handleEvent(DomainEvent event) throws Throwable {
         log.log(Level.FINEST, "Event Thrown : {0}", event.getEventName());

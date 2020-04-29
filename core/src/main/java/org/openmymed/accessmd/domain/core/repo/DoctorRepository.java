@@ -18,7 +18,19 @@ import org.openmymed.accessmd.domain.repo.CrudRepository;
  */
 public interface DoctorRepository extends CrudRepository<Doctor>{
     
-    public List<Question> getAnsweredQuestionsSince(Long doctorId, Date date);
+    /**
+     * Get new answers since this date
+     * @param doctorId the doctor id
+     * @param date the date to check from
+     * @return  a list of questions
+     */
+    public List<Question> getNewAnswersSince(Long doctorId, Date date);
     
+    /**
+     * Get new symptoms since this date
+     * @param doctorId the doctor id
+     * @param date the date to check from
+     * @return  a list of answers
+     */
     public List<Symptom> getNewSymptomsSince(Long doctorId, Date date );
 }

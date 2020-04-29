@@ -99,14 +99,26 @@ public class Patient extends DomainEntity {
         this.password = password;
     }
 
-    public void addQuestion(Question question) {
+    /**
+     * Ask a question to this patient
+     *
+     * @param question the question to ask
+     */
+    public void askQuestion(Question question) {
         if (questions == null) {
             questions = new ArrayList<>();
         }
         question.setPatient(this);
         questions.add(question);
+        this.queueEvent("questionAsked", question);
     }
 
+    /**
+     * Answer a question
+     *
+     * @param answer the answer
+     * @param questionId the id of the question to answer
+     */
     public void answerQuestion(String answer, Long questionId) {
         Question foundQuestion = questions.stream()
                 .filter(question -> Objects.equals(questionId, question.getId())).findFirst().orElse(null);
@@ -117,14 +129,25 @@ public class Patient extends DomainEntity {
         }
     }
 
+    /**
+     * Archive an answer
+     * @param answerId  the answer to archive
+     */
     public void archiveAnswer(Long answerId) {
         this.getQuestions()
                 .stream()
                 .flatMap(question -> question.getAnswers().stream())
                 .filter(answer -> Objects.equals(answer.getId(), answerId))
                 .findFirst().orElse(new Answer()).archive();
+        
+        
     }
 
+    /**
+     * Reply to a symptom
+     * @param symptomId the symptom to reply to 
+     * @param reply the reply value
+     */
     public void replyToSymptom(Long symptomId, String reply) {
         this.getSymptoms()
                 .stream()
@@ -132,6 +155,11 @@ public class Patient extends DomainEntity {
                 .findFirst().orElse(new Symptom()).reply(reply);
     }
 
+    /**
+     * Reply to an answer
+     * @param answerId the answer to reply to
+     * @param reply  the reply value
+     */
     public void replyToAnswer(Long answerId, String reply) {
         this.getQuestions()
                 .stream()
@@ -140,6 +168,10 @@ public class Patient extends DomainEntity {
                 .findFirst().orElse(new Answer()).reply(reply);
     }
 
+    /**
+     * Archive a symptom
+     * @param symptomId  the id of the symptom to archive
+     */
     public void archiveSymptom(Long symptomId) {
         this.getSymptoms()
                 .stream()
@@ -147,7 +179,11 @@ public class Patient extends DomainEntity {
                 .findFirst().orElse(new Symptom()).archive();
     }
 
-    public void addSymptom(Symptom symptom) {
+    /**
+     * Report a new symptom
+     * @param symptom  the symptom to report
+     */
+    public void reportSymptom(Symptom symptom) {
         if (symptoms == null) {
             symptoms = new ArrayList<>();
         }
@@ -156,7 +192,11 @@ public class Patient extends DomainEntity {
 
     }
 
-    public void addVitalsMesurment(VitalsMeasurment vitalsMeasurment) {
+    /**
+     * Report a vitals measurement 
+     * @param vitalsMeasurment  the vitals measurement to report
+     */
+    public void reportVitalsMesurment(VitalsMeasurment vitalsMeasurment) {
         if (vitalsMeasurments == null) {
             vitalsMeasurments = new ArrayList<>();
         }
@@ -169,6 +209,10 @@ public class Patient extends DomainEntity {
         return "patient";
     }
 
+    /**
+     * Get the list of unarchived answers
+     * @return a list of unarchived answers
+     */
     @JsonIgnore
     @Transient
     public List<Answer> getUnarchivedAnswers() {
@@ -177,6 +221,10 @@ public class Patient extends DomainEntity {
                 .filter(answer -> !answer.isArchived()).collect(Collectors.toList());
     }
 
+    /**
+     * Get the list of unarchived symptoms
+     * @return  a list of unarchived symptoms
+     */
     @JsonIgnore
     @Transient
     public List<Symptom> getUnarchivedSymptoms() {

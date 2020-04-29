@@ -7,7 +7,6 @@ package org.openmymed.accessmd.infra.core.service.impl;
 
 import java.util.List;
 import org.openmymed.accessmd.domain.auth.entity.User;
-import org.openmymed.accessmd.domain.auth.enums.UserRole;
 import org.openmymed.accessmd.domain.core.entity.Doctor;
 import org.openmymed.accessmd.domain.core.repo.PatientRepository;
 import org.openmymed.accessmd.domain.core.service.PatientService;
@@ -61,9 +60,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Reply> getPatientReccomendations(Long id) {
+    public List<Reply> getDoctorRepliesForPatient(Long id) {
         try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
-            return repo.getPatientReccomendations(id);
+            return repo.getDoctorRepliesForPatient(id);
         }
     }
 
@@ -79,29 +78,29 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void addNewPatientSymptom(Long patientId, Symptom symptom) {
+    public void reportNewPatientSymptom(Long patientId, Symptom symptom) {
         try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.findById(patientId);
             if (p != null) {
-                p.addSymptom(symptom);
+                p.reportSymptom(symptom);
                 repo.save(p);
             }
         }
     }
 
     @Override
-    public Doctor getPatientDoctor(Long patientId) {
+    public Doctor getPatientAssignedDoctor(Long patientId) {
         try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             return repo.findById(patientId).getDoctor();
         }
     }
 
     @Override
-    public void addNewVitalsMeasurment(Long patientId, VitalsMeasurment vitalsMeasurment) {
+    public void reportNewVitalsMeasurment(Long patientId, VitalsMeasurment vitalsMeasurment) {
         try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.findById(patientId);
             if (p != null) {
-                p.addVitalsMesurment(vitalsMeasurment);
+                p.reportVitalsMesurment(vitalsMeasurment);
                 repo.save(p);
             }
         }

@@ -33,16 +33,25 @@ public class EventBus {
     }
     private JBus jbus;
 
-
-
+    /**
+     * Resets the event bus
+     */
     public void removeHandlers() {
         jbus = new JBus();
     }
 
+    /**
+     * Posts an event to the domain bus
+     * @param event  the event to post
+     */
     public void post(DomainEvent event) {
         jbus.post(event);
     }
 
+    /**
+     * Add a handler to the event bus
+     * @param handler  the handler to add
+     */
     public void subscribe(DomainEventHandler handler) {
         jbus.register(handler);
     }

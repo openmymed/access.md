@@ -60,6 +60,7 @@ public class Question extends DomainEntity {
         this.answers.add(answer);
         this.answered = true;
         this.answeredOn = new Date();
+        this.queueEvent("questionAnswered", answer);
     }
 
     @Override

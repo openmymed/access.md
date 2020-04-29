@@ -5,8 +5,6 @@
  */
 package org.openmymed.accessmd.infra.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.openmymed.accessmd.domain.auth.entity.User;
@@ -59,12 +57,12 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void addPatient(Long doctorId, Long patientId) {
+    public void assignPatientToDoctor(Long doctorId, Long patientId) {
         try ( DoctorRepository doctorRepo = DoctorRepositoryFactory.getInstance().get();  PatientRepository patientRepo = PatientRepositoryFactory.getInstance().get();) {
             Patient patient = patientRepo.findById(patientId);
             Doctor doctor = doctorRepo.findById(doctorId);
             patient.setDoctor(doctor);
-            doctor.addPatient(patient);
+            doctor.assignPatient(patient);
             doctorRepo.save(doctor);
             patientRepo.save(patient);
         }
@@ -79,21 +77,21 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void addQuestionForPatient(Long doctorId, Long patientId, Question question) {
+    public void askPatientAQuestion(Long doctorId, Long patientId, Question question) {
         try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
-            p.addQuestion(question);
+            p.askQuestion(question);
             repo.save(p);
         }
     }
 
     @Override
-    public List<Answer> getAllPatientsUnseenAnswers(Long doctorId) {
+    public List<Answer> getAllPatientsUnarchivedAnswers(Long doctorId) {
         return this.getDoctorPatients(doctorId).stream().flatMap(patient -> patient.getUnarchivedAnswers().stream()).collect(Collectors.toList());
     }
 
     @Override
-    public List<Symptom> getAllPatientsUnseenSymptoms(Long doctorId) {
+    public List<Symptom> getAllPatientsUnarchivedSymptoms(Long doctorId) {
         return this.getDoctorPatients(doctorId).stream().flatMap(patient -> patient.getUnarchivedSymptoms().stream()).collect(Collectors.toList());
 
     }
@@ -106,7 +104,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void removePatientQuestion(Long id, Long get, Long get0) {
+    public void stopAskingPatientAQuestion(Long id, Long get, Long get0) {
 
     }
 
@@ -115,7 +113,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Question getPatientQuestion(Long id, Long get, Long get0) {
+    public Question getPatientQuestionDetails(Long id, Long get, Long get0) {
         return new Question();
     }
 

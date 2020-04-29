@@ -15,10 +15,24 @@ import org.openmymed.accessmd.domain.repo.CrudRepository;
  */
 public interface SecurityCodeRepository extends CrudRepository<SecurityCode> {
     
-    public SecurityCode findByCode(String code);
+    /**
+     * Finds the security code by the provided client code
+     * @param clientCode the client code to search by
+     * @return  the security code, if found, null otherwise
+     */
+    public SecurityCode findByCode(String clientCode);
         
+    /**
+     * Gets all valid codes for a certain user
+     * @param userId the id of the user to get valid codes for
+     * @return  a list of codes
+     */
     public List<SecurityCode> getValidUserCodes(long userId);
     
+    /**
+     * Gets a list of all unexpired codes so far
+     * @return a list of unexpired code
+     */
     public List<SecurityCode> getUnexpiredCodes();
     
 }

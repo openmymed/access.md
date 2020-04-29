@@ -36,16 +36,24 @@ public class Answer extends DomainEntity {
     private boolean archived = false;
     private Date archiveDate;
 
+    /**
+     * Archive this answer, and mark the archive date
+     */
     public void archive() {
         archiveDate = new Date();
         this.archived = true;
         this.queueEvent("answerArchived", archiveDate);
     }
 
+    /**
+     * Reply to this answer
+     * @param doctorsReply  the reply text of the doctor
+     */
     public void reply(String doctorsReply) {
         Reply reply = new Reply();
         reply.setReply(doctorsReply);
         replies.add(reply);
+        this.queueEvent("answerRepliedTo", reply);
     }
 
     @Override

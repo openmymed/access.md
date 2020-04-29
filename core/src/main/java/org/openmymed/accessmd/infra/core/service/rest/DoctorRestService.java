@@ -7,7 +7,6 @@ package org.openmymed.accessmd.infra.core.service.rest;
 
 import io.javalin.http.Context;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import org.openmymed.accessmd.domain.auth.entity.User;
@@ -32,14 +31,14 @@ public class DoctorRestService {
     public void getUnseenAnswerCount(Context ctx) {
         User user = ctx.sessionAttribute("user");
         HashMap map = new HashMap();
-        map.put("count", doctorService.getAllPatientsUnseenAnswers(user.getId()).size());
+        map.put("count", doctorService.getAllPatientsUnarchivedAnswers(user.getId()).size());
         ctx.json(map);
     }
 
     public void getUnseenSymptomCount(Context ctx) {
         User user = ctx.sessionAttribute("user");
         HashMap map = new HashMap();
-        map.put("count", doctorService.getAllPatientsUnseenSymptoms(user.getId()).size());
+        map.put("count", doctorService.getAllPatientsUnarchivedSymptoms(user.getId()).size());
         ctx.json(map);
     }
 
@@ -52,8 +51,8 @@ public class DoctorRestService {
 
     public void getPatientsFeed(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        List<Answer> answers = doctorService.getAllPatientsUnseenAnswers(user.getId());
-        List<Symptom> symptoms = doctorService.getAllPatientsUnseenSymptoms(user.getId());
+        List<Answer> answers = doctorService.getAllPatientsUnarchivedAnswers(user.getId());
+        List<Symptom> symptoms = doctorService.getAllPatientsUnarchivedSymptoms(user.getId());
         List<PatientUpdateVo> updates = new ArrayList<>();
         answers.stream().forEach(answer -> {
             updates.add(new PatientUpdateVo(answer.getQuestion().getPatient(), answer));
@@ -86,13 +85,13 @@ public class DoctorRestService {
 
     public void createPatientQuestion(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        doctorService.addQuestionForPatient(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.bodyAsClass(Question.class));
+        doctorService.askPatientAQuestion(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.bodyAsClass(Question.class));
         ctx.status(200);
     }
 
     public void deletePatientQuestion(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        doctorService.removePatientQuestion(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.pathParam("question_id", Long.class).get());
+        doctorService.stopAskingPatientAQuestion(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.pathParam("question_id", Long.class).get());
         ctx.status(200);
     }
 
@@ -104,7 +103,7 @@ public class DoctorRestService {
 
     public void getPatientQuestion(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        ctx.json(doctorService.getPatientQuestion(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.pathParam("question_id", Long.class).get()));
+        ctx.json(doctorService.getPatientQuestionDetails(user.getId(), ctx.pathParam("id", Long.class).get(), ctx.pathParam("question_id", Long.class).get()));
     }
 
     public void createDoctor(Context ctx) {
@@ -129,7 +128,7 @@ public class DoctorRestService {
         HashMap<String, String> map = ctx.bodyAsClass(HashMap.class);
         long consumeSecurityCode = securityCodeService.consumeSecurityCode(map.get("code"), user.getId());
         if (consumeSecurityCode > 0) {
-            doctorService.addPatient(user.getId(), consumeSecurityCode);
+            doctorService.assignPatientToDoctor(user.getId(), consumeSecurityCode);
         }
         ctx.status(200);
     }

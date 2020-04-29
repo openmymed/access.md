@@ -12,7 +12,6 @@ import org.openmymed.accessmd.domain.auth.service.SecurityCodeService;
 import org.openmymed.accessmd.domain.core.entity.Answer;
 import org.openmymed.accessmd.domain.core.service.PatientService;
 import org.openmymed.accessmd.domain.core.entity.MedicalProfile;
-import org.openmymed.accessmd.domain.core.entity.Question;
 import org.openmymed.accessmd.domain.core.entity.Symptom;
 import org.openmymed.accessmd.domain.core.entity.VitalsMeasurment;
 import org.openmymed.accessmd.infra.auth.factory.SecurityCodeServiceFactory;
@@ -42,7 +41,7 @@ public class PatientRestService {
 
     public void getDoctor(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        ctx.json(patientService.getPatientDoctor(user.getId()));
+        ctx.json(patientService.getPatientAssignedDoctor(user.getId()));
     }
 
     public void updateMedicalProfile(Context ctx) {
@@ -65,7 +64,7 @@ public class PatientRestService {
 
     public void getReccomendations(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        ctx.json(patientService.getPatientReccomendations(user.getId()));
+        ctx.json(patientService.getDoctorRepliesForPatient(user.getId()));
         ctx.res.setStatus(200);
     }
 
@@ -79,7 +78,7 @@ public class PatientRestService {
 
     public void addSymptom(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        patientService.addNewPatientSymptom(user.getId(), ctx.bodyAsClass(Symptom.class));
+        patientService.reportNewPatientSymptom(user.getId(), ctx.bodyAsClass(Symptom.class));
         ctx.status(200);
     }
 
@@ -91,7 +90,7 @@ public class PatientRestService {
 
     public void addVitalsMeasurment(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        patientService.addNewVitalsMeasurment(user.getId(), ctx.bodyAsClass(VitalsMeasurment.class));
+        patientService.reportNewVitalsMeasurment(user.getId(), ctx.bodyAsClass(VitalsMeasurment.class));
         ctx.json(200);
     }
 }

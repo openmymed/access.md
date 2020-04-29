@@ -17,12 +17,33 @@ import org.openmymed.accessmd.domain.repo.CrudRepository;
  */
 public interface PatientRepository extends CrudRepository<Patient>{
     
+    /**
+     * Get all questions asked to this patient
+     * @param patientId the id of the patient to search for
+     * @return  a list of questions
+     */
      List<Question> getPatientQuestions(Long patientId);
       
+     /**
+      * Get all questions that have not been answered by the patient
+      * @param patientId the id of the patient
+      * @return a list of questions
+      */
      List<Question> getUnAnsweredPatientQuestions(Long patientId);
      
-     List<Reply> getPatientReccomendations(Long patientId);
+     /**
+      * Get all replies by the assigned doctor for this patient
+      * @param patientId the id of the patient
+      * @return a list of replies
+      */
+     List<Reply> getDoctorRepliesForPatient(Long patientId);
      
+     /**
+      * Finds a patient by and id and the doctor id assigned to it
+      * @param patientId the id of the patient
+      * @param doctorId the id of the doctor
+      * @return  the patient, if found, null otherwise
+      */
      Patient getPatientByDoctorAndId(Long patientId, Long doctorId);
      
 }

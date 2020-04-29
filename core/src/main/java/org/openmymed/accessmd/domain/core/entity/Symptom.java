@@ -5,7 +5,6 @@
  */
 package org.openmymed.accessmd.domain.core.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 import org.openmymed.accessmd.domain.entity.DomainEntity;
@@ -35,6 +36,7 @@ public class Symptom extends DomainEntity {
     private List<Reply> replies = new ArrayList<>();
     private String note;
     private boolean archived = false;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date archiveDate;
 
     public void archive() {
@@ -47,6 +49,7 @@ public class Symptom extends DomainEntity {
         Reply reply = new Reply();
         reply.setReply(doctorsReply);
         replies.add(reply);
+        this.queueEvent("symptomRepliedTo",reply);
     }
 
     @Override

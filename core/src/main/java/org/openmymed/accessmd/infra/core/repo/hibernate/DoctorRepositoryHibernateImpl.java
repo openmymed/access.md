@@ -26,7 +26,7 @@ public class DoctorRepositoryHibernateImpl extends HibernateCrudRepository<Docto
     }
 
     @Override
-    public List<Question> getAnsweredQuestionsSince(Long doctorId, Date date) {
+    public List<Question> getNewAnswersSince(Long doctorId, Date date) {
         return new ArrayList<>();
     }
 

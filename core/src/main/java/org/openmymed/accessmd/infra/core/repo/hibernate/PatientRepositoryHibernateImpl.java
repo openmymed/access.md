@@ -36,7 +36,7 @@ public class PatientRepositoryHibernateImpl extends HibernateCrudRepository<Pati
     }
 
     @Override
-    public List<Reply> getPatientReccomendations(Long patientId) {
+    public List<Reply> getDoctorRepliesForPatient(Long patientId) {
         return  this.findById(patientId).getReccomendations();
     }
 

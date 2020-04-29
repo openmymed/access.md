@@ -14,7 +14,18 @@ import org.openmymed.accessmd.infra.notification.vo.Notification;
  */
 public interface NotificationService {
     
+    /**
+     * Add Notification for a user to the notification queue
+     * @param userId the user to add notifications for
+     * @param name the name of the notification event
+     * @param data the data of the notification
+     */
     public void addNotification(Long userId, String name, Object data);
     
+    /**
+     * Retrieves all the user's notifications and removes them from the notification queue
+     * @param userId the user to get notifications for
+     * @return  a list of notifications
+     */
     public List<Notification> getUserNotificationAndDeleteThem(Long userId);
 }
