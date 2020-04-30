@@ -6,6 +6,7 @@
 
 import { el, text, mount } from "redom";
 import { Card } from "../component/card";
+import * as api from "../utils/api";
 export class Overview {
   constructor(attr, text) {
     <div class="container-fluid" this="el">
@@ -24,59 +25,26 @@ export class Overview {
 
   update(data) {
 
-    this._updateTotalPatients()
-    this._updateTotalSymptoms()
+    this._updateTotalPatients();
+    this._updateTotalSymptoms();
     this._updateTotalAnswers();
 
   }
   
   _updateTotalPatients(){
-     fetch("/doctor/patient/count", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        alert("Wrong username or password");
-      }
-    }).then((json) => {
+     api.getPatientsCount().then((json) => {
       this.totalPatients.update(json.count);
     });
   }
   
   _updateTotalSymptoms(){
-     fetch("/doctor/patient/symptom/count", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        alert("Wrong username or password");
-      }
-    }).then((json) => {
+     api.getUnarchivedSymptomsCount().then((json) => {
       this.totalSymptoms.update(json.count);
     });
   }
   
   _updateTotalAnswers(){
-     fetch("/doctor/patient/answer/count", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        alert("Wrong username or password");
-      }
-    }).then((json) => {
+     api.getUnarchivedAnswersCount().then((json) => {
       this.totalAnswers.update(json.count);
     });
   }

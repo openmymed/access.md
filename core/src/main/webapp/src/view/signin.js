@@ -9,6 +9,7 @@ import { goto } from "redom-app";
 import {loadIcpc} from "../utils/icpc"
 import logo from '../res/openmymed.png'
 import {displayNotification} from "../utils/notifications"
+import * as api from "../utils/api";
 export class Signin {
     constructor() {
         const _self = this;
@@ -70,22 +71,7 @@ class LoginForm {
 
     login(e) {
         e.preventDefault();
-        fetch("/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: this.username.value,
-                password: this.password.value,
-            }),
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                alert("Wrong username or password");
-            }
-        }).then((json) => {
+        api.login(this.username.value, this.password.value).then((json) => {
             sessionStorage.setItem("role", json.userRole);
             let fullName = json.firstName + " " + json.lastName;
             if (json.userRole == "ROLE_DOCTOR") {

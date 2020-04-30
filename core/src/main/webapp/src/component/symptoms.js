@@ -6,6 +6,7 @@
 
 import { el, text, mount, list, unmount } from "redom";
 import {getTitle} from "../utils/icpc"
+import * as api from "../utils/api"
 export class Symptoms {
   constructor(attr, text) {
     <div this="el" class="col-lg-6">
@@ -19,27 +20,12 @@ export class Symptoms {
   }
 
   update(patientId) {
-    this._getPatientSymptoms(patientId).then((data) => {
+    api.getPatientSymptoms(patientId).then((data) => {
       this.symptoms.update(data, {"patientId": patientId});
     })
 
   }
 
-  _getPatientSymptoms(patientId) {
-    return  fetch("/doctor/patient/" + patientId + "/symptom", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        alert("Wrong username or password");
-      }
-    })
-
-  }
 }
 
 class Symptom {
@@ -85,18 +71,7 @@ class Symptom {
   }
 
   _dismiss() {
-    return  fetch("/doctor/patient/" + this.patientId + "/symptom/" + this.data.id + "/seen", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return "ok"
-      } else {
-        alert("Wrong username or password");
-      }
-    })
+    return api.archiveSymptom(this.patientId, this.data.id);  
   }
 
 }

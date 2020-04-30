@@ -5,7 +5,7 @@
  */
 
 import { el, text, mount, list, unmount} from 'redom';
-import {getPatientVitals} from  "../utils/api";
+import * as api from  "../utils/api";
 import {Chart} from "chart.js"
 import 'moment'
 import 'chartjs-adapter-moment';
@@ -49,7 +49,7 @@ export class PatientVitals {
         this.systolicData = [];
         this.diastolicData = [];
         this.breathingRateData = [];
-        getPatientVitals(patientId).then((data) => {
+        api.getPatientVitals(patientId).then((data) => {
             this.data = data;
             data.forEach((item) => {
                 this.oxygenationData.push({x: item.creationDate, y: item.bloodOxygenation, label: item.creationDate})
