@@ -9,10 +9,19 @@ We started the ACCESS.MD project at the onset of our local covid-19 outbreak. Ou
 
 Uses code from [HealthWatcher](https://github.com/YahyaOdeh/HealthWatcher) for Vitals Measurement and Reporting.
 
+## Features
 
-# Screen Shots TODO
-
-
+* Full Patient Complaint and Response History 
+* Patient Medical Profile & History 
+* 2-Way MD and patient communication using questions system
+  * Schedueled Questions
+  * Patient Complaints
+  * MD Replies
+  * Vitals Measurement & Graphing Using IR imagery from off-the-shelf smartphones
+* Push Notifications for Patient and Doctor
+* Easy Dashboard for Multiple Patient Management
+* Fully ICPC-2 compliant Medical Record
+  
 # Links 
 
 * [Project Page and Documentation](https://wiki.kisoft.me/doku.php?id=projects:access_md:start)
@@ -28,3 +37,18 @@ Uses code from [HealthWatcher](https://github.com/YahyaOdeh/HealthWatcher) for V
 </a>
 
 Made with [contributors-img](https://contributors-img.web.app).
+
+
+# Screen Shots
+
+## Dashboard
+
+![Dashboard](./images/dashboard.png)
+
+## Vitals 
+
+![Vitals](./images/vitals.png)
+
+## Patient Profile
+![Patient Profile](./images/patient-profile.png)
+
