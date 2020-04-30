@@ -110,16 +110,6 @@ class SideBar {
               <i class="fa fa-user fa-lg mr-3"></i>Patient List
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="sidebar-link nav-link p-3 mb-2 ">
-              <i class="fa fa-calendar-alt fa-lg mr-3"></i>Questions
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="sidebar-link nav-link p-3 mb-2 ">
-              <i class="fa fa-cog fa-lg mr-3"></i>Settings
-            </a>
-          </li>
         </ul>
       </div>
       <button

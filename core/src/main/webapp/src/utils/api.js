@@ -168,9 +168,7 @@ export const addQuestion = (patientId, question) => {
 export const login = (username, password) => {
     fetch("/login", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify({
             username: username,
             password: password
