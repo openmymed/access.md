@@ -17,7 +17,7 @@ Uses code from [HealthWatcher](https://github.com/YahyaOdeh/HealthWatcher) for V
   * Schedueled Questions
   * Patient Complaints
   * MD Replies
-  * Vitals Measurement & Graphing Using IR imagery from off-the-shelf smartphones
+  * Vitals Measurement & Graphing Using IR imagery from smartphones
 * Push Notifications for Patient and Doctor
 * Easy Dashboard for Multiple Patient Management
 * Fully ICPC-2 compliant Medical Record
