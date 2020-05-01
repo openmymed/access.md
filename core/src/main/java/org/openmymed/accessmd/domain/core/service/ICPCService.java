@@ -68,4 +68,12 @@ public interface ICPCService {
     void setEntries(List<ICPCEntry> entries);
     
     
+    /**
+     * Gets an entry by its ICPC Code
+     * @param code the code of the entry
+     * @return  the entry, if found, null otherwise
+     */
+    ICPCEntry getEntryByCode(String code);
+    
+    
 }

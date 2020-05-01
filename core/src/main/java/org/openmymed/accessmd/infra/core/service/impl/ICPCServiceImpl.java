@@ -75,4 +75,9 @@ public class ICPCServiceImpl implements ICPCService {
         return filter(ICPCType.OTHER);
     }
 
+    @Override
+    public ICPCEntry getEntryByCode(String code) {
+        return MAP.get(code);
+    }
+
 }

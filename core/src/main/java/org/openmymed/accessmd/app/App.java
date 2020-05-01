@@ -14,13 +14,9 @@ import static io.javalin.apibuilder.ApiBuilder.put;
 import static io.javalin.core.security.SecurityUtil.roles;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.extern.java.Log;
@@ -32,23 +28,18 @@ import static org.openmymed.accessmd.domain.auth.enums.UserRole.ROLE_ADMIN;
 import static org.openmymed.accessmd.domain.auth.enums.UserRole.ROLE_DOCTOR;
 import static org.openmymed.accessmd.domain.auth.enums.UserRole.ROLE_PATIENT;
 import org.openmymed.accessmd.domain.auth.repo.UserRepository;
-import org.openmymed.accessmd.domain.core.entity.ICPCEntry;
-import org.openmymed.accessmd.domain.core.enums.ICPCType;
-import org.openmymed.accessmd.domain.event.EventBus;
 import org.openmymed.accessmd.infra.auth.factory.UserRepositoryFactory;
 import org.openmymed.accessmd.infra.core.service.rest.PatientRestService;
 import org.openmymed.accessmd.infra.auth.service.rest.UserRestService;
-import org.openmymed.accessmd.infra.core.factory.ICPCServiceFactory;
 import org.openmymed.accessmd.infra.core.service.rest.DoctorRestService;
 import org.openmymed.accessmd.infra.core.service.rest.ICPCRestService;
 import org.openmymed.accessmd.infra.factory.EntityManagerFactory;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.jetty.server.session.DefaultSessionCache;
 import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionCache;
 import org.eclipse.jetty.server.session.SessionHandler;
+import org.openmymed.accessmd.app.service.ICPCParsingService;
 import org.openmymed.accessmd.domain.event.DomainEventHandler;
 import org.openmymed.accessmd.infra.notification.service.rest.NotificationRestService;
 
@@ -141,8 +132,8 @@ public class App {
                     get(icpcService::getICPCSymptoms, roles(NONE));
                 });
             });
-            path("notification", () ->{
-                get(notificationService::getNotifications, roles(ROLE_PATIENT,ROLE_DOCTOR));
+            path("notification", () -> {
+                get(notificationService::getNotifications, roles(ROLE_PATIENT, ROLE_DOCTOR));
             });
             path("patient", () -> {
                 path("doctor", () -> {
@@ -277,19 +268,7 @@ public class App {
     }
 
     private static void readICPCCodes() {
-        try {
-            ArrayList<ICPCEntry> icpcEntries = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    App.class.getClassLoader().getResourceAsStream("icpc_en.csv")));
-            CSVParser csvFileParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';'));
-            csvFileParser.iterator().forEachRemaining(record -> {
-                icpcEntries.add(new ICPCEntry(record.get(0), record.get(1), ICPCType.valueOf(record.get(2))));
-            });
-            ICPCServiceFactory.getInstance().get().setEntries(icpcEntries);
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Logger.getLogger(App.class.getName()).log(Level.INFO, "Done Reading ICPC Codes");
+        ICPCParsingService.parse();
 
     }
 
@@ -298,7 +277,7 @@ public class App {
     }
 
     private static void createAdminIfNotFound() {
-        try ( UserRepository repo = UserRepositoryFactory.getInstance().get()) {
+        try (UserRepository repo = UserRepositoryFactory.getInstance().get()) {
             if (repo.getUsersByRole(ROLE_ADMIN).isEmpty()) {
                 log.info("No Admins Found; Creating one now");
                 String password = RandomStringUtils.random(16, true, true);

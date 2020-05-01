@@ -5,6 +5,9 @@
  */
 package org.openmymed.accessmd.infra.core.factory;
 
+import java.util.List;
+import java.util.Locale;
+import org.openmymed.accessmd.domain.core.entity.ICPCEntry;
 import org.openmymed.accessmd.domain.core.service.ICPCService;
 import org.openmymed.accessmd.infra.core.service.impl.ICPCServiceImpl;
 import org.openmymed.accessmd.infra.factory.Factory;
@@ -28,7 +31,8 @@ public class ICPCServiceFactory implements Factory<ICPCService>{
     }
     @Override
     public ICPCService get() {
-        return this.service;
+        return service;
     }
     
+  
 }

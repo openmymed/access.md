@@ -5,6 +5,11 @@
  */
 package org.openmymed.accessmd.domain.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +22,22 @@ import org.openmymed.accessmd.domain.core.enums.ICPCType;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ICPCEntry {
+
     private String code;
-    private String title;
     private ICPCType type;
+
+    public ICPCEntry(String code, ICPCType type) {
+        this.code = code;
+        this.type = type;
+    }
+
+    @Transient
+    public ICPCCategory getCategory() {
+        if (code != null) {
+            return ICPCCategory.of(code.charAt(0));
+        }
+        return null;
+    }
 }
