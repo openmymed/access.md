@@ -39,7 +39,8 @@ public class RestClient {
     public static final String GET_ICPC_URL = BASE_URL + "symptom/codes";
     public static final String GET_NOTIFICATION = BASE_URL + "notification";
     public static final String POST_SYMPTOMS_URL = BASE_URL + "patient/symptom";
-    public static final String POST_VITALS = BASE_URL + "patient/vitals";
+    public static final String POST_VITALS_URL = BASE_URL + "patient/vitals";
+    public static final String CHANGE_PASSWORD_URL = BASE_URL + "user/password";
     static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     static ClearableCookieJar cookieJar;
     static OkHttpClient CLIENT;

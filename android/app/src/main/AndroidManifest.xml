@@ -5,9 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <uses-feature android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.flash" />
+
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
@@ -19,7 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".SecurityCodeActivity" />
         <activity android:name=".VitalSignsProcess" />
         <activity android:name=".VitalSignsResults" />
@@ -40,7 +44,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".services.BackIntentService"/>
+
+        <service android:name=".services.BackIntentService" />
     </application>
 
 </manifest>
