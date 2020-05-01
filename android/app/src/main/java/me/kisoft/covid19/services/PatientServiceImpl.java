@@ -2,8 +2,6 @@ package me.kisoft.covid19.services;
 
 import android.util.Log;
 
-import androidx.core.app.NotificationManagerCompat;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -31,7 +29,6 @@ import me.kisoft.covid19.models.Question;
 import me.kisoft.covid19.models.SecurityCode;
 import me.kisoft.covid19.models.Symptom;
 import me.kisoft.covid19.models.Vitals;
-import me.kisoft.covid19.utils.NotificationUtility;
 import me.kisoft.covid19.utils.RestClient;
 import okhttp3.Response;
 
@@ -68,7 +65,7 @@ public class PatientServiceImpl implements PatientService {
     public Boolean postVitals(Vitals vitals) {
         Gson gson = new Gson();
         String json = gson.toJson(vitals);
-        try (Response response = RestClient.post(RestClient.POST_VITALS, json)) {
+        try (Response response = RestClient.post(RestClient.POST_VITALS_URL, json)) {
             Log.i("PostVitals", String.valueOf(response.code()));//used for testing
             if (response.isSuccessful()) {
                 return true;
@@ -99,6 +96,29 @@ public class PatientServiceImpl implements PatientService {
             }
         } catch (IOException | JSONException e) {
             Log.e("GET Notification", e.toString());
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean changePassword(String oldPassword, String newPassword) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("oldPassword", oldPassword);
+            jsonObject.put("newPassword", newPassword);
+        } catch (JSONException e) {
+            Log.e("JSON Login ", e.toString());
+        }
+        String json = jsonObject.toString();
+        try (Response response = RestClient.post(RestClient.CHANGE_PASSWORD_URL, json)) {
+            Log.i("Change Password", String.valueOf(response.code()));//used for testing
+            if (response.isSuccessful()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            Log.e("Login ", e.toString());
         }
         return null;
     }

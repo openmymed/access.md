@@ -79,5 +79,10 @@ public class PatientServiceDelegate implements PatientService {
         return service.getNotification();
     }
 
+    @Override
+    public Boolean changePassword(String oldPassword, String newPassword) {
+        return service.changePassword(oldPassword,newPassword);
+    }
+
 
 }

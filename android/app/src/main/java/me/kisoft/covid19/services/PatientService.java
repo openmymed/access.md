@@ -39,4 +39,6 @@ public interface PatientService {
 
     List<Notification> getNotification();
 
+    Boolean changePassword(String oldPassword, String newPassword);
+
 }
