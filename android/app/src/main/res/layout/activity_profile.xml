@@ -52,9 +52,21 @@
             app:layout_constraintStart_toStartOf="@+id/tv_user_full_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_user_full_name" />
 
+        <ImageView
+            android:id="@+id/img_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_edit_black_24dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -101,16 +113,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_weight"
                 android:textAlignment="center"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_user_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="75 kg"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
-                android:textSize="20sp"
-                android:textAlignment="center" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -125,17 +137,95 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_height"
                 android:textAlignment="center"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_user_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="175 cm"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
-                android:textSize="20sp"
-                android:textAlignment="center" />
+                android:textSize="20sp" />
 
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/medical_flags_title"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18">
+
+        <CheckBox
+            android:id="@+id/chk_g6pd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/g6pd"
+            android:textColor="#888888" />
+
+        <CheckBox
+            android:id="@+id/chk_respiratory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/respiratory"
+            android:textColor="#888888" />
+
+        <CheckBox
+            android:id="@+id/chk_diabetes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/diabetes"
+            android:textColor="#888888" />
+
+        <CheckBox
+            android:id="@+id/chk_cardiovascular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/cardiovascular"
+            android:textColor="#888888" />
+
+        <CheckBox
+            android:id="@+id/chk_obesity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/obesity"
+            android:textColor="#888888" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
