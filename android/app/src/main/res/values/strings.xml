@@ -9,6 +9,7 @@
     <string name="already_have_account">Already have an account? Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="error_sign_up">Error while signing up</string>
+    <string name="confirm_pass_warning">Password Does\'nt match</string>
 
 
     <!--  Sign in screen  -->
@@ -29,6 +30,7 @@
     <string name="title_home">Home</string>
     <string name="title_chat">Chat</string>
     <string name="title_settings">Settings</string>
+    <string name="title_menu">Menu</string>
     <string name="title_measurement">Measurement</string>
     <string name="notification_question">You have %1$d new questions from your doctor</string>
 
@@ -98,6 +100,18 @@
     <string name="respiration_rate">Respiration Rate</string>
     <string name="blood_pressure">Blood Pressure</string>
     <string name="O2_saturation">O2 Saturation</string>
+    <string name="title_activity_settings">Settings</string>
 
+    <!-- Settings Activity -->
+    <string name="change_password">Change Password</string>
+    <string name="change_language">Change Language</string>
+    <string name="security">Security</string>
+    <string name="language">Language</string>
+
+    <!--  Change Password Activity  -->
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password_successfully">Password has been changed successfully</string>
 
 </resources>

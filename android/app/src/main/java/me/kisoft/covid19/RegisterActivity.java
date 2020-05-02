@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 KeyboardUtil.hideKeyboard(RegisterActivity.this);
+                tvRegisterWarning.setVisibility(View.GONE);
                 String firstName = edtFirstName.getText().toString();
                 String lastName = edtLastName.getText().toString();
                 String phone = edtPhone.getText().toString();
@@ -74,6 +75,9 @@ public class RegisterActivity extends AppCompatActivity {
                     if (password.equals(confirmPassword)) {
                         Patient patient = new Patient(phone, password, phone,firstName,lastName);
                         register(patient);
+                    }else{
+                        tvRegisterWarning.setText(R.string.confirm_pass_warning);
+                        tvRegisterWarning.setVisibility(View.VISIBLE);
                     }
                 } else {
                     tvRegisterWarning.setText(R.string.sign_in_all_fields_required);

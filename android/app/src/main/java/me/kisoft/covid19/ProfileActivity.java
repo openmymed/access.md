@@ -1,11 +1,11 @@
 package me.kisoft.covid19;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import io.paperdb.Paper;
 import me.kisoft.covid19.models.Patient;
@@ -20,6 +20,12 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView tvUserWeight;
     private TextView tvUserHeight;
 
+    private CheckBox chkG6PD;
+    private CheckBox chkObesity;
+    private CheckBox chkDiabetes;
+    private CheckBox chkRespiratory;
+    private CheckBox chkCardiovascular;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +39,12 @@ public class ProfileActivity extends AppCompatActivity {
         tvUserSex = findViewById(R.id.tv_user_sex);
         tvUserWeight = findViewById(R.id.tv_user_weight);
         tvUserHeight = findViewById(R.id.tv_user_height);
+
+        chkG6PD = findViewById(R.id.chk_g6pd);
+        chkRespiratory = findViewById(R.id.chk_respiratory);
+        chkCardiovascular = findViewById(R.id.chk_cardiovascular);
+        chkDiabetes = findViewById(R.id.chk_diabetes);
+        chkObesity = findViewById(R.id.chk_obesity);
         // placing data in their place..
         String fullName = currentPatient.getFirstName() + " " + currentPatient.getLastName();
         tvUserFullName.setText(fullName);
@@ -40,5 +52,13 @@ public class ProfileActivity extends AppCompatActivity {
         tvUserSex.setText(currentPatient.getProfile().getSex().toString());
         tvUserWeight.setText(currentPatient.getProfile().getWeight() + " kg");
         tvUserHeight.setText(currentPatient.getProfile().getHeight() + " cm");
+
+        chkG6PD.setChecked(currentPatient.getProfile().isG6pdDeficiency());
+        chkRespiratory.setChecked(currentPatient.getProfile().isRespiratoryDiseases());
+        chkCardiovascular.setChecked(currentPatient.getProfile().isCardiovascularDiseases());
+        chkDiabetes.setChecked(currentPatient.getProfile().isDiabetes());
+        chkObesity.setChecked(currentPatient.getProfile().isObesity());
     }
+
+
 }
