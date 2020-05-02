@@ -59,10 +59,6 @@ class Signin extends Component {
         loadIcpc();
         sessionStorage.setItem("name", fullName);
         this.props.history.push("/home");
-      } else if (json.userRole === "ROLE_ADMIN") {
-        sessionStorage.setItem("auth", true);
-        sessionStorage.setItem("name", fullName);
-        // goto("admin");
       } else {
         sessionStorage.setItem("auth", false);
         alert("You do not have the authorization for this page");
