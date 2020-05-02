@@ -10,8 +10,8 @@ const headers = {
 const process = (res) => {
   if (res.ok) {
     return res.json();
-  } else if (res.status == 401 || res.status == 403) {
-    goto("login", []);
+  } else if (res.status === 401 || res.status === 403) {
+    // goto("login", []);
   } else {
     throw new Error(res.status);
   }

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button, Form } from "react-bootstrap";
 import "./Signin.css";
 import Logo from "./../../images/openmymed.png";
+import { loadIcpc } from "../../utils/icpc";
+import * as api from "../../utils/api";
 
 class Signin extends Component {
   constructor(props) {
@@ -49,8 +51,23 @@ class Signin extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    //if successfully logged in
-    this.props.history.push("/home");
+    api.login(this.state.username, this.state.password).then((json) => {
+      sessionStorage.setItem("role", json.userRole);
+      let fullName = json.firstName + " " + json.lastName;
+      if (json.userRole === "ROLE_DOCTOR") {
+        sessionStorage.setItem("auth", true);
+        loadIcpc();
+        sessionStorage.setItem("name", fullName);
+        this.props.history.push("/home");
+      } else if (json.userRole === "ROLE_ADMIN") {
+        sessionStorage.setItem("auth", true);
+        sessionStorage.setItem("name", fullName);
+        // goto("admin");
+      } else {
+        sessionStorage.setItem("auth", false);
+        alert("You do not have the authorization for this page");
+      }
+    });
   }
   handleChange(e) {
     if (e.target.type === "text") {
