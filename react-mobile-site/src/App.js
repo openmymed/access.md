@@ -5,7 +5,6 @@ import PatientDetails from "./views/Patient-Details/PatientDetails";
 import PatientQuestions from "./views/Patient-Questions/PatientQuestions";
 import PatientList from "./views/Patient-List/PatientList";
 import Signin from "./views/Signin/Signin";
-import "./App.css";
 
 class App extends Component {
   render() {
