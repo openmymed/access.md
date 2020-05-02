@@ -6,16 +6,13 @@
 package org.openmymed.accessmd.app.service;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import lombok.extern.java.Log;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -26,6 +23,8 @@ import org.openmymed.accessmd.domain.core.service.ICPCService;
 import org.openmymed.accessmd.domain.localization.service.LocalizationService;
 import org.openmymed.accessmd.infra.core.factory.ICPCServiceFactory;
 import org.openmymed.accessmd.infra.localization.delegate.LocalizationServiceFactory;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
 
 /**
  *
@@ -60,27 +59,27 @@ public class ICPCParsingService {
     }
 
     private static void parseLocales() throws IOException {
-        for (File file : getFileList()) {
-            parseLocaleFile(file);
+        for (String localizationFileName : getLocalizationFileNames()) {
+            parseLocaleFile(localizationFileName);
         }
         log.info("Done Reading All Locales");
     }
 
-    private static void parseLocaleFile(File file) throws IOException {
-        Locale locale = new Locale(file.getName().replaceAll("\\.csv", ""));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    private static void parseLocaleFile(String fileName) throws IOException {
+        log.log(Level.INFO, "Reading File {0}", fileName);
+        ClassLoader loader = App.class.getClassLoader();
+        String[] splitFileName = fileName.replaceAll("\\.csv", "").split("/");
+        Locale locale = new Locale(splitFileName[splitFileName.length -1]);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(loader.getResourceAsStream(fileName)));
         CSVParser csvFileParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(','));
         csvFileParser.iterator().forEachRemaining(record -> {
-           localizationService.set(record.get(0), locale, record.get(1));
+            localizationService.set(record.get(0), locale, record.get(1));
         });
         log.log(Level.INFO, "Done Reading Locale {0}", locale.getLanguage());
     }
 
-    private static File[] getFileList() {
-        URL url = App.class.getClassLoader().getResource("icpc/localization");
-        String path = url.getPath();
-        File[] files = new File(path).listFiles();
-        log.log(Level.INFO, "Found {0} Locales : {1}", new Object[]{files.length, Arrays.toString(files)});
-        return files;
+    private static Set<String> getLocalizationFileNames() throws IOException {
+        Reflections reflections = new Reflections("icpc.localization", new ResourcesScanner());
+        return reflections.getResources(Pattern.compile(".*\\.csv"));
     }
 }
