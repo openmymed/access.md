@@ -51,19 +51,20 @@ class Signin extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    api.login(this.state.username, this.state.password).then((json) => {
-      sessionStorage.setItem("role", json.userRole);
-      let fullName = json.firstName + " " + json.lastName;
-      if (json.userRole === "ROLE_DOCTOR") {
-        sessionStorage.setItem("auth", true);
-        loadIcpc();
-        sessionStorage.setItem("name", fullName);
-        this.props.history.push("/home");
-      } else {
-        sessionStorage.setItem("auth", false);
-        alert("You do not have the authorization for this page");
-      }
-    });
+    // api.login(this.state.username, this.state.password).then((json) => {
+    //   sessionStorage.setItem("role", json.userRole);
+    //   let fullName = json.firstName + " " + json.lastName;
+    //   if (json.userRole === "ROLE_DOCTOR") {
+    //     sessionStorage.setItem("auth", true);
+    //     loadIcpc();
+    //     sessionStorage.setItem("name", fullName);
+    //     this.props.history.push("/home");
+    //   } else {
+    //     sessionStorage.setItem("auth", false);
+    //     alert("You do not have the authorization for this page");
+    //   }
+    // });
+    this.props.history.push("/home");
   }
   handleChange(e) {
     if (e.target.type === "text") {
