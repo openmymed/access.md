@@ -6,10 +6,10 @@
 
 import {goto} from "redom-app";
 
-export const headers = {
+const headers = {
     "Content-Type": "application/json"
 }
-export const process = (res) => {
+const process = (res) => {
     if (res.ok) {
         return res.json();
     } else if (res.status == 401 || res.status == 403) {
@@ -93,7 +93,7 @@ export const getPatientPersonalProfile = (patientId) => {
 
 
 export const getPatientsCount = () => {
-    fetch("/doctor/patient/count", {
+    return fetch("/doctor/patient/count", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -101,8 +101,8 @@ export const getPatientsCount = () => {
     });
 }
 
-export const getUarchivedSymptomsCount = () => {
-    fetch("/doctor/patient/symptom/count", {
+export const getUnarchivedSymptomsCount = () => {
+    return fetch("/doctor/patient/symptom/count", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -111,7 +111,7 @@ export const getUarchivedSymptomsCount = () => {
 }
 
 export const getUnarchivedAnswersCount = () => {
-    fetch("/doctor/patient/answer/count", {
+   return fetch("/doctor/patient/answer/count", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -120,7 +120,7 @@ export const getUnarchivedAnswersCount = () => {
 }
 
 export const getDoctorFeed = () => {
-    fetch("/doctor/feed", {
+    return fetch("/doctor/feed", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -156,7 +156,7 @@ export const getPatientQuestions = (patientId) => {
 }
 
 export const addQuestion = (patientId, question) => {
-    fetch("/doctor/patient/" + patientId + "/question", {
+   return fetch("/doctor/patient/" + patientId + "/question", {
         method: "POST",
         headers: headers,
         body: JSON.stringify(question)
@@ -166,7 +166,7 @@ export const addQuestion = (patientId, question) => {
 }
 
 export const login = (username, password) => {
-    fetch("/login", {
+    return fetch("/login", {
         method: "POST",
         headers: headers,
         body: JSON.stringify({
