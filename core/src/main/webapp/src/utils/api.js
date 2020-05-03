@@ -6,10 +6,10 @@
 
 import {goto} from "redom-app";
 
-const headers = {
+export const headers = {
     "Content-Type": "application/json"
 }
-const process = (res) => {
+export const process = (res) => {
     if (res.ok) {
         return res.json();
     } else if (res.status == 401 || res.status == 403) {
