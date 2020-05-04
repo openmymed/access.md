@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import AddPatient from "./AddPatient";
+// import { handleShow } from "./AddPatient";
 import Sidebar from "react-sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "react-bootstrap";
 import {
   faHome,
   faSignOutAlt,
@@ -14,6 +16,7 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      flag: false,
       fullname: sessionStorage.getItem("name"),
       fullname: "Majed Nuseibeh",
       sidebarDocked: mql.matches,
@@ -22,6 +25,15 @@ class Navbar extends Component {
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
+
+  ModalRef = ({ handleShow }) => {
+    this.showModal = handleShow;
+  };
+
+  onShowModal = () => {
+    this.setState({ sidebarOpen: false });
+    this.showModal();
+  };
 
   onSetSidebarOpen(open) {
     this.setState({ sidebarOpen: open });
@@ -36,6 +48,8 @@ class Navbar extends Component {
       <Sidebar
         sidebar={
           <div>
+            <AddPatient ref={this.ModalRef} />
+
             <h5 className="text-white bg-info py-4 pl-4 pr-5">
               Dr. {this.state.fullname}
             </h5>
@@ -61,13 +75,15 @@ class Navbar extends Component {
                 </li>
               </ul>
             </div>
-            <Button className="ml-4 mt-5">Add Patient</Button>
+            <Button className="ml-4 mt-5" onClick={this.onShowModal}>
+              Add Patient
+            </Button>
           </div>
         }
         open={this.state.sidebarOpen}
         docked={this.state.sidebarDocked}
         onSetOpen={this.onSetSidebarOpen}
-        styles={{ sidebar: { background: "white" } }}
+        styles={{ sidebar: { zIndex: 9999, background: "white" } }}
       >
         <div className="d-flex justify-content-between bg-info">
           <button

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Carousel } from "react-bootstrap";
 import * as api from "../utils/api";
+import "./../App.css";
 import Card from "./Card";
 
 class Overview extends Component {
@@ -24,29 +26,20 @@ class Overview extends Component {
 
   render() {
     return (
-      <div className="mt-5 ">
-        <h5 className="col-12">Overview</h5>
-        <div className="mt-2 d-flex row text-center">
-          <div className="col-12">
-            <Card
-              title="Total Patients"
-              number={this.state.totalPatients}
-            ></Card>
-          </div>
-          <div className="col-12">
-            <Card
-              title="Unseen Symptoms"
-              number={this.state.totalSymptoms}
-            ></Card>
-          </div>
-          <div className="col-12">
-            <Card
-              title="Unseen Answers"
-              number={this.state.totalAnswers}
-            ></Card>
-          </div>
-        </div>
-      </div>
+      <Carousel>
+        <Carousel.Item>
+          <Card title="Total Patients" number={this.state.totalPatients}></Card>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Card
+            title="Unseen Symptoms"
+            number={this.state.totalSymptoms}
+          ></Card>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Card title="Unseen Answers" number={this.state.totalAnswers}></Card>
+        </Carousel.Item>
+      </Carousel>
     );
   }
 

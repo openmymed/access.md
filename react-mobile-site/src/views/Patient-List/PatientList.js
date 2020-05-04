@@ -17,22 +17,26 @@ class PatientList extends Component {
     return (
       <Navbar>
         <div className="col-sm-12 mt-4">
-          <h4>Patient List</h4>
+          <h4>My Patients</h4>
           <div className="mt-4">
             <table className="table" this="table">
               <thead>
-                <th scope="col" className="text-left">
-                  Name
-                </th>
-                <th scope="col" className="text-center">
-                  Number
-                </th>
-                <th scope="col" className="text-right">
-                  Profile
-                </th>
+                <tr>
+                  <th scope="col" className="text-left">
+                    Name
+                  </th>
+                  <th scope="col" className="text-center">
+                    Number
+                  </th>
+                  <th scope="col" className="text-right">
+                    Profile
+                  </th>
+                </tr>
               </thead>
               {this.state.patients.map((patient) => (
-                <PatientEntry>{patient}</PatientEntry>
+                <PatientEntry key={this.state.patients.indexOf(patient)}>
+                  {patient}
+                </PatientEntry>
               ))}
             </table>
           </div>

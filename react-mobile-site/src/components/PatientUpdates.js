@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Modal from "./Modal";
+import Accordion from "./Accordion";
 
 class PatientUpdates extends Component {
   constructor() {
@@ -50,12 +50,14 @@ class PatientUpdates extends Component {
         <div className="mt-4">
           <table className="table">
             <thead className="bg-info text-white">
-              <th></th>
-              <th scope="col">Patient Name</th>
-              <th scope="col">Update Type</th>
+              <tr>
+                <th></th>
+                <th scope="col">Patient Name</th>
+                <th scope="col">Update Type</th>
+              </tr>
             </thead>
             {this.state.feeds.map((feed) => (
-              <Modal>{feed}</Modal>
+              <Accordion key={this.state.feeds.indexOf(feed)}>{feed}</Accordion>
             ))}
           </table>
         </div>

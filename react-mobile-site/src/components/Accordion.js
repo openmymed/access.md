@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
-class Modal extends Component {
+class Accordion extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,26 +31,27 @@ class Modal extends Component {
           <td>{this.state.feed.name}</td>
           <td>{this.state.feed.type}</td>
         </tr>
-
-        <td colspan="3" className="p-0">
-          <Collapse in={this.state.open}>
-            <div id="patientActivities">
-              <div className="card card-body">
-                <p>{this.state.feed.name}</p>
-                <p>{this.state.feed.date}</p>
-                <p>{this.state.feed.question}</p>
-                <div className="d-flex">
-                  <Link to="/patient" className="mr-1 btn btn-primary">
-                    Profile
-                  </Link>
-                  <Button variant="danger" onClick={this.handleClose}>
-                    Close
-                  </Button>
+        <tr>
+          <td colSpan="3" className="p-0">
+            <Collapse in={this.state.open}>
+              <div id="patientActivities">
+                <div className="card card-body">
+                  <p>{this.state.feed.name}</p>
+                  <p>{this.state.feed.date}</p>
+                  <p>{this.state.feed.question}</p>
+                  <div className="d-flex">
+                    <Link to="/patient" className="mr-1 btn btn-primary">
+                      Profile
+                    </Link>
+                    <Button variant="danger" onClick={this.handleClose}>
+                      Close
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Collapse>
-        </td>
+            </Collapse>
+          </td>
+        </tr>
       </tbody>
     );
   }
@@ -71,4 +72,4 @@ class Modal extends Component {
     e.preventDefault();
   }
 }
-export default Modal;
+export default Accordion;
