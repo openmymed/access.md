@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import * as api from "../utils/api";
 
 class Answers extends Component {
@@ -50,9 +51,10 @@ class Answers extends Component {
         <div className="d-flex justify-content-between">
           <h5 className="p-2 mt-3">Patient Answers</h5>
           <div className="mt-3">
-            <a this="questionsButton" className="btn btn-primary text-white">
-              Add Questions
-            </a>
+            {/* use this as referance how to pass data https://stackoverflow.com/questions/30115324/pass-props-in-link-react-router */}
+            <Link className="btn btn-primary text-white" to="/ask">
+              Questions
+            </Link>
           </div>
         </div>
         <div className="col-12 mb-2">

@@ -12,11 +12,11 @@ class PatientDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Majed nuss",
-      age: "23",
-      sex: "Male",
-      height: "175",
-      weight: "85",
+      name: "",
+      age: "",
+      sex: "",
+      height: "",
+      weight: "",
       respiratoryDiseases: false,
       g6pdDeficiency: false,
       diabetes: false,
@@ -46,7 +46,7 @@ class PatientDetails extends Component {
         sex = "Female";
       }
       this.setState({
-        age: json.age + " Years Old",
+        age: json.age,
         height: json.height,
         weight: json.weight,
         sex: sex,
@@ -61,6 +61,20 @@ class PatientDetails extends Component {
     api.getPatientPersonalProfile(this.props.patientId).then((json) => {
       this.setState({ name: json.firstName + " " + json.lastName });
     });
+
+    this.setState({
+      name: "Majed nuss",
+      age: "23",
+      sex: "Male",
+      height: "175",
+      weight: "85",
+      respiratoryDiseases: false,
+      g6pdDeficiency: false,
+      diabetes: false,
+      cardiovascularDiseases: false,
+      obesity: false,
+      medications: [],
+    });
   }
   render() {
     return (
@@ -74,7 +88,7 @@ class PatientDetails extends Component {
             ></img>
             <div className=" ml-4 mt-2">
               <h5 className="mb-1">{this.state.name}</h5>
-              <h6 className="text-secondary">{this.state.age}</h6>
+              <h6 className="text-secondary">{this.state.age} Years Old</h6>
             </div>
           </div>
           <div className="border-top border-bottom row m-0 text-center px-2 pt-2">

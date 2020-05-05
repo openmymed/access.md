@@ -12,6 +12,7 @@ class Accordion extends Component {
       open: false,
       icon: faCaretDown,
     };
+
     this.setOpen = this.setOpen.bind(this);
   }
 
@@ -43,9 +44,7 @@ class Accordion extends Component {
                     </Link>
                     <Button
                       variant="danger"
-                      onClick={() =>
-                        this.props.onDelete(this.props.children.id)
-                      }
+                      onClick={() => this.props.onDelete(this.props.children)}
                     >
                       Close
                     </Button>
@@ -72,4 +71,5 @@ class Accordion extends Component {
     }
   }
 }
+
 export default Accordion;

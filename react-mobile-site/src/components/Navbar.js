@@ -16,7 +16,7 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      flag: false,
+      showModal: false,
       fullname: sessionStorage.getItem("name"),
       fullname: "Majed Nuseibeh",
       sidebarDocked: mql.matches,
@@ -26,14 +26,13 @@ class Navbar extends Component {
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
-  // ModalRef = ({ handleShow }) => {
-  //   this.showModal = handleShow;
-  // };
+  handleModalClose() {
+    this.setState({ showModal: false });
+  }
 
-  onShowModal = () => {
-    this.setState({ sidebarOpen: false });
-    // this.showModal();
-  };
+  onShowModal() {
+    this.setState({ sidebarOpen: false, showModal: true });
+  }
 
   onSetSidebarOpen(open) {
     this.setState({ sidebarOpen: open });
@@ -49,7 +48,6 @@ class Navbar extends Component {
         sidebar={
           <div>
             {/* {this.ModalRef} */}
-            <AddPatient />
             <h5 className="text-white bg-info py-4 pl-4 pr-5">
               Dr. {this.state.fullname}
             </h5>
@@ -75,9 +73,13 @@ class Navbar extends Component {
                 </li>
               </ul>
             </div>
-            <Button className="ml-4 mt-5" onClick={this.onShowModal}>
+            <Button className="ml-4 mt-5" onClick={this.onShowModal.bind(this)}>
               Add Patient
             </Button>
+            <AddPatient
+              onClose={this.handleModalClose.bind(this)}
+              show={this.state.showModal}
+            />
           </div>
         }
         open={this.state.sidebarOpen}

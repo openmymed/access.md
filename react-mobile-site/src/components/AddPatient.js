@@ -1,39 +1,30 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import * as api from "../utils/api";
 
 class AddPatient extends Component {
   constructor(props) {
     super(props);
-    this.state = { code: "", show: props.show };
+    this.state = { code: "" };
     this.handleChange = this.handleChange.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleShow = this.handleShow.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(e) {
-    e.preventDefault();
     this.setState({
       code: e.target.value,
     });
   }
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log(this.state.code);
-  }
-  handleClose() {
-    this.setState({
-      show: false,
-    });
-  }
-  handleShow() {
-    this.setState({
-      show: true,
-    });
+  handleSubmit() {
+    api.assignPatientToMyself(this.state.code);
   }
 
   render() {
     return (
-      <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
+      <Modal
+        show={this.props.show}
+        onHide={this.props.onClose}
+        animation={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Add Patient</Modal.Title>
         </Modal.Header>
@@ -50,7 +41,7 @@ class AddPatient extends Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={this.handleClose}>
+          <Button variant="secondary" onClick={this.props.onClose}>
             Close
           </Button>
           <Button variant="primary" type="submit" onSubmit={this.handleSubmit}>

@@ -59,13 +59,13 @@ class PatientList extends Component {
           number: "123",
         },
         {
-          id: 1,
-          name: "Majed Nuss",
+          id: 2,
+          name: "Ahmad Nuss",
           number: "123",
         },
         {
-          id: 1,
-          name: "Majed Nuss",
+          id: 3,
+          name: "Mutaz Nuss",
           number: "123",
         },
       ],
@@ -88,11 +88,8 @@ class PatientEntry extends Component {
           <td className="text-left">{this.state.patient.name}</td>
           <td className="text-center">{this.state.patient.number}</td>
           <td className="text-right">
-            <Link
-              to="/patient"
-              patientId={this.state.number}
-              className="btn btn-primary"
-            >
+            {/* use this as referance how to pass data https://stackoverflow.com/questions/30115324/pass-props-in-link-react-router */}
+            <Link to="/patient" className="btn btn-primary">
               Profile
             </Link>
           </td>

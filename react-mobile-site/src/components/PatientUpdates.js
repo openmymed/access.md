@@ -9,7 +9,7 @@ class PatientUpdates extends Component {
       feeds: [],
     };
     this.getDoctorFeed = this.getDoctorFeed.bind(this);
-    this.handleChildUnmount = this.handleChildUnmount.bind(this);
+    // this.handleChildUnmount = this.handleChildUnmount.bind(this);
   }
 
   componentDidMount() {
@@ -17,8 +17,14 @@ class PatientUpdates extends Component {
   }
   handleChildUnmount = (feedId) => {
     //this does delete items but not the correct one i dont know why there is problem with setState
-    const newFeeds = this.state.feeds.filter((feed) => feed.id !== feedId);
-    this.setState({ feeds: newFeeds });
+    // console.log(feedId);
+    // const newFeeds = this.state.feeds.filter((feed) => feed.id !== feedId);
+    // console.log(newFeeds);
+    var index = this.state.feeds.indexOf(feedId);
+    this.state.feeds.splice(index, 1);
+    // this.state.feeds.pop(feedId);
+    // this.setState({ feeds: newFeeds });
+    this.setState(this.state.feeds);
   };
 
   getDoctorFeed() {
@@ -68,7 +74,7 @@ class PatientUpdates extends Component {
             </thead>
             {this.state.feeds.map((feed) => (
               <Accordion
-                onDelete={this.handleChildUnmount}
+                onDelete={this.handleChildUnmount.bind(this)}
                 key={this.state.feeds.indexOf(feed)}
               >
                 {feed}
