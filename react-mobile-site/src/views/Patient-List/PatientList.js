@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../../components/Navbar";
 import { Link } from "react-router-dom";
+import * as api from "../../utils/api";
 
 class PatientList extends Component {
   constructor(props) {
@@ -46,7 +47,10 @@ class PatientList extends Component {
   }
 
   getPatientList() {
-    //change this with api fetch
+    api.getPatients().then((json) => {
+      this.setState({ patients: json });
+    });
+    //dummy data
     this.setState({
       patients: [
         {
@@ -84,7 +88,11 @@ class PatientEntry extends Component {
           <td className="text-left">{this.state.patient.name}</td>
           <td className="text-center">{this.state.patient.number}</td>
           <td className="text-right">
-            <Link to="/patient" className="btn btn-primary">
+            <Link
+              to="/patient"
+              patientId={this.state.number}
+              className="btn btn-primary"
+            >
               Profile
             </Link>
           </td>

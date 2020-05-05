@@ -12,9 +12,7 @@ class Accordion extends Component {
       open: false,
       icon: faCaretDown,
     };
-
     this.setOpen = this.setOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
   }
 
   render() {
@@ -43,7 +41,12 @@ class Accordion extends Component {
                     <Link to="/patient" className="mr-1 btn btn-primary">
                       Profile
                     </Link>
-                    <Button variant="danger" onClick={this.handleClose}>
+                    <Button
+                      variant="danger"
+                      onClick={() =>
+                        this.props.onDelete(this.props.children.id)
+                      }
+                    >
                       Close
                     </Button>
                   </div>
@@ -67,9 +70,6 @@ class Accordion extends Component {
         icon: faCaretDown,
       });
     }
-  }
-  handleClose(e) {
-    e.preventDefault();
   }
 }
 export default Accordion;

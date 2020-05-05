@@ -26,13 +26,13 @@ class Navbar extends Component {
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
-  ModalRef = ({ handleShow }) => {
-    this.showModal = handleShow;
-  };
+  // ModalRef = ({ handleShow }) => {
+  //   this.showModal = handleShow;
+  // };
 
   onShowModal = () => {
     this.setState({ sidebarOpen: false });
-    this.showModal();
+    // this.showModal();
   };
 
   onSetSidebarOpen(open) {
@@ -48,8 +48,8 @@ class Navbar extends Component {
       <Sidebar
         sidebar={
           <div>
-            <AddPatient ref={this.ModalRef} />
-
+            {/* {this.ModalRef} */}
+            <AddPatient />
             <h5 className="text-white bg-info py-4 pl-4 pr-5">
               Dr. {this.state.fullname}
             </h5>
