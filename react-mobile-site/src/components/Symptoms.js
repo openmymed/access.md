@@ -51,7 +51,9 @@ class Symptoms extends Component {
     return (
       <div>
         <div className="mx-2">
-          <h5 className="p-2 mt-3">Patient Symptoms</h5>
+          <h5 className="text-info font-weight-bold p-2 mt-3">
+            Patient Symptoms
+          </h5>
           <div className="col-12 mb-2">
             {this.state.symptoms.map((symptom) => (
               <Symptom key={this.state.symptoms.indexOf(symptom)}>
@@ -105,7 +107,7 @@ class Symptom extends Component {
               <div>
                 <button
                   this="dismiss"
-                  className="btn btn-danger"
+                  className="btn btn-danger btn-sm"
                   onClick={this.handleDismiss}
                 >
                   Dismiss

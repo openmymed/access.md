@@ -19,6 +19,11 @@
   width: 3.5rem;
   height: 3.5rem;
 }
+.profile-img {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
 .nav-link {
   color: black;
   padding: 0.8rem 0.4rem;

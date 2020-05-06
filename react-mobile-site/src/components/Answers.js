@@ -7,11 +7,21 @@ import * as api from "../utils/api";
 class Answers extends Component {
   constructor(props) {
     super(props);
-    this.state = { answers: [] };
+    this.state = { answers: [], isVisible: window.innerWidth < 1080 };
     this.getAnswers = this.getAnswers.bind(this);
   }
-
+  updateDimensions = () => {
+    if (window.innerWidth < 1080) {
+      this.setState({ width: window.innerWidth, isVisible: true });
+    } else {
+      this.setState({ width: window.innerWidth, isVisible: false });
+    }
+  };
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
   componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
     this.getAnswers();
   }
   getAnswers() {
@@ -49,10 +59,18 @@ class Answers extends Component {
     return (
       <div className="mx-2">
         <div className="d-flex justify-content-between">
-          <h5 className="p-2 mt-3">Patient Answers</h5>
+          <h5 className="text-info font-weight-bold p-2 mt-3 mb-0">
+            Patient Answers
+          </h5>
           <div className="mt-3">
             {/* use this as referance how to pass data https://stackoverflow.com/questions/30115324/pass-props-in-link-react-router */}
-            <Link className="btn btn-primary text-white" to="/ask">
+            {/* <Link className="btn btn-primary btn-sm text-white" to="/ask"> */}
+            <Link
+              className={`btn btn-primary btn-sm text-white ${
+                this.state.isVisible ? "" : "invisible"
+              }`}
+              to="/ask"
+            >
               Questions
             </Link>
           </div>
@@ -99,7 +117,7 @@ class Answer extends Component {
               <div>
                 <button
                   this="dismiss"
-                  className="btn btn-danger"
+                  className="btn btn-danger btn-sm"
                   onClick={this.handleDismiss}
                 >
                   Dismiss

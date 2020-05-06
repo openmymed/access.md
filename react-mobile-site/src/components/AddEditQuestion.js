@@ -73,6 +73,7 @@ class AddEditQuestion extends Component {
   render() {
     return (
       <Modal
+        style={{ zIndex: 9999 }}
         show={this.props.show}
         onHide={this.props.onClose}
         animation={false}

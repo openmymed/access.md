@@ -12,3 +12,9 @@ img {
 form {
   text-align: left;
 }
+.sidebar {
+  margin-top: 50%;
+}
+.log {
+  margin-top: 25%;
+}

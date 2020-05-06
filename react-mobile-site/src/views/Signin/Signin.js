@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Row, Button, Form } from "react-bootstrap";
 import "./Signin.css";
 import Logo from "./../../images/openmymed.png";
 import { loadIcpc } from "../../utils/icpc";
@@ -8,45 +8,101 @@ import * as api from "../../utils/api";
 class Signin extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "" };
+    this.state = { username: "", password: "", width: window.innerWidth };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  updateDimensions = () => {
+    this.setState({ width: window.innerWidth });
+  };
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
   render() {
-    return (
-      <div className="Login">
-        <img src={Logo} alt="logo" />
-        <h1 className="mt-5 text-info">Access.md</h1>
-        <h2 className="text-info">Sign In</h2>
-        <Form className="mt-5 form" onSubmit={this.handleSubmit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              value={this.state.username}
-              type="text"
-              onChange={this.handleChange}
-              placeholder="Username"
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              value={this.state.password}
-              type="password"
-              onChange={this.handleChange}
-              placeholder="Password"
-            />
-          </Form.Group>
-          <Form.Control.Feedback type="invalid">
-            Incorrect Username or Password.
-          </Form.Control.Feedback>
-          <Button className="mt-4 btn-block" variant="info" type="submit">
-            Submit
-          </Button>
-        </Form>
-      </div>
-    );
+    if (this.state.width <= 550) {
+      return (
+        <div className="Login">
+          <img src={Logo} alt="logo" />
+          <h1 className="mt-5 text-info">Access.md</h1>
+          <h2 className="text-info">Sign In</h2>
+
+          <Form className="mt-5 form" onSubmit={this.handleSubmit}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                value={this.state.username}
+                type="text"
+                onChange={this.handleChange}
+                placeholder="Username"
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                value={this.state.password}
+                type="password"
+                onChange={this.handleChange}
+                placeholder="Password"
+              />
+            </Form.Group>
+            <Form.Control.Feedback type="invalid">
+              Incorrect Username or Password.
+            </Form.Control.Feedback>
+            <Button className="mt-4 btn-block" variant="info" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Row className="m-0">
+            <div className=" col-4 vh-100 bg-info">
+              <div className="sidebar text-white text-center ">
+                <h1>ACCESS.MD</h1>
+                <img src={Logo}></img>
+              </div>
+            </div>
+            <div className="col-8">
+              <div className="w-50 log ml-5">
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                      value={this.state.username}
+                      type="text"
+                      onChange={this.handleChange}
+                      placeholder="Username"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      value={this.state.password}
+                      type="password"
+                      onChange={this.handleChange}
+                      placeholder="Password"
+                    />
+                  </Form.Group>
+                  <Form.Control.Feedback type="invalid">
+                    Incorrect Username or Password.
+                  </Form.Control.Feedback>
+                  <Button type="submit" className="btn btn-info" variant="info">
+                    Login
+                  </Button>
+                </Form>
+              </div>
+            </div>
+          </Row>
+        </div>
+      );
+    }
   }
 
   handleSubmit(e) {

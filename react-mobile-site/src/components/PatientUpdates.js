@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Accordion from "./Accordion";
+import Feed from "./Feed";
 import * as api from "../utils/api";
 
 class PatientUpdates extends Component {
@@ -7,12 +8,22 @@ class PatientUpdates extends Component {
     super();
     this.state = {
       feeds: [],
+      width: window.innerWidth,
     };
     this.getDoctorFeed = this.getDoctorFeed.bind(this);
     // this.handleChildUnmount = this.handleChildUnmount.bind(this);
   }
 
+  updateDimensions = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
   componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
     this.getDoctorFeed();
   }
   handleChildUnmount = (feedId) => {
@@ -60,30 +71,67 @@ class PatientUpdates extends Component {
   }
 
   render() {
-    return (
-      <div className="col-sm-12 mt-4">
-        <h5>Last Activities</h5>
-        <div className="mt-4">
-          <table className="table">
-            <thead className="bg-info text-white">
-              <tr>
-                <th></th>
-                <th scope="col">Patient Name</th>
-                <th scope="col">Update Type</th>
-              </tr>
-            </thead>
-            {this.state.feeds.map((feed) => (
-              <Accordion
-                onDelete={this.handleChildUnmount.bind(this)}
-                key={this.state.feeds.indexOf(feed)}
-              >
-                {feed}
-              </Accordion>
-            ))}
-          </table>
+    if (this.state.width <= 1115) {
+      return (
+        <div className="col-sm-12 mt-4">
+          <h5>Last Activities</h5>
+          <div className="mt-4">
+            <table className="table">
+              <thead className="bg-info text-white">
+                <tr>
+                  <th></th>
+                  <th scope="col">Patient Name</th>
+                  <th scope="col">Update Type</th>
+                </tr>
+              </thead>
+              {this.state.feeds.map((feed) => (
+                <Accordion
+                  onDelete={this.handleChildUnmount.bind(this)}
+                  key={this.state.feeds.indexOf(feed)}
+                >
+                  {feed}
+                </Accordion>
+              ))}
+            </table>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="col-sm-12 mt-4">
+          <h5>Last Activities</h5>
+          <div className="mt-4">
+            <table className="table">
+              <thead className="bg-info text-white">
+                <tr>
+                  <th scope="col" className="text-left">
+                    Patient Name
+                  </th>
+                  <th scope="col" className="text-center">
+                    Update Type
+                  </th>
+                  <th scope="col" className="text-center">
+                    Time
+                  </th>
+                  <th scope="col" className="text-center">
+                    Details
+                  </th>
+                  <th scope="col" className="text-right"></th>
+                </tr>
+              </thead>
+              {this.state.feeds.map((feed) => (
+                <Feed
+                  onDelete={this.handleChildUnmount.bind(this)}
+                  key={this.state.feeds.indexOf(feed)}
+                >
+                  {feed}
+                </Feed>
+              ))}
+            </table>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
