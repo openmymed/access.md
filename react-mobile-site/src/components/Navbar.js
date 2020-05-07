@@ -107,7 +107,7 @@ class Navbar extends Component {
         >
           <div className="d-flex justify-content-between bg-info">
             <Button
-              className="navbar-dark navbar-toggler"
+              className="navbar-dark navbar-toggler btn-info"
               onClick={() => this.onSetSidebarOpen(true)}
             >
               <span className="navbar-toggler-icon"></span>

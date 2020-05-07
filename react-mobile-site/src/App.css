@@ -28,6 +28,9 @@
   color: black;
   padding: 0.8rem 0.4rem;
 }
+.nav-link:hover {
+  color: #17a2b8 !important;
+}
 .nav-tabs .nav-link.active {
   border-bottom: solid #17a2b8 0.3rem;
   color: #17a2b8 !important;

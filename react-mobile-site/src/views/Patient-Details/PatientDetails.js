@@ -165,7 +165,7 @@ class PatientDetails extends Component {
               Questions
             </Link>
           </div>
-          <div class="row m-3 bg-light">
+          <div className="row m-3 bg-light">
             <PatientVitals />
           </div>
           <div className="row m-3 border bg-light">
