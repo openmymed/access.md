@@ -14,6 +14,7 @@ class Signin extends Component {
   }
 
   updateDimensions = () => {
+    console.log(window.innerWidth);
     this.setState({ width: window.innerWidth });
   };
   componentDidMount() {
@@ -24,7 +25,7 @@ class Signin extends Component {
   }
 
   render() {
-    if (this.state.width <= 550) {
+    if (this.state.width <= 790) {
       return (
         <div className="Login">
           <img src={Logo} alt="logo" />
