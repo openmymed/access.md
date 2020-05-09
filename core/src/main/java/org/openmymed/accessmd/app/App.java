@@ -243,7 +243,7 @@ public class App {
         if (Boolean.valueOf(System.getProperty("app.production", "false"))) {
             app.config.addStaticFiles("/webapp");
         } else {
-            app.config.addStaticFiles("./src/main/webapp/dist", Location.EXTERNAL);
+            app.config.addStaticFiles("./src/main/webapp/build", Location.EXTERNAL);
         }
 
     }

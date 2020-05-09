@@ -5,6 +5,7 @@ app_dev/
 ObjectStore/
 PutObjectStoreDirHere/
 /src/main/webapp/dist/
+/src/main/webapp/build/
 /src/main/webapp/node_modules/
 /src/main/webapp/node/
 /src/main/webapp/docs/
