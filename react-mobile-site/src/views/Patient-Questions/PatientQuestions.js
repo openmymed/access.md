@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../../components/Navbar";
 import { Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPen } from "@fortawesome/free-solid-svg-icons";
 import AddEditQuestion from "../../components/AddEditQuestion";
@@ -9,7 +10,11 @@ import * as api from "../../utils/api";
 class PatientQuestions extends Component {
   constructor(props) {
     super(props);
-    this.state = { questions: [], showModal: false };
+    this.state = {
+      patientId: this.props.match.params.id,
+      questions: [],
+      showModal: false,
+    };
     this.loadQuestions = this.loadQuestions.bind(this);
   }
 
@@ -22,7 +27,7 @@ class PatientQuestions extends Component {
   }
 
   loadQuestions() {
-    api.getPatientQuestions(this.props.patientId).then((json) => {
+    api.getPatientQuestions(this.state.patientId).then((json) => {
       this.setState({ questions: json });
     });
     //dummy data
@@ -59,7 +64,10 @@ class PatientQuestions extends Component {
           id: 4,
           question: "Do you have a fever?",
           type: "Scale",
-          recurrance: [{ hi: 1 }, { hi: 2 }],
+          recurrance: [
+            { hourOfDay: 0, minuteOfHour: 0 },
+            { hourOfDay: 2, minuteOfHour: 2 },
+          ],
           recurring: true,
           startDate: "15/7/2019",
           endDate: "15/7/2019",
@@ -85,7 +93,7 @@ class PatientQuestions extends Component {
               <FontAwesomeIcon icon={faPlus} />
             </Button>
             <AddEditQuestion
-              patientId={this.props.patientId}
+              patientId={this.state.patientId}
               show={this.state.showModal}
               onClose={this.handleModalClose.bind(this)}
             />
@@ -105,7 +113,7 @@ class PatientQuestions extends Component {
               </thead>
               {this.state.questions.map((question) => (
                 <Question
-                  patientId={this.props.patientId}
+                  patientId={this.state.patientId}
                   key={this.state.questions.indexOf(question)}
                 >
                   {question}
@@ -118,7 +126,7 @@ class PatientQuestions extends Component {
     );
   }
 }
-export default PatientQuestions;
+export default withRouter(PatientQuestions);
 
 class Question extends Component {
   constructor(props) {

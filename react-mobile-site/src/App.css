@@ -35,3 +35,8 @@
   border-bottom: solid #17a2b8 0.3rem;
   color: #17a2b8 !important;
 }
+.repetition-time {
+  width: 70%;
+  text-align: center;
+  height: 1.75rem;
+}

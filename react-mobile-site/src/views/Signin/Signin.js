@@ -67,7 +67,7 @@ class Signin extends Component {
             <div className=" col-4 vh-100 bg-info">
               <div className="sidebar text-white text-center ">
                 <h1>ACCESS.MD</h1>
-                <img src={Logo}></img>
+                <img src={Logo} alt="logo"></img>
               </div>
             </div>
             <div className="col-8">
@@ -108,19 +108,23 @@ class Signin extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // api.login(this.state.username, this.state.password).then((json) => {
-    //   sessionStorage.setItem("role", json.userRole);
-    //   let fullName = json.firstName + " " + json.lastName;
-    //   if (json.userRole === "ROLE_DOCTOR") {
-    //     sessionStorage.setItem("auth", true);
-    //     loadIcpc();
-    //     sessionStorage.setItem("name", fullName);
-    //     this.props.history.push("/home");
-    //   } else {
-    //     sessionStorage.setItem("auth", false);
-    //     alert("You do not have the authorization for this page");
-    //   }
-    // });
+    api.login(this.state.username, this.state.password).then((json) => {
+      sessionStorage.setItem("role", json.userRole);
+      let fullName = json.firstName + " " + json.lastName;
+      if (json.userRole === "ROLE_DOCTOR") {
+        sessionStorage.setItem("auth", true);
+        loadIcpc();
+        sessionStorage.setItem("name", fullName);
+        this.props.history.push("/home");
+      } else if (json.userRole === "ROLE_ADMIN") {
+        sessionStorage.setItem("auth", true);
+        sessionStorage.setItem("name", fullName);
+        this.props.history.push("/admin");
+      } else {
+        sessionStorage.setItem("auth", false);
+        alert("You do not have the authorization for this page");
+      }
+    });
     this.props.history.push("/home");
   }
   handleChange(e) {

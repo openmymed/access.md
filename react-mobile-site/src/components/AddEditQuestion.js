@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Modal, Button, Form, Row, Collapse } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import "./../App.css";
 import * as api from "../utils/api";
 
 class AddEditQuestion extends Component {
@@ -61,12 +62,13 @@ class AddEditQuestion extends Component {
       case "to-date-input":
         this.setState({ toDate: e.target.value });
         break;
+      default:
     }
   }
   handleRecurring() {
     this.setState({ recurring: !this.state.recurring });
   }
-  handleRecurrence() {
+  handleAddRecurrence() {
     this.state.recurrance.push({ hourOfDay: 0, minuteOfHour: 0 });
     this.setState(this.state.recurrance);
   }
@@ -104,6 +106,7 @@ class AddEditQuestion extends Component {
                   value={this.state.questionType}
                   onChange={this.handleChange}
                 >
+                  <option>Please Select</option>
                   <option value="Scale">Scale</option>
                   <option value="Binary">Binary</option>
                   <option value="Text">Text</option>
@@ -124,7 +127,6 @@ class AddEditQuestion extends Component {
           </Row>
           <Collapse in={this.state.recurring}>
             <Row id="recurrance-row">
-              {/* //className="collapse" */}
               <Form.Group className="col">
                 <Form.Label>From Date</Form.Label>
                 <Form.Control
@@ -157,19 +159,17 @@ class AddEditQuestion extends Component {
                       <th scope="col" className="text-right"></th>
                     </tr>
                   </thead>
-                  {this.state.repetitions.map((repetition) => (
-                    <Repetition
-                      key={this.state.repetitions.indexOf(repetition)}
-                    >
+                  {this.state.recurrance.map((repetition) => (
+                    <Repetition key={this.state.recurrance.indexOf(repetition)}>
                       {repetition}
                     </Repetition>
                   ))}
                 </table>
               </div>
-              <div className="col-12 d-flex justify-content-end">
+              <div className="col-12 d-flex justify-content-end mr-5">
                 <Button
-                  className="btn bt-primary btn-sm"
-                  onClick={this.handleRecurrence.bind(this)}
+                  className="btn btn-primary btn-sm "
+                  onClick={this.handleAddRecurrence.bind(this)}
                 >
                   <FontAwesomeIcon icon={faPlus} />
                 </Button>
@@ -201,10 +201,16 @@ export default AddEditQuestion;
 // })
 
 class Repetition extends Component {
-  constructor() {
+  constructor(props) {
+    super(props);
+
     this.state = {
       repitition: this.props.children,
-      timeInput: "",
+      items: [],
+      timeInput:
+        ("" + this.props.children.hourOfDay).padStart(2, "0") +
+        ":" +
+        ("" + this.props.children.minuteOfHour).padStart(2, "0"),
       indexText: "",
     };
 
@@ -216,26 +222,38 @@ class Repetition extends Component {
     //   }
     // };
   }
-  onDelete() {}
-  handleInputChange() {}
+  onDelete() {
+    //work on deleting recurrance..
+    // this._delete();
+  }
+  handleInput(e) {
+    // we need to fix this too...
+    if (e.target.value) {
+      let splits = e.target.value.split(":");
+      let hourOfDay = parseInt(splits[0]);
+      let minuteOfHour = parseInt(splits[1]);
+
+      this.setState({
+        timeInput: { hourOfDay, minuteOfHour },
+      });
+    }
+  }
   render() {
     return (
       <tbody>
         <tr>
-          <td scope="row" className="text-left" this="indexText">
-            {this.state.indexText}
-          </td>
+          <td className="text-left">{this.state.indexText}</td>
           <td className="text-center">
             <input
               className="repetition-time"
               value={this.state.timeInput}
-              onChange={this.handleInputChange.bind(this)}
+              onInput={this.handleInput.bind(this)}
               type="time"
             ></input>
           </td>
           <td className="text-right">
             <a onClick={this.onDelete.bind(this)}>
-              {/* <i className="fa fa-times"></i> */}
+              <FontAwesomeIcon icon={faTimes} />
             </a>
           </td>
         </tr>
@@ -253,14 +271,14 @@ class Repetition extends Component {
     );
   }
 
-  update(data, index, items) {
-    this.data = data;
-    this.index = index;
-    this.items = items;
-    this.indexText.textContent = index + 1;
-    this.timeInput.value =
-      ("" + this.data.hourOfDay).padStart(2, "0") +
-      ":" +
-      ("" + this.data.minuteOfHour).padStart(2, "0");
-  }
+  // update(data, index, items) {
+  //   this.data = data;
+  //   this.index = index;
+  //   this.items = items;
+  //   this.indexText.textContent = index + 1;
+  //   this.timeInput.value =
+  //     ("" + this.data.hourOfDay).padStart(2, "0") +
+  //     ":" +
+  //     ("" + this.data.minuteOfHour).padStart(2, "0");
+  // }
 }

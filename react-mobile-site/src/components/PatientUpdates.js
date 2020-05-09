@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Accordion from "./Accordion";
-import Feed from "./Feed";
 import * as api from "../utils/api";
 
 class PatientUpdates extends Component {
@@ -120,12 +119,12 @@ class PatientUpdates extends Component {
                 </tr>
               </thead>
               {this.state.feeds.map((feed) => (
-                <Feed
+                <Accordion
                   onDelete={this.handleChildUnmount.bind(this)}
                   key={this.state.feeds.indexOf(feed)}
                 >
                   {feed}
-                </Feed>
+                </Accordion>
               ))}
             </table>
           </div>

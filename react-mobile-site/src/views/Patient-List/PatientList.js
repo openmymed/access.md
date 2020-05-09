@@ -79,17 +79,18 @@ class PatientEntry extends Component {
     super(props);
     this.state = {
       patient: this.props.children,
+      id: this.props.children.id,
     };
   }
   render() {
+    let url = "/patient/" + this.state.id;
     return (
       <tbody>
         <tr>
           <td className="text-left">{this.state.patient.name}</td>
           <td className="text-center">{this.state.patient.number}</td>
           <td className="text-right">
-            {/* use this as referance how to pass data https://stackoverflow.com/questions/30115324/pass-props-in-link-react-router */}
-            <Link to="/patient" className="btn btn-primary">
+            <Link to={url} className="btn btn-primary btn-sm">
               Profile
             </Link>
           </td>

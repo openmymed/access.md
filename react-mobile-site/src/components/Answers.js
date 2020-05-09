@@ -56,6 +56,7 @@ class Answers extends Component {
   }
 
   render() {
+    let askUrl = "/ask/" + this.props.patientId;
     return (
       <div className="mx-2">
         <div className="d-flex justify-content-between">
@@ -63,13 +64,11 @@ class Answers extends Component {
             Patient Answers
           </h5>
           <div className="mt-3">
-            {/* use this as referance how to pass data https://stackoverflow.com/questions/30115324/pass-props-in-link-react-router */}
-            {/* <Link className="btn btn-primary btn-sm text-white" to="/ask"> */}
             <Link
               className={`btn btn-primary btn-sm text-white ${
                 this.state.isVisible ? "" : "invisible"
               }`}
-              to="/ask"
+              to={askUrl}
             >
               Questions
             </Link>
@@ -92,7 +91,9 @@ class Answer extends Component {
     this.state = { answer: props.children };
     this.handleDismiss = this.handleDismiss.bind(this);
   }
-  handleDismiss() {}
+  handleDismiss() {
+    //here we handle answers dismiss
+  }
   render() {
     return (
       <div className="row mt-2">

@@ -16,7 +16,7 @@ class Navbar extends Component {
     super(props);
     this.state = {
       showModal: false,
-      fullname: sessionStorage.getItem("name"),
+      // fullname: sessionStorage.getItem("name"),
       fullname: "Majed Nuseibeh",
       sidebarDocked: mql.matches,
       sidebarOpen: false,

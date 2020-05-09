@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Tabs, Tab } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Answers from "./../../components/Answers";
 import Symptoms from "./../../components/Symptoms";
 import Vitals from "./../../components/Vitals";
-import PatientVitals from "./../../components/vitals-lg";
 import MedicalProfile from "../../components/MedicalProfile";
-import Profile from "../../components/medical-profile-lg";
+import Profile from "../../components/Profile";
 import "./../../App.css";
 import * as api from "../../utils/api";
 
@@ -15,6 +14,7 @@ class PatientDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      patientId: this.props.match.params.id,
       name: "",
       age: "",
       sex: "",
@@ -43,12 +43,12 @@ class PatientDetails extends Component {
     window.removeEventListener("resize", this.updateDimensions);
   }
   componentDidMount() {
-    this.getPatientProfile();
+    this.getPatientProfile(this.state.patientId);
     window.addEventListener("resize", this.updateDimensions);
   }
 
-  getPatientProfile() {
-    api.getPatientMedicalProfile(this.props.patientId).then((json) => {
+  getPatientProfile(patientId) {
+    api.getPatientMedicalProfile(patientId).then((json) => {
       let sex = "";
       if (json.sex === "Male") {
         sex = "Male";
@@ -56,6 +56,7 @@ class PatientDetails extends Component {
         sex = "Female";
       }
       this.setState({
+        patientId: patientId,
         age: json.age,
         height: json.height,
         weight: json.weight,
@@ -68,11 +69,12 @@ class PatientDetails extends Component {
         medications: json.medications,
       });
     });
-    api.getPatientPersonalProfile(this.props.patientId).then((json) => {
+    api.getPatientPersonalProfile(patientId).then((json) => {
       this.setState({ name: json.firstName + " " + json.lastName });
     });
 
     this.setState({
+      patientId: patientId,
       name: "Majed nuss",
       age: "23",
       sex: "Male",
@@ -87,6 +89,7 @@ class PatientDetails extends Component {
     });
   }
   render() {
+    let askUrl = "/ask/" + this.state.patientId;
     if (this.state.width <= 1080) {
       return (
         <Navbar>
@@ -130,23 +133,26 @@ class PatientDetails extends Component {
                 onSelect={(key) => this.setState({ key })}
               >
                 <Tab eventKey="flags" title=" Medical Flags">
-                  <MedicalProfile
-                    respiratoryDiseases={this.state.respiratoryDiseases}
-                    g6pdDeficiency={this.state.g6pdDeficiency}
-                    diabetes={this.state.diabetes}
-                    cardiovascularDiseases={this.state.cardiovascularDiseases}
-                    obesity={this.state.obesity}
-                    medications={this.state.medications}
-                  ></MedicalProfile>
+                  <div className="pl-2">
+                    <h5 className="d-block mx-auto p-2 mt-3">Medical Flags</h5>
+                    <MedicalProfile
+                      respiratoryDiseases={this.state.respiratoryDiseases}
+                      g6pdDeficiency={this.state.g6pdDeficiency}
+                      diabetes={this.state.diabetes}
+                      cardiovascularDiseases={this.state.cardiovascularDiseases}
+                      obesity={this.state.obesity}
+                      medications={this.state.medications}
+                    ></MedicalProfile>
+                  </div>
                 </Tab>
                 <Tab eventKey="symptoms" title="Symptoms">
-                  <Symptoms patientId={this.props.patientId} />
+                  <Symptoms patientId={this.state.patientId} />
                 </Tab>
                 <Tab eventKey="answers" title="Answers">
-                  <Answers patientId={this.props.patientId} />
+                  <Answers patientId={this.state.patientId} />
                 </Tab>
                 <Tab eventKey="vitals" title="Vitals">
-                  <Vitals patientId={this.props.patientId} />
+                  <Vitals patientId={this.state.patientId} />
                 </Tab>
               </Tabs>
             </div>
@@ -160,33 +166,32 @@ class PatientDetails extends Component {
             <h4 className="ml-3 mt-5">Patient Profile</h4>
             <Link
               className="btn btn-primary mr-3 mt-5 btn-sm text-white"
-              to="/ask"
+              to={askUrl}
             >
               Questions
             </Link>
           </div>
           <div className="row m-3 bg-light">
-            <PatientVitals />
+            <Vitals patientId={this.state.patientId} />
           </div>
           <div className="row m-3 border bg-light">
             <div className="col-lg-4 p-0 border-right">
-              <Profile patientId={this.props.patientId} />
+              <Profile patientId={this.state.patientId} />
             </div>
             <div className="col-lg-8 bg-light">
               <div className="row ">
                 <div className="col-lg-6">
-                  <Symptoms patientId={this.props.patientId} />
+                  <Symptoms patientId={this.state.patientId} />
                 </div>
                 <div className="col-lg-6">
-                  <Answers patientId={this.props.patientId} />
+                  <Answers patientId={this.state.patientId} />
                 </div>
               </div>
             </div>
-            <label this="patientLabel"></label>
           </div>
         </Navbar>
       );
     }
   }
 }
-export default PatientDetails;
+export default withRouter(PatientDetails);

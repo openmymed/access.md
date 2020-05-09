@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Row, Form } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import "./../App.css";
-import * as api from "./../utils/api";
+import MedicalProfile from "./MedicalProfile";
+import * as api from "../utils/api";
 
 class Profile extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class Profile extends Component {
     api.getPatientPersonalProfile(this.props.patientId).then((json) => {
       this.setState({ name: json.firstName + " " + json.lastName });
     });
+    //dummy data
     this.setState({
       name: "Majed nuss",
       age: "23",
@@ -103,55 +105,24 @@ class Profile extends Component {
         <h5 className="bg-info text-white d-block mx-auto p-2 mt-3">
           Medical Flags
         </h5>
-        <div className="col-12 py-1">
-          <Form.Group>
-            <Form.Check
-              disabled
-              type="checkbox"
-              label="G6PD Deficiency"
-              checked={this.state.g6pdDeficiency}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Check
-              disabled
-              type="checkbox"
-              label="Respiratory Diseases"
-              checked={this.state.respiratoryDiseases}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Check
-              disabled
-              type="checkbox"
-              label="Diabetes"
-              checked={this.state.diabetes}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Check
-              disabled
-              type="checkbox"
-              label="Cardiovascular Diseases"
-              checked={this.state.cardiovascularDiseases}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Check
-              disabled
-              type="checkbox"
-              label="Obesity"
-              checked={this.state.obesity}
-            />
-          </Form.Group>
-        </div>
+        <MedicalProfile
+          respiratoryDiseases={this.state.respiratoryDiseases}
+          g6pdDeficiency={this.state.g6pdDeficiency}
+          diabetes={this.state.diabetes}
+          cardiovascularDiseases={this.state.cardiovascularDiseases}
+          obesity={this.state.obesity}
+          medications={this.state.medications}
+        ></MedicalProfile>
         <h5 className="bg-info  text-white d-block mx-auto p-2 mt-3">
           Current Medications
         </h5>
-        {/* <div className="p-1">{(this.medications = list("ul", Medication))}</div> */}
+        <ul>
+          {this.state.medications.map((medication) => (
+            <li key={this.state.medications.indexOf(medication)}>
+              {medication}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
