@@ -125,7 +125,6 @@ class Signin extends Component {
         alert("You do not have the authorization for this page");
       }
     });
-    this.props.history.push("/home");
   }
   handleChange(e) {
     if (e.target.type === "text") {

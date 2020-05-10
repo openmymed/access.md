@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import AddPatient from "./AddPatient";
+import AddDoctor from "./AddDoctor";
 import Sidebar from "react-sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,13 +11,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const mql = window.matchMedia(`(min-width: 800px)`);
-class Navbar extends Component {
+class AdminNavbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showModal: false,
-      // fullname: sessionStorage.getItem("name"),
-      fullname: "Majed Nuseibeh",
       sidebarDocked: mql.matches,
       sidebarOpen: false,
       width: window.innerWidth,
@@ -62,9 +60,7 @@ class Navbar extends Component {
         <Sidebar
           sidebar={
             <div>
-              <h5 className="text-white bg-info py-4 pl-4 pr-5">
-                Dr. {this.state.fullname}
-              </h5>
+              <h5 className="text-white bg-info py-4 pl-4 pr-5">Admin Panel</h5>
               <div className="text-left text-white pl-4 pr-5">
                 <ul className="navbar-nav mt-5">
                   <li className="d-block nav-item">
@@ -76,7 +72,7 @@ class Navbar extends Component {
                   <li className="nav-item">
                     <Link className="text-info nav-link" to="/patients">
                       <FontAwesomeIcon className="mr-1" icon={faUser} />
-                      My Patients
+                      Doctors List
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -91,9 +87,9 @@ class Navbar extends Component {
                 className="ml-4 mt-5 btn-sm"
                 onClick={this.onShowModal.bind(this)}
               >
-                Add Patient
+                Add Doctor
               </Button>
-              <AddPatient
+              <AddDoctor
                 onClose={this.handleModalClose.bind(this)}
                 show={this.state.showModal}
               />
@@ -124,10 +120,7 @@ class Navbar extends Component {
         <Sidebar
           sidebar={
             <div>
-              {/* {this.ModalRef} */}
-              <h5 className="text-white bg-info py-4 pl-4 pr-5">
-                Dr. {this.state.fullname}
-              </h5>
+              <h5 className="text-white bg-info py-4 pl-4 pr-5">Admin Panel</h5>
               <div className="text-left text-white pl-4 pr-5">
                 <ul className="navbar-nav mt-5">
                   <li className="d-block nav-item">
@@ -139,7 +132,7 @@ class Navbar extends Component {
                   <li className="nav-item">
                     <Link className="text-info nav-link" to="/patients">
                       <FontAwesomeIcon className="mr-1" icon={faUser} />
-                      My Patients
+                      Doctors List
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -154,9 +147,9 @@ class Navbar extends Component {
                 className="ml-4 mt-5 btn-sm"
                 onClick={this.onShowModal.bind(this)}
               >
-                Add Patient
+                Add Doctor
               </Button>
-              <AddPatient
+              <AddDoctor
                 onClose={this.handleModalClose.bind(this)}
                 show={this.state.showModal}
               />
@@ -176,4 +169,4 @@ class Navbar extends Component {
     }
   }
 }
-export default Navbar;
+export default AdminNavbar;

@@ -5,6 +5,7 @@ import PatientDetails from "./views/Patient-Details/PatientDetails";
 import PatientQuestions from "./views/Patient-Questions/PatientQuestions";
 import PatientList from "./views/Patient-List/PatientList";
 import Signin from "./views/Signin/Signin";
+import AdminHome from "./views/Admin/AdminHome";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/patient/:id" children={<PatientDetails />} />
           <Route path="/ask/:id" children={<PatientQuestions />} />
           <Route path="/home" component={Home} />
+          <Route path="/admin" component={AdminHome} />
         </Switch>
       </Router>
     );
