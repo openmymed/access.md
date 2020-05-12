@@ -44,8 +44,8 @@ class AddPatient extends Component {
           <Button variant="secondary" onClick={this.props.onClose}>
             Close
           </Button>
-          <Button variant="primary" type="submit" onSubmit={this.handleSubmit}>
-            Save changes
+          <Button variant="primary" type="button" onClick={this.handleSubmit}>
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

@@ -26,47 +26,50 @@ class PatientUpdates extends Component {
     this.getDoctorFeed();
   }
   handleChildUnmount = (feedId) => {
+    this.setState({
+      feeds: [...this.state.feeds.filter((feed) => feed.id !== feedId.id)],
+    });
     //this does delete items but not the correct one i dont know why there is problem with setState
     // console.log(feedId);
     // const newFeeds = this.state.feeds.filter((feed) => feed.id !== feedId);
     // console.log(newFeeds);
-    var index = this.state.feeds.indexOf(feedId);
-    this.state.feeds.splice(index, 1);
-    // this.state.feeds.pop(feedId);
-    // this.setState({ feeds: newFeeds });
-    this.setState(this.state.feeds);
+    // var index = this.state.feeds.indexOf(feedId);
+    // this.state.feeds.splice(index, 1);
+    // // this.state.feeds.pop(feedId);
+    // // this.setState({ feeds: newFeeds });
+    // this.setState(this.state.feeds);
   };
 
   getDoctorFeed() {
-    // api.getDoctorFeed().then((json) => {
-    //   this.setState({ feeds: json });
-    // });
-    //dummy data
-    this.setState({
-      feeds: [
-        {
-          id: 1,
-          name: "Majed Nuss",
-          type: "Answer",
-          date: "4/27/2020 @ 5:49:07 PM",
-          question: "Question : Do you have fever?",
-        },
-        {
-          id: 2,
-          name: "Ahmad Nuss",
-          type: "Answer",
-          date: "4/27/2020 @ 5:49:07 PM",
-          question: "Question : Do you have fever?",
-        },
-        {
-          id: 3,
-          name: "Ahmad Nuss",
-          type: "Answer",
-          date: "4/27/2020 @ 5:49:07 PM",
-          question: "Question : Do you have fever?",
-        },
-      ],
+    api.getDoctorFeed().then((json) => {
+      this.setState({ feeds: json });
     });
+    //dummy data
+    // this.setState({
+    //   feeds: [
+    //     {
+    //       id: 1,
+    //       name: "Majed Nuss",
+    //       type: "Answer",
+    //       date: "4/27/2020 @ 5:49:07 PM",
+    //       question: "Question : Do you have fever?",
+    //     },
+    //     {
+    //       id: 2,
+    //       name: "Ahmad Nuss",
+    //       type: "Answer",
+    //       date: "4/27/2020 @ 5:49:07 PM",
+    //       question: "Question : Do you have fever?",
+    //     },
+    //     {
+    //       id: 3,
+    //       name: "Ahmad Nuss",
+    //       type: "Answer",
+    //       date: "4/27/2020 @ 5:49:07 PM",
+    //       question: "Question : Do you have fever?",
+    //     },
+    //   ],
+    // });
   }
 
   render() {
