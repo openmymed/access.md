@@ -39,16 +39,3 @@ Uses code from [HealthWatcher](https://github.com/YahyaOdeh/HealthWatcher) for V
 Made with [contributors-img](https://contributors-img.web.app).
 
 
-# Screen Shots
-
-## Dashboard
-
-![Dashboard](./images/dashboard.png)
-
-## Vitals 
-
-![Vitals](./images/vitals.png)
-
-## Patient Profile
-![Patient Profile](./images/patient-profile.png)
-
