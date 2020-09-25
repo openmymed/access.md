@@ -14,6 +14,7 @@ import static io.javalin.apibuilder.ApiBuilder.put;
 import static io.javalin.core.security.SecurityUtil.roles;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
+import io.javalin.plugin.rendering.vue.VueComponent;
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -105,7 +106,7 @@ public class App {
 
     public static void startServer() {
         app = Javalin.create().start(7000);
-
+        app.config.enableWebjars();
         // Set the access-manager that Javalin should use
         app.config.accessManager((handler, ctx, permittedRoles) -> {
             if (!permittedRoles.contains(NONE)) {
@@ -123,114 +124,123 @@ public class App {
         ICPCRestService icpcService = new ICPCRestService();
         DoctorRestService doctorService = new DoctorRestService();
         NotificationRestService notificationService = new NotificationRestService();
+        app.get("/", new VueComponent("<login></login>"), roles(NONE));
+        app.get("/dashboard", new VueComponent("<doctor-home></doctor-home>"), roles(ROLE_DOCTOR));
+        app.get("/patient", new VueComponent("<patient-list></patient-list>"), roles(ROLE_DOCTOR));
+        app.get("/patient/:patientId", new VueComponent("<patient-details></patient-details>"), roles(ROLE_DOCTOR));
+        
+        app.get("/admin/dashboard", new VueComponent("<admin-home></admin-home>"), roles(ROLE_ADMIN));
+        
         app.routes(() -> {
-            path("login", () -> {
-                post(userService::signIn, roles(NONE));
-            });
-            path("symptom", () -> {
-                path("codes", () -> {
-                    get(icpcService::getICPCSymptoms, roles(NONE));
-                });
-            });
-            path("notification", () -> {
-                get(notificationService::getNotifications, roles(ROLE_PATIENT, ROLE_DOCTOR));
-            });
-            path("patient", () -> {
-                path("doctor", () -> {
-                    get(patientService::getDoctor, roles(ROLE_PATIENT));
-                });
-                path("signup", () -> {
-                    post(patientService::signUp, roles(NONE));
-                });
-                path("profile", () -> {
-                    put(patientService::updateMedicalProfile, roles(ROLE_PATIENT));
-                    get(patientService::getMedicalProfile, roles(ROLE_PATIENT));
-                });
-                path("reccomendation", () -> {
-                    get(patientService::getReccomendations, roles(ROLE_PATIENT));
-                });
-                path("question", () -> {
-                    get(patientService::getUnansweredQuestions, roles(ROLE_PATIENT));
-                    path(":id", () -> {
-                        path("answer", () -> {
-                            put(patientService::answerQuestion, roles(ROLE_PATIENT));
-                        });
-                    });
-                });
-                path("code", () -> {
-                    get(patientService::getSecurityCode, roles(ROLE_PATIENT));
+            path("/api", () -> {
+                path("login", () -> {
+                    post(userService::signIn, roles(NONE));
                 });
                 path("symptom", () -> {
-                    post(patientService::addSymptom, roles(ROLE_PATIENT));
+                    path("codes", () -> {
+                        get(icpcService::getICPCSymptoms, roles(NONE));
+                    });
                 });
-                path("vitals", () -> {
-                    post(patientService::addVitalsMeasurment, roles(ROLE_PATIENT));
-                });
-            });
-            path("doctor", () -> {
-                path("feed", () -> {
-                    get(doctorService::getPatientsFeed, roles(ROLE_DOCTOR));
+                path("notification", () -> {
+                    get(notificationService::getNotifications, roles(ROLE_PATIENT, ROLE_DOCTOR));
                 });
                 path("patient", () -> {
+                    path("doctor", () -> {
+                        get(patientService::getDoctor, roles(ROLE_PATIENT));
+                    });
+                    path("signup", () -> {
+                        post(patientService::signUp, roles(NONE));
+                    });
+                    path("profile", () -> {
+                        put(patientService::updateMedicalProfile, roles(ROLE_PATIENT));
+                        get(patientService::getMedicalProfile, roles(ROLE_PATIENT));
+                    });
+                    path("reccomendation", () -> {
+                        get(patientService::getReccomendations, roles(ROLE_PATIENT));
+                    });
+                    path("question", () -> {
+                        get(patientService::getUnansweredQuestions, roles(ROLE_PATIENT));
+                        path(":id", () -> {
+                            path("answer", () -> {
+                                put(patientService::answerQuestion, roles(ROLE_PATIENT));
+                            });
+                        });
+                    });
+                    path("code", () -> {
+                        get(patientService::getSecurityCode, roles(ROLE_PATIENT));
+                    });
                     path("symptom", () -> {
-                        path("count", () -> {
-                            get(doctorService::getUnseenSymptomCount, roles(ROLE_DOCTOR));
-                        });
+                        post(patientService::addSymptom, roles(ROLE_PATIENT));
                     });
-                    path("answer", () -> {
-                        path("count", () -> {
-                            get(doctorService::getUnseenAnswerCount, roles(ROLE_DOCTOR));
-                        });
+                    path("vitals", () -> {
+                        post(patientService::addVitalsMeasurment, roles(ROLE_PATIENT));
                     });
-
-                    path("count", () -> {
-                        get(doctorService::getPatientCount, roles(ROLE_DOCTOR));
+                });
+                path("doctor", () -> {
+                    path("feed", () -> {
+                        get(doctorService::getPatientsFeed, roles(ROLE_DOCTOR));
                     });
-                    get(doctorService::listPatients, roles(ROLE_DOCTOR));
-                    path("add", () -> {
-                        post(doctorService::consumePatientCode, roles(ROLE_DOCTOR));
-                    });
-                    path(":id", () -> {
-                        get(doctorService::getPatient, roles(ROLE_DOCTOR));
-                        path("profile", () -> {
-                            get(doctorService::getPatientProfile, roles(ROLE_DOCTOR));
-                        });
-                        path("vitals", () -> {
-                            get(doctorService::getPatientVitalsMeasurments, roles(ROLE_DOCTOR));
-                        });
+                    path("patient", () -> {
                         path("symptom", () -> {
-                            get(doctorService::listPatientSymptoms, roles(ROLE_DOCTOR));
-                            path(":symptom_id", () -> {
-                                path("seen", () -> {
-                                    put(doctorService::markSymptomSeen, roles(ROLE_DOCTOR));
-                                });
+                            path("count", () -> {
+                                get(doctorService::getUnseenSymptomCount, roles(ROLE_DOCTOR));
                             });
                         });
                         path("answer", () -> {
-                            get(doctorService::listPatientAnswers, roles(ROLE_DOCTOR));
-                            path(":answer_id", () -> {
-                                path("seen", () -> {
-                                    put(doctorService::markAnswerSeen, roles(ROLE_DOCTOR));
+                            path("count", () -> {
+                                get(doctorService::getUnseenAnswerCount, roles(ROLE_DOCTOR));
+                            });
+                        });
+
+                        path("count", () -> {
+                            get(doctorService::getPatientCount, roles(ROLE_DOCTOR));
+                        });
+                        get(doctorService::listPatients, roles(ROLE_DOCTOR));
+                        path("add", () -> {
+                            post(doctorService::consumePatientCode, roles(ROLE_DOCTOR));
+                        });
+                        path(":id", () -> {
+                            get(doctorService::getPatient, roles(ROLE_DOCTOR));
+                            path("profile", () -> {
+                                get(doctorService::getPatientProfile, roles(ROLE_DOCTOR));
+                            });
+                            path("vitals", () -> {
+                                get(doctorService::getPatientVitalsMeasurments, roles(ROLE_DOCTOR));
+                            });
+                            path("symptom", () -> {
+                                get(doctorService::listPatientSymptoms, roles(ROLE_DOCTOR));
+                                path(":symptom_id", () -> {
+                                    path("seen", () -> {
+                                        put(doctorService::markSymptomSeen, roles(ROLE_DOCTOR));
+                                    });
+                                });
+                            });
+                            path("answer", () -> {
+                                get(doctorService::listPatientAnswers, roles(ROLE_DOCTOR));
+                                path(":answer_id", () -> {
+                                    path("seen", () -> {
+                                        put(doctorService::markAnswerSeen, roles(ROLE_DOCTOR));
+                                    });
+                                });
+                            });
+                            path("question", () -> {
+                                get(doctorService::listPatientQuestions, roles(ROLE_DOCTOR));
+                                post(doctorService::createPatientQuestion, roles(ROLE_DOCTOR));
+                                path(":question_id", () -> {
+                                    delete(doctorService::deletePatientQuestion, roles(ROLE_DOCTOR));
+                                    put(doctorService::updatePatientQuestion, roles(ROLE_DOCTOR));
+                                    get(doctorService::getPatientQuestion, roles(ROLE_DOCTOR));
                                 });
                             });
                         });
-                        path("question", () -> {
-                            get(doctorService::listPatientQuestions, roles(ROLE_DOCTOR));
-                            post(doctorService::createPatientQuestion, roles(ROLE_DOCTOR));
-                            path(":question_id", () -> {
-                                delete(doctorService::deletePatientQuestion, roles(ROLE_DOCTOR));
-                                put(doctorService::updatePatientQuestion, roles(ROLE_DOCTOR));
-                                get(doctorService::getPatientQuestion, roles(ROLE_DOCTOR));
-                            });
-                        });
                     });
-                });
 
-            });
-            path("admin", () -> {
-                path("doctor", () -> {
-                    post(doctorService::createDoctor, roles(ROLE_ADMIN));
-                    get(doctorService::getDoctors, roles(ROLE_ADMIN));
+                });
+                path("admin", () -> {
+                    path("doctor", () -> {
+                        post(doctorService::createDoctor, roles(ROLE_ADMIN));
+                        get(doctorService::getDoctors, roles(ROLE_ADMIN));
+                    });
                 });
             });
         });
@@ -240,11 +250,6 @@ public class App {
             ctx.result(e.getMessage());
         });
         app.config.sessionHandler(() -> fileSessionHandler());
-        if (Boolean.valueOf(System.getProperty("app.production", "false"))) {
-            app.config.addStaticFiles("/webapp");
-        } else {
-            app.config.addStaticFiles("./src/main/webapp/dist", Location.EXTERNAL);
-        }
 
     }
 
@@ -277,7 +282,7 @@ public class App {
     }
 
     private static void createAdminIfNotFound() {
-        try (UserRepository repo = UserRepositoryFactory.getInstance().get()) {
+        try ( UserRepository repo = UserRepositoryFactory.getInstance().get()) {
             if (repo.getUsersByRole(ROLE_ADMIN).isEmpty()) {
                 log.info("No Admins Found; Creating one now");
                 String password = RandomStringUtils.random(16, true, true);
