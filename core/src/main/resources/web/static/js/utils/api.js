@@ -8,18 +8,18 @@ var headers = {
     "Content-Type": "application/json"
 }
 
-window.api = {};
+function api() {};
 const process = (res) => {
     if (res.ok) {
-        return res.json();
-    } else if (res.status == 401 || res.status == 403) {
-        window.location.path="/login"
+        return res.json().catch(() => res.text());
+    } else if (res.status === 401 || res.status === 403) {
+        window.location.href="/"
     } else {
         throw new Error(res.status);
     }
 }
 
-window.api.getPatientVitals = (patientId) => {
+api.prototype.getPatientVitals = (patientId) => {
     return  fetch("/api/doctor/patient/" + patientId + "/vitals", {
         method: "GET",
         headers: headers
@@ -29,7 +29,7 @@ window.api.getPatientVitals = (patientId) => {
 }
 
 
-window.api.addDoctor = (doctor) => {
+api.prototype.addDoctor = (doctor) => {
     return fetch("/api/admin/doctor", {
         method: "POST",
         headers: headers,
@@ -39,7 +39,7 @@ window.api.addDoctor = (doctor) => {
     })
 }
 
-window.api.assignPatientToMyself = (code) => {
+api.prototype.assignPatientToMyself = (code) => {
 
     return fetch("/api/doctor/patient/add", {
         method: "POST",
@@ -52,7 +52,7 @@ window.api.assignPatientToMyself = (code) => {
     });
 }
 
-window.api.getPatientAnswers = (patientId) => {
+api.prototype.getPatientAnswers = (patientId) => {
     return  fetch("/api/doctor/patient/" + patientId + "/answer", {
         method: "GET",
         headers: headers,
@@ -63,7 +63,7 @@ window.api.getPatientAnswers = (patientId) => {
 }
 
 
-window.api.archiveAnswer = (patientId, answerId) => {
+api.prototype.archiveAnswer = (patientId, answerId) => {
     return  fetch("/api/doctor/patient/" + patientId + "/answer/" + answerId + "/seen", {
         method: "PUT",
         headers: headers,
@@ -72,7 +72,7 @@ window.api.archiveAnswer = (patientId, answerId) => {
     })
 }
 
-window.api.getPatientMedicalProfile = (patientId) => {
+api.prototype.getPatientMedicalProfile = (patientId) => {
     return  fetch("/api/doctor/patient/" + patientId, {
         method: "GET",
         headers: headers,
@@ -82,7 +82,7 @@ window.api.getPatientMedicalProfile = (patientId) => {
 
 }
 
-window.api.getPatientPersonalProfile = (patientId) => {
+api.prototype.getPatientPersonalProfile = (patientId) => {
     return  fetch("/api/doctor/patient/" + patientId, {
         method: "GET",
         headers: headers,
@@ -92,8 +92,8 @@ window.api.getPatientPersonalProfile = (patientId) => {
 }
 
 
-window.api.getPatientsCount = () => {
-    fetch("/api/doctor/patient/count", {
+api.prototype.getPatientsCount = () => {
+    return fetch("/api/doctor/patient/count", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -101,8 +101,8 @@ window.api.getPatientsCount = () => {
     });
 }
 
-window.api.getUarchivedSymptomsCount = () => {
-    fetch("/api/doctor/patient/symptom/count", {
+api.prototype.getUnarchivedSymptomsCount = () => {
+    return fetch("/api/doctor/patient/symptom/count", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -110,8 +110,8 @@ window.api.getUarchivedSymptomsCount = () => {
     });
 }
 
-window.api.getUnarchivedAnswersCount = () => {
-    fetch("/api/doctor/patient/answer/count", {
+api.prototype.getUnarchivedAnswersCount = () => {
+    return fetch("/api/doctor/patient/answer/count", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -119,8 +119,8 @@ window.api.getUnarchivedAnswersCount = () => {
     });
 }
 
-window.api.getDoctorFeed = () => {
-    fetch("/api/doctor/feed", {
+api.prototype.getDoctorFeed = () => {
+    return fetch("/api/doctor/feed", {
         method: "GET",
         headers: headers
     }).then((res) => {
@@ -128,7 +128,7 @@ window.api.getDoctorFeed = () => {
     });
 }
 
-window.api.getPatientSymptoms = (patientId) => {
+api.prototype.getPatientSymptoms = (patientId) => {
     return  fetch("/api/doctor/patient/" + patientId + "/symptom", {
         method: "GET",
         headers: headers
@@ -137,7 +137,7 @@ window.api.getPatientSymptoms = (patientId) => {
     });
 }
 
-window.api.getPatients = () => {
+api.prototype.getPatients = () => {
     return fetch("/api/doctor/patient", {
         method: "GET",
         headers: headers
@@ -146,7 +146,7 @@ window.api.getPatients = () => {
     });
 }
 
-window.api.getPatientQuestions = (patientId) => {
+api.prototype.getPatientQuestions = (patientId) => {
     return fetch("/api/doctor/patient/" + patientId + "/question", {
         method: "GET",
         headers: headers
@@ -155,8 +155,8 @@ window.api.getPatientQuestions = (patientId) => {
     });
 }
 
-window.api.addQuestion = (patientId, question) => {
-    fetch("/api/doctor/patient/" + patientId + "/question", {
+api.prototype.addQuestion = (patientId, question) => {
+    return fetch("/api/doctor/patient/" + patientId + "/question", {
         method: "POST",
         headers: headers,
         body: JSON.stringify(question)
@@ -165,8 +165,8 @@ window.api.addQuestion = (patientId, question) => {
     });
 }
 
-window.api.login = (username, password) => {
-    fetch("/api/login", {
+api.prototype.login = (username, password) => {
+    return fetch("/api/login", {
         method: "POST",
         headers: headers,
         body: JSON.stringify({
@@ -177,3 +177,5 @@ window.api.login = (username, password) => {
         return process(res);
     })
 }
+
+window.apiService = new api();

@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-window.icpc = {};
-window.icpc.loadIcpc = () => {
+function icpc(){};
+icpc.prototype.loadIcpc = () => {
   return  fetch("/symptom/codes", {
     method: "GET",
     headers: {
@@ -22,7 +22,7 @@ window.icpc.loadIcpc = () => {
 }
 
 
-window.icpc.getTitle = (code) => {
+icpc.prototype.getTitle = (code) => {
   let i = 0;
   let codes = JSON.parse(window.localStorage.getItem("icpc"));
   for (i; i < codes.length; i++) {
@@ -32,3 +32,4 @@ window.icpc.getTitle = (code) => {
   }
   return "CODE " + code + " NOT FOUND";
 }
+window.icpcService = new icpc();

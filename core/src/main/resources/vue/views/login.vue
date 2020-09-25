@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <template id="login">
   <div>
-    <h1 class="login">Hello, World!</h1>
-    asdasdasd
-    <h2>Does this work??????????????</h2>
-    <a href="/second">go to second</a>
-    <div v-if="stuff">
-      <ul class="user-overview-list">
-        <li v-bind:key="item.one" v-for="item in stuff">
-          {{ item.one }} and {{ item.two }}
-        </li>
-      </ul>
-    </div>
+     <div this="el">
+            <div class="sidenav">
+                <div class="login-main-text">
+                    <h1>
+                        ACCESS.MD
+                    </h1>
+                    <img src="/static/img/openmymed.png"></img>
+                </div>
+            </div>
+         <login-form></login-form>
+        </div>;
   </div>
 </template>
 <script>

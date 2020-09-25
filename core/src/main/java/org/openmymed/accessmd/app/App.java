@@ -250,7 +250,7 @@ public class App {
             ctx.result(e.getMessage());
         });
         app.config.sessionHandler(() -> fileSessionHandler());
-
+        app.config.addStaticFiles("/web");
     }
 
     private static SessionHandler fileSessionHandler() {
