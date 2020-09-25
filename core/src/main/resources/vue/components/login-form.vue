@@ -49,9 +49,10 @@
                             let fullName = json.firstName + " " + json.lastName;
                             if (json.userRole == "ROLE_DOCTOR") {
                                 sessionStorage.setItem("auth", true)
-                                window.icpcService.loadIcpc();
                                 sessionStorage.setItem("name", fullName);
-                                window.location.href = "/dashboard";
+                                window.icpcService.loadIcpc().then(() => {
+                                    window.location.href = "/dashboard";
+                                });
                             } else if (json.userRole == "ROLE_ADMIN") {
                                 sessionStorage.setItem("auth", true)
                                 sessionStorage.setItem("name", fullName);

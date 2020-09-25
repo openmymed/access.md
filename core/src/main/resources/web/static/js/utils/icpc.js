@@ -5,7 +5,7 @@
  */
 function icpc(){};
 icpc.prototype.loadIcpc = () => {
-  return  fetch("/symptom/codes", {
+  return  fetch("/api/symptom/codes", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

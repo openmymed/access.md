@@ -72,6 +72,15 @@ api.prototype.archiveAnswer = (patientId, answerId) => {
     })
 }
 
+api.prototype.archiveSymptom = (patientId, symptomId) => {
+    return  fetch("/api/doctor/patient/" + patientId + "/symptom/" + symptomId + "/seen", {
+        method: "PUT",
+        headers: headers,
+    }).then((res) => {
+        return process(res);
+    })
+}
+
 api.prototype.getPatientMedicalProfile = (patientId) => {
     return  fetch("/api/doctor/patient/" + patientId, {
         method: "GET",

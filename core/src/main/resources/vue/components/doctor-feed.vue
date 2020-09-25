@@ -11,7 +11,9 @@
                 <th scope="col" class="text-right"></th>
                 </thead>
                 <tbody>
-                <doctor-feed-item v-for="(update, index) in updates" :key="update.entityId" v-bind="update" v-on:dismiss="dismissRow(index)"></doctor-feed-item>
+                <template v-for="(update, index) in updates" :key="update.entityId">
+                    <doctor-feed-item v-bind:update="update" v-on:dismiss="dismissRow(index)"></doctor-feed-item>
+                </template>
                 </tbody>
             </table>
         </div>
@@ -26,6 +28,7 @@
         methods: {
             dismissRow: function (index) {
                 this.updates.splice(index, 1);
+                this.$emit("dismiss");
             }
         },
         created() {

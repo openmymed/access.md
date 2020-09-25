@@ -20,16 +20,21 @@
                 unseenSymptoms: 0,
                 unseenAnswers: 0
             }),
+        methods: {
+            refresh: function () {
+                window.apiService.getPatientsCount().then((json) => {
+                    this.totalPatients = json.count;
+                });
+                window.apiService.getUnarchivedSymptomsCount().then((json) => {
+                    this.unseenSymptoms = json.count;
+                });
+                window.apiService.getUnarchivedAnswersCount().then((json) => {
+                    this.unseenAnswers = json.count;
+                });
+            }
+        },
         created() {
-            window.apiService.getPatientsCount().then((json) => {
-                this.totalPatients = json.count;
-            });
-            window.apiService.getUnarchivedSymptomsCount().then((json) => {
-                this.unseenSymptoms = json.count;
-            });
-            window.apiService.getUnarchivedAnswersCount().then((json) => {
-                this.unseenAnswers = json.count;
-            });
+            this.refresh();
         }
     })
 </script>

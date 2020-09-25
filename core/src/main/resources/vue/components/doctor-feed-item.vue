@@ -1,13 +1,13 @@
 <template id="doctor-feed-item">
     <tr>
         <th scope="row" class="text-left"> 
-            {{feedItem.patientName}}
+            {{update.patientName}}
         </th>
         <td this="updateType"  class="text-center">
             {{updateType}}
         </td>
         <td this="time"  class="text-center">
-            {{feedItem.time}}
+            {{update.time}}
         </td>
         <td this="value"  class="text-center">
             {{content}}
@@ -21,32 +21,32 @@
 <script>
     Vue.component("doctor-feed-item", {
         template: "#doctor-feed-item",
-        props: ["feedItem"],
+        props: ["update"],
         computed: {
             profileLink: function () {
-                return "/patient/" + this.feedItem.patientId;
+                return "/patient/" + this.update.patientId;
             },
             updateType: function () {
-                if (this.feedItem.type === "UNSEEN_SYMPTOM") {
+                if (this.update.type === "UNSEEN_SYMPTOM") {
                     return "Symptom";
-                } else if (this.feedItem.type === "UNSEEN_ANSWER") {
+                } else if (this.update.type === "UNSEEN_ANSWER") {
                     return "Answer";
                 }
             },
             content: function () {
-                if (this.feedItem.type === "UNSEEN_SYMPTOM") {
-                    return window.icpcService.getTitle(this.feedItem.value)
-                } else if (this.feedItem.type === "UNSEEN_ANSWER") {
-                    return "Question : " + this.feedItem.value;
+                if (this.update.type === "UNSEEN_SYMPTOM") {
+                    return window.icpcService.getTitle(this.update.value)
+                } else if (this.update.type === "UNSEEN_ANSWER") {
+                    return "Question : " + this.update.value;
                 }
             }
         },
         methods: {
             dismiss: function () {
-                if (this.feedItem.type === "UNSEEN_SYMPTOM") {
-                    window.apiService.archiveSymptom(this.data.patientId, this.data.entityId);
-                } else if (this.feedItem.type === "UNSEEN_ANSWER") {
-                    window.apiService.archiveAnswer(this.data.patientId, this.data.entityId);
+                if (this.update.type === "UNSEEN_SYMPTOM") {
+                    window.apiService.archiveSymptom(this.update.patientId, this.update.entityId);
+                } else if (this.update.type === "UNSEEN_ANSWER") {
+                    window.apiService.archiveAnswer(this.update.patientId, this.update.entityId);
                 }
                 this.$emit("dismiss");
             }

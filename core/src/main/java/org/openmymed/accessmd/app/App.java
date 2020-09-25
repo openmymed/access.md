@@ -127,7 +127,7 @@ public class App {
         app.get("/", new VueComponent("<login></login>"), roles(NONE));
         app.get("/dashboard", new VueComponent("<doctor-home></doctor-home>"), roles(ROLE_DOCTOR));
         app.get("/patient", new VueComponent("<patient-list></patient-list>"), roles(ROLE_DOCTOR));
-        app.get("/patient/:patientId", new VueComponent("<patient-details></patient-details>"), roles(ROLE_DOCTOR));
+        app.get("/patient/:patientId", new VueComponent("<patient-profile></patient-profile>"), roles(ROLE_DOCTOR));
         
         app.get("/admin/dashboard", new VueComponent("<admin-home></admin-home>"), roles(ROLE_ADMIN));
         
