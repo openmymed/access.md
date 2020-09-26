@@ -2,7 +2,7 @@
     <doctor-layout>
         <h4 class="ml-3">Patient Profile</h4>
         <div class="row m-3 bg-light">
-            
+            <patient-vitals v-bind:patient-id="patientId"></patient-vitals>
         </div>
         <div class="row m-3 border bg-light">
             <div this="el" class="col-lg-3 p-0 border-right">

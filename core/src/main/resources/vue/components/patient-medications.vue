@@ -1,5 +1,5 @@
 <template id="patient-medications">
-    <div class="row d-block">
+    <div class="d-block w-100">
         <h5 class="bg-blue-primary text-white d-block mx-auto p-2 mt-3">
             Current Medications
         </h5>

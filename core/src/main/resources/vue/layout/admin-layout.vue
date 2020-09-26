@@ -1,6 +1,6 @@
 <template id="admin-layout">
-    <div class="row">
-        <div class="col-12">
+    <div class="container-fluid">
+        <div class="row">
             <top-nav></top-nav>
             <admin-sidebar></admin-sidebar>
         </div>

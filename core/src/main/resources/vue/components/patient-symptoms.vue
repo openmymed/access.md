@@ -1,5 +1,5 @@
 <template id="patient-symptoms">
-    <div class="row d-block">
+    <div class="d-block w-100">
         <div class="bg-light-grey mx-2 my-4">
             <h5 class="p-3 text-info font-weight-bold">Patient Symptoms</h5>
             <div class="col-12">
