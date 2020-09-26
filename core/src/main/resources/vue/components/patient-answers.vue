@@ -1,5 +1,5 @@
 <template id="patient-answers">
-    <div class="col-lg-6">
+    <div class="row d-block">
         <div class="bg-light-grey mx-2 my-4 ">
             <div class="col-12 d-flex justify-content-between">
                 <h5 class="py-3 text-info font-weight-bold">Patient Answers</h5>

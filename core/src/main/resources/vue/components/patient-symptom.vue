@@ -30,14 +30,13 @@
         props: ["symptom"],
         computed: {
             symptomName: function () {
-                return window.icpcService.getTitle(this.symptom.symtomCode);
+                return window.icpcService.getTitle(this.symptom.symptomCode);
             }
         },
         methods: {
             dismiss: function () {
-                return api.archiveSymptom(this.symptom.patientId, this.symptom.id).then(()=>{
-                    this.$emit("dismiss")
-                });
+                window.apiService.archiveSymptom(this.symptom.patient.id, this.symptom.id)
+                this.$emit("dismiss")
             }
         }
     })

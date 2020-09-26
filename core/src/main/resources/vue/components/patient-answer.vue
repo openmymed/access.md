@@ -30,9 +30,8 @@
         props: ["answer"],
         methods: {
             dismiss: function () {
-                window.apiService.archiveAnswer(this.answer.patientId, this.answer.id).then((res) => {
-                    this.$emit("dismiss");
-                });
+                window.apiService.archiveAnswer(this.answer.patientId, this.answer.id)
+                this.$emit("dismiss");
             }
         }
     })
