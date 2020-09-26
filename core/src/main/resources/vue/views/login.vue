@@ -17,13 +17,5 @@
 <script>
 Vue.component("login", {
   template: "#login",
-  data: () => ({
-    stuff: null,
-  })
 });
 </script>
-<style>
-.login {
-  color: goldenrod;
-}
-</style>
