@@ -26,7 +26,7 @@
             }),
         computed: {
             askLink: function () {
-                return"/patient/" + this.patientId + "/ask"
+                return "/patient/" + this.patientId + "/question"
             }
         },
         methods: {

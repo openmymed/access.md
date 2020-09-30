@@ -8,12 +8,13 @@ var headers = {
     "Content-Type": "application/json"
 }
 
-function api() {};
+function api() {}
+;
 const process = (res) => {
     if (res.ok) {
         return res.json().catch(() => res.text());
     } else if (res.status === 401 || res.status === 403) {
-        window.location.href="/"
+        window.location.href = "/"
     } else {
         throw new Error(res.status);
     }
@@ -187,4 +188,15 @@ api.prototype.login = (username, password) => {
     })
 }
 
+api.prototype.addQuestion = (patientId, question) => {
+
+}
+
+api.prototype.getPatientQuestion = (patientId, questionId) => {
+
+}
+
+api.prototype.updateQuestion = (patientId, questionId, question) => {
+
+}
 window.apiService = new api();

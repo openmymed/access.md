@@ -13,7 +13,6 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 import static io.javalin.apibuilder.ApiBuilder.put;
 import static io.javalin.core.security.SecurityUtil.roles;
 import io.javalin.http.Context;
-import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.rendering.vue.VueComponent;
 import java.io.File;
 import java.sql.DriverManager;
@@ -128,7 +127,9 @@ public class App {
         app.get("/dashboard", new VueComponent("<doctor-home></doctor-home>"), roles(ROLE_DOCTOR));
         app.get("/patient", new VueComponent("<patient-list></patient-list>"), roles(ROLE_DOCTOR));
         app.get("/patient/:patientId", new VueComponent("<patient-profile></patient-profile>"), roles(ROLE_DOCTOR));
-        
+        app.get("/patient/:patientId/question", new VueComponent("<patient-questions></patient-questions>"), roles(ROLE_DOCTOR));
+        app.get("/patient/:patientId/question/new", new VueComponent("<add-patient-question></add-patient-question>"), roles(ROLE_DOCTOR));
+        app.get("/patient/:patientId/question/:questionId", new VueComponent("<edit-patient-question></edit-patient-question>"), roles(ROLE_DOCTOR));
         app.get("/admin/dashboard", new VueComponent("<admin-home></admin-home>"), roles(ROLE_ADMIN));
         
         app.routes(() -> {
