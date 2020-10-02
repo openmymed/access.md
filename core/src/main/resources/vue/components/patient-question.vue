@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div v-if="question.recurring">
+        <template v-if="question.recurring">
             <div class="row">
                 <div class="col-6 form-group">
                     <label for="from-date-input">From Date</label>
@@ -65,7 +65,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </template>
         <div class="row">
             <div class="col-12 form-group">
                 <label></label>
