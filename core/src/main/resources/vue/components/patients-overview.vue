@@ -4,9 +4,15 @@
         <div class="row">
             <div class="col-sm-12 col-xl-11 col-lg-9 col-md-8">
                 <div class="ml-5 row pt-md-2">
-                    <card title="Total Patients" v-bind:number="totalPatients"></card>
-                    <card title="Unseen Symptoms" v-bind:number="unseenSymptoms"></card>
-                    <card title="Unseen Answers" v-bind:number="unseenAnswers"></card>
+                    <div class="col-lg-4 col-sm-12 p-2">
+                        <card title="Total Patients" v-bind:number="totalPatients"></card>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 p-2">
+                        <card title="Unseen Symptoms" v-bind:number="unseenSymptoms"></card>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 p-2">
+                        <card title="Unseen Answers" v-bind:number="unseenAnswers"></card>
+                    </div>
                 </div>
             </div>
         </div>

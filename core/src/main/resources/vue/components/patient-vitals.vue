@@ -1,5 +1,5 @@
 <template id="patient-vitals">
-    <div class="d-block w-100">
+    <div class="container-fluid">
         <div class="row patient-vitals-expander mx-auto p-2 mt-1" >                 
             <h5 class="d-block w-100 m-0" data-toggle="collapse" href="#patientVitals" role="button" aria-expanded="false" aria-controls="patientVitals"> <i class="fa fa-angle-down"></i>&nbsp;Vitals</h5>
         </div>

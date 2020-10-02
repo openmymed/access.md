@@ -1,5 +1,5 @@
 <template id="patient-personal-info">
-    <div class="d-block w-100">
+    <div class="container-fluid">
         <div class="d-flex row mt-4 pl-5">
             <img alt="patient-profile-img" class="profile-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/768px-Circle-icons-profile.svg.png" ></img>
             <div class="ml-2">

@@ -1,5 +1,5 @@
 <template id="patient-question">
-    <div class="row d-block">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12 form-group">
                 <label for="question-text">Question</label>
@@ -26,42 +26,51 @@
             </div>
         </div>
 
-        <div v-if="question.recurring" class="row">
-            <div class="col-6 form-group">
-                <label for="from-date-input">From Date</label>
-                <input v-model="question.startDate" id="from-date-input" type="text" class="form-control"/>
+        <div v-if="question.recurring">
+            <div class="row">
+                <div class="col-6 form-group">
+                    <label for="from-date-input">From Date</label>
+                    <input v-model="question.startDate" id="from-date-input" type="text" class="form-control"/>
+                </div>
+                <div class="col-6 form-group">
+                    <label for="to-date-input">To Date</label>
+                    <input v-model="question.endDate" id="to-date-input" type="text" class="form-control"/>
+                </div>
             </div>
-            <div class="col-6 form-group">
-                <label for="to-date-input">To Date</label>
-                <input v-model="question.endDate" id="to-date-input" type="text" class="form-control"/>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                        <th scope="col" class="text-left">
+                            #
+                        </th>
+                        <th scope="col" class="text-center">
+                            Recurrence Time
+                        </th>
+                        <th scope="col" class="text-right">
+                        </th>
+                        </thead>
+                        <tbody>
+                        <template v-for="(recurrance,index) in recurrances" :key="index">
+                            <patient-question-recurrance v-bind:recurrance="recurrance" v-bind:index="index" v-on:delete-recurrance="removeRecurrance" v-on:update-recurrance="updateRecurrance"></patient-question-recurrance>
+                        </template>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-12">
-                <table class="table">
-                    <thead>
-                    <th scope="col" class="text-left">
-                        #
-                    </th>
-                    <th scope="col" class="text-center">
-                        Recurrence Time
-                    </th>
-                    <th scope="col" class="text-right">
-                    </th>
-                    </thead>
-                    <tbody>
-                    <template v-for="(recurrance,index) in recurrances" :key="index">
-                        <patient-question-recurrance v-bind:recurrance="recurrance" v-bind:index="index" v-on:delete-recurrance="removeRecurrance" v-on:update-recurrance="updateRecurrance"></patient-question-recurrance>
-                    </template>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-12 d-flex justify-content-end">
-                <button v-on:click="addRecurrance" class="btn bt-primary btn-sm">
-                    <i class="fa fa-plus"></i>
-                </button>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end form-group">
+                    <button v-on:click="addRecurrance" class="btn bt-primary btn-sm">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="row">
-            <button class="btn btn-primary" v-on:click="saveQuestion" >Save</button>
+            <div class="col-12 form-group">
+                <label></label>
+                <button class="btn btn-primary" v-on:click="saveQuestion" >Save</button>
+            </div>
         </div>
     </div>
 </template>
@@ -70,7 +79,7 @@
         template: "#patient-question",
         data: () => ({
                 question: {},
-                recurrances:[]
+                recurrances: []
             }),
         props: ["questionId", "patientId"],
         created() {
@@ -82,7 +91,7 @@
             loadQuestion: function () {
                 window.apiService.getPatientQuestion(this.patientId, this.questionId).then(data => {
                     this.question = data;
-                    if(data.recurrance){
+                    if (data.recurrance) {
                         this.recurrances = data.recurrance;
                     }
                 })

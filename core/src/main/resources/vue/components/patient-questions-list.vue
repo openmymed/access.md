@@ -1,5 +1,5 @@
 <template id="patient-questions-list">
-    <div class="row d-block">
+    <div class="container-fluid">
         <div class="col-12 d-flex justify-content-between">
             <h4 class="ml-4">Questions</h4>
             <a class="btn btn-primary btn-sm" v-bind:href="addQuestionLink">

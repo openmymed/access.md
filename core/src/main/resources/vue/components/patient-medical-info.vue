@@ -1,5 +1,5 @@
 <template id="patient-medical-info">
-    <div class="d-block w-100">
+    <div class="container-fluid">
         <h5 class="bg-blue-primary text-white d-block mx-auto p-2 mt-3">
             General Info
         </h5>

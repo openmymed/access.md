@@ -123,6 +123,8 @@ public class App {
         ICPCRestService icpcService = new ICPCRestService();
         DoctorRestService doctorService = new DoctorRestService();
         NotificationRestService notificationService = new NotificationRestService();
+        app.error(403, new VueComponent("<login></login>"));
+        app.error(401, new VueComponent("<login></login>"));
         app.get("/", new VueComponent("<login></login>"), roles(NONE));
         app.get("/dashboard", new VueComponent("<doctor-home></doctor-home>"), roles(ROLE_DOCTOR));
         app.get("/patient", new VueComponent("<patient-list></patient-list>"), roles(ROLE_DOCTOR));
@@ -131,7 +133,7 @@ public class App {
         app.get("/patient/:patientId/question/new", new VueComponent("<add-patient-question></add-patient-question>"), roles(ROLE_DOCTOR));
         app.get("/patient/:patientId/question/:questionId", new VueComponent("<edit-patient-question></edit-patient-question>"), roles(ROLE_DOCTOR));
         app.get("/admin/dashboard", new VueComponent("<admin-home></admin-home>"), roles(ROLE_ADMIN));
-        
+
         app.routes(() -> {
             path("/api", () -> {
                 path("login", () -> {

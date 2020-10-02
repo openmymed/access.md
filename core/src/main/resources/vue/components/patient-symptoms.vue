@@ -1,16 +1,16 @@
 <template id="patient-symptoms">
-    <div class="d-block w-100">
-        <div class="bg-light-grey mx-2 my-4">
+    <div class="container-fluid ">
+        <div class="col-12">
             <h5 class="p-3 text-info font-weight-bold">Patient Symptoms</h5>
-            <div class="col-12">
-                <div v-if="symptoms && symptoms.length>0"class="container-fluid">
-                    <template v-for="(symptom,index) in symptoms" :key="index">
-                        <patient-symptom v-bind:symptom="symptom" v-on:dismiss="dismiss(index)"></patient-symptom>
-                    </template>
-                </div>
+        </div>
+        <div class="col-12">
+            <div v-if="symptoms && symptoms.length>0"class="container-fluid">
+                <template v-for="(symptom,index) in symptoms" :key="index">
+                    <patient-symptom v-bind:symptom="symptom" v-on:dismiss="dismiss(index)"></patient-symptom>
+                </template>
             </div>
         </div>
-    </div>;
+    </div>
 </template>
 <script>
     Vue.component("patient-symptoms", {
