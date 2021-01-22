@@ -30,11 +30,11 @@
             <div class="row">
                 <div class="col-6 form-group">
                     <label for="from-date-input">From Date</label>
-                    <input v-model="question.startDate" id="from-date-input" type="text" class="form-control"/>
+                    <input ref="fromDateInput" v-model="startDate" id="from-date-input" type="date" class="form-control"/>
                 </div>
                 <div class="col-6 form-group">
                     <label for="to-date-input">To Date</label>
-                    <input v-model="question.endDate" id="to-date-input" type="text" class="form-control"/>
+                    <input ref="toDateInput" v-model="endDate" id="to-date-input" type="date" class="form-control"/>
                 </div>
             </div>
             <div class="row">
@@ -79,12 +79,14 @@
         template: "#patient-question",
         data: () => ({
                 question: {},
+                startDate: new Date().toString(),
+                endDate: new Date().toString(),
                 recurrances: []
             }),
         props: ["questionId", "patientId"],
         created() {
             if (this.questionId) {
-                loadQuestion();
+                this.loadQuestion();
             }
         },
         methods: {
@@ -93,14 +95,25 @@
                     this.question = data;
                     if (data.recurrance) {
                         this.recurrances = data.recurrance;
+                        this.startDate = new Date(this.question.startDate).toISOString().slice(0, -14);
+                        this.endDate = new Date(this.question.endDate).toISOString().slice(0, -14);
                     }
                 })
             },
             saveQuestion: function () {
+                if (this.question.recurring) {
+                    this.question.startDate = Date.parse(this.startDate);
+                    this.question.endDate = Date.parse(this.endDate);
+                    this.question.recurrance = this.recurrances;
+                }
                 if (this.questionId) {
-                    window.apiService.updateQuestion(this.patientId, this.questionId, this.question);
+                    window.apiService.updateQuestion(this.patientId, this.questionId, this.question).then(res => {
+                        window.location = `/patient/${this.patientId}/question`;
+                    });
                 } else {
-                    window.apiService.createQuestion(this.patientId, this.question);
+                    window.apiService.createQuestion(this.patientId, this.question).then(res => {
+                        window.location = `/patient/${this.patientId}/question`;
+                    });
                 }
             },
             addRecurrance: function () {

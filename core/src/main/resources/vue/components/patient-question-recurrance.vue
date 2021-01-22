@@ -2,7 +2,7 @@
     <tr>
         <th scope="row" class="text-left">{{index}}</th>
         <td  class="text-center">
-            <input v-on:change="timeChanged" type="time" class="recurrance-time" ></input>
+            <input v-model="timeInput" v-on:keyup="timeChanged" type="time" class="recurrance-time" ></input>
         </td>
         <td class="text-right">
             <button v-on:click="deleteRecurrance" class="btn bt-primary btn-sm">
@@ -16,7 +16,7 @@
         template: "#patient-question-recurrance",
         props: ["recurrance", "index"],
         data: () => ({
-                timeInput: "00:00"
+                timeInput: "12:00"
             }),
         created() {
             if (this.recurrance.hourOfDay && this.recurrance.minuteOfHour) {
@@ -26,12 +26,14 @@
         methods: {
             timeChanged: function () {
                 let splits = this.timeInput.split(":");
-                this.recurrance.hourOfDay = parseInt(splits[0]);
-                this.recurrance.minuteOfHour = parseInt(splits[1]);
-                this.$emit("update-recurrance", {index: this.index, recurrance: this.recurrance});
+                console.log(splits);
+                this.$emit("update-recurrance", {index: this.index, recurrance:{
+                        hourOfDay:parseInt(splits[0]),
+                        minuteOfHour: parseInt(splits[1])
+                }});
             },
             deleteRecurrance: function () {
-                this.$emit("delete-recurrance", {index: this.index, recurrance: this.recurrance});
+                this.$emit("delete-recurrance", {index: this.index, recurrance: this.recurranceValue});
             }
         }
     });

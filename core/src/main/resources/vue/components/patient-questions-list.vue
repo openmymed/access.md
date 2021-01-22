@@ -24,7 +24,16 @@
                 </thead>
                 <tbody v-if="questions && questions.length>0">
                 <template v-for="(question, index) in questions">
-                    <patient-questions-list-item v-bind:patient-id="patientId" v-bind:question="question"></patient-questions-list-item>
+                    <tr >
+                        <th scope="row" class="text-left">{{question.question}}</th>
+                        <td class="text-center">{{question.type}}</td>
+                        <td class="text-center">{{question.recurring}}</td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" :href="getQuestionLink(question.id)">
+                                <i class="fa fa-pencil" ></i>&nbsp;Edit
+                            </a>
+                        </td>
+                    </tr>
                 </template>
                 </tbody>
             </table>
@@ -32,28 +41,9 @@
     </div>
 </template>
 <template id="patient-questions-list-item">
-    <tr >
-        <th scope="row" class="text-left"></th>
-        <td class="text-center"></td>
-        <td class="text-center"></td>
-        <td class="text-right">
-            <a class="btn btn-primary" v-bind:href="questionLink">
-                <i class="fa fa-pencil" ></i>
-            </a>
-        </td>
-    </tr>
+
 </template>
 <script>
-    Vue.component("patient-questions-list-item", {
-        template: "#patient-questions-list-item",
-        props: ["question", "index", "patientId"],
-        computed: {
-            questionLink: function () {
-                return "/patient/" + this.patientId + "/question/" + this.question.id;
-            }
-
-        }
-    });
     Vue.component("patient-questions-list", {
         template: "#patient-questions-list",
         props: ["patientId"],
@@ -68,6 +58,9 @@
                 window.apiService.getPatientQuestions(this.patientId).then(res => {
                     this.questions = res;
                 });
+            },
+            getQuestionLink: function (questionId) {
+                return "/patient/" + this.patientId + "/question/" + questionId;
             }
         },
         computed: {

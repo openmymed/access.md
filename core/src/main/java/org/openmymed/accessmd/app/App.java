@@ -109,7 +109,7 @@ public class App {
         app.config.enableWebjars();
         // Set the access-manager that Javalin should use
         JavalinVue.optimizeDependencies = true;
-        JavalinVue.isDevFunction = (ctx)->{return false;};
+        //JavalinVue.isDevFunction = (ctx)->{return false;};
         app.config.accessManager((handler, ctx, permittedRoles) -> {
             if (!permittedRoles.contains(NONE)) {
                 UserRole userRole = getUserRole(ctx);

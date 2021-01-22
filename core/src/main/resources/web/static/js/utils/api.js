@@ -188,15 +188,32 @@ api.prototype.login = (username, password) => {
     })
 }
 
-api.prototype.addQuestion = (patientId, question) => {
-
+api.prototype.createQuestion = (patientId, question) => {
+    return fetch(`/api/doctor/patient/${patientId}/question`, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(question),
+    }).then((res) => {
+        return res;
+    })
 }
 
 api.prototype.getPatientQuestion = (patientId, questionId) => {
-
+    return fetch(`/api/doctor/patient/${patientId}/question/${questionId}`, {
+        method: "GET",
+        headers: headers,
+    }).then((res) => {
+        return process(res);
+    })
 }
 
 api.prototype.updateQuestion = (patientId, questionId, question) => {
-
+    return fetch(`/api/doctor/patient/${patientId}/question/${questionId}`, {
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify(question),
+    }).then((res) => {
+        return res;
+    })
 }
 window.apiService = new api();
