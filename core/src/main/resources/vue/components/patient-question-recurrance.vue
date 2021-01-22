@@ -26,7 +26,6 @@
         methods: {
             timeChanged: function () {
                 let splits = this.timeInput.split(":");
-                console.log(splits);
                 this.$emit("update-recurrance", {index: this.index, recurrance:{
                         hourOfDay:parseInt(splits[0]),
                         minuteOfHour: parseInt(splits[1])
