@@ -131,7 +131,8 @@ public class Patient extends DomainEntity {
 
     /**
      * Archive an answer
-     * @param answerId  the answer to archive
+     *
+     * @param answerId the answer to archive
      */
     public void archiveAnswer(Long answerId) {
         this.getQuestions()
@@ -139,13 +140,13 @@ public class Patient extends DomainEntity {
                 .flatMap(question -> question.getAnswers().stream())
                 .filter(answer -> Objects.equals(answer.getId(), answerId))
                 .findFirst().orElse(new Answer()).archive();
-        
-        
+
     }
 
     /**
      * Reply to a symptom
-     * @param symptomId the symptom to reply to 
+     *
+     * @param symptomId the symptom to reply to
      * @param reply the reply value
      */
     public void replyToSymptom(Long symptomId, String reply) {
@@ -157,8 +158,9 @@ public class Patient extends DomainEntity {
 
     /**
      * Reply to an answer
+     *
      * @param answerId the answer to reply to
-     * @param reply  the reply value
+     * @param reply the reply value
      */
     public void replyToAnswer(Long answerId, String reply) {
         this.getQuestions()
@@ -170,7 +172,8 @@ public class Patient extends DomainEntity {
 
     /**
      * Archive a symptom
-     * @param symptomId  the id of the symptom to archive
+     *
+     * @param symptomId the id of the symptom to archive
      */
     public void archiveSymptom(Long symptomId) {
         this.getSymptoms()
@@ -181,7 +184,8 @@ public class Patient extends DomainEntity {
 
     /**
      * Report a new symptom
-     * @param symptom  the symptom to report
+     *
+     * @param symptom the symptom to report
      */
     public void reportSymptom(Symptom symptom) {
         if (symptoms == null) {
@@ -193,8 +197,9 @@ public class Patient extends DomainEntity {
     }
 
     /**
-     * Report a vitals measurement 
-     * @param vitalsMeasurment  the vitals measurement to report
+     * Report a vitals measurement
+     *
+     * @param vitalsMeasurment the vitals measurement to report
      */
     public void reportVitalsMesurment(VitalsMeasurment vitalsMeasurment) {
         if (vitalsMeasurments == null) {
@@ -211,6 +216,7 @@ public class Patient extends DomainEntity {
 
     /**
      * Get the list of unarchived answers
+     *
      * @return a list of unarchived answers
      */
     @JsonIgnore
@@ -223,13 +229,28 @@ public class Patient extends DomainEntity {
 
     /**
      * Get the list of unarchived symptoms
-     * @return  a list of unarchived symptoms
+     *
+     * @return a list of unarchived symptoms
      */
     @JsonIgnore
     @Transient
     public List<Symptom> getUnarchivedSymptoms() {
         return this.getSymptoms().stream()
                 .filter(symptom -> !symptom.isArchived()).collect(Collectors.toList());
+    }
+
+    public Question findQuestion(Long questionId) {
+        return this.getQuestions().stream().filter(question -> question.getId() == questionId)
+                .findFirst().orElse(null);
+    }
+
+    public void updateQuestion(Long questionId, Question question) {
+        Question found = this.findQuestion(questionId);
+        this.questions.remove(found);
+        question.setId(questionId);
+        this.questions.add(question);
+        this.queueEvent("questionUpdate", question);
+
     }
 
 }

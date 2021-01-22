@@ -29,7 +29,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Patient> getDoctorPatients(Long doctorId) {
-        try ( DoctorRepository repo = DoctorRepositoryFactory.getInstance().get()) {
+        try (DoctorRepository repo = DoctorRepositoryFactory.getInstance().get()) {
             return repo.findById(doctorId).getPatients();
         }
 
@@ -37,28 +37,28 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public MedicalProfile getPatientProfile(Long doctorId, Long patientId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             return repo.getPatientByDoctorAndId(patientId, doctorId).getProfile();
         }
     }
 
     @Override
     public List<Symptom> getUnarchivedPatientSymptoms(Long doctorId, Long patientId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             return repo.getPatientByDoctorAndId(patientId, doctorId).getUnarchivedSymptoms();
         }
     }
 
     @Override
     public List<Answer> getUnarchivedPatientAnswers(Long doctorId, Long patientId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             return repo.getPatientByDoctorAndId(patientId, doctorId).getUnarchivedAnswers();
         }
     }
 
     @Override
     public void assignPatientToDoctor(Long doctorId, Long patientId) {
-        try ( DoctorRepository doctorRepo = DoctorRepositoryFactory.getInstance().get();  PatientRepository patientRepo = PatientRepositoryFactory.getInstance().get();) {
+        try (DoctorRepository doctorRepo = DoctorRepositoryFactory.getInstance().get(); PatientRepository patientRepo = PatientRepositoryFactory.getInstance().get();) {
             Patient patient = patientRepo.findById(patientId);
             Doctor doctor = doctorRepo.findById(doctorId);
             patient.setDoctor(doctor);
@@ -70,7 +70,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void createDoctor(User user) {
-        try ( DoctorRepository doctorRepo = DoctorRepositoryFactory.getInstance().get()) {
+        try (DoctorRepository doctorRepo = DoctorRepositoryFactory.getInstance().get()) {
             Doctor d = new Doctor(user);
             doctorRepo.save(d);
         }
@@ -78,7 +78,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void askPatientAQuestion(Long doctorId, Long patientId, Question question) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
             p.askQuestion(question);
             repo.save(p);
@@ -98,7 +98,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Question> getPatientQuestions(Long doctorId, Long patientId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             return repo.getPatientByDoctorAndId(patientId, doctorId).getQuestions();
         }
     }
@@ -109,24 +109,31 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void updatePatientQuestion(Long id, Long get, Long get0, Question bodyAsClass) {
+    public void updatePatientQuestion(Long doctorId, Long patientId, Long questionId, Question question) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+            Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
+            p.updateQuestion(questionId, question);
+            repo.save(p);
+        }
     }
 
     @Override
-    public Question getPatientQuestionDetails(Long id, Long get, Long get0) {
-        return new Question();
+    public Question getPatientQuestionDetails(Long doctorId, Long patientId, Long questionId) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+            return repo.getPatientByDoctorAndId(patientId, doctorId).findQuestion(questionId);
+        }
     }
 
     @Override
     public List<Doctor> getDoctors() {
-        try ( DoctorRepository doctorRepo = DoctorRepositoryFactory.getInstance().get()) {
+        try (DoctorRepository doctorRepo = DoctorRepositoryFactory.getInstance().get()) {
             return doctorRepo.findAll();
         }
     }
 
     @Override
     public Patient getPatient(Long doctorId, Long patientId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             return repo.getPatientByDoctorAndId(patientId, doctorId);
         }
 
@@ -134,7 +141,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void archiveAnswer(Long doctorId, Long patientId, Long answerId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
             p.archiveAnswer(answerId);
             repo.save(p);
@@ -143,7 +150,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void archiveSymptom(Long doctorId, Long patientId, Long symptomId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
             p.archiveSymptom(symptomId);
             repo.save(p);
@@ -152,7 +159,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<VitalsMeasurment> getPatientVitalsMeasurments(Long doctorId, Long patientId) {
-        try ( PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
+        try (PatientRepository repo = PatientRepositoryFactory.getInstance().get()) {
             Patient p = repo.getPatientByDoctorAndId(patientId, doctorId);
             return p.getVitalsMeasurments();
         }

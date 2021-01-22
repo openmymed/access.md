@@ -5,6 +5,7 @@
  */
 package org.openmymed.accessmd.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -111,5 +112,6 @@ public abstract class DomainEntity {
     }
 
     @Transient
+    @JsonIgnore
     public abstract String getEntityName();
 }

@@ -1,0 +1,217 @@
+body {
+  font-family: "Lato", sans-serif;
+  background-color: #f4f5fa;
+  --primary: #3399ff;
+  --accent:#158498;
+}
+
+.main-head {
+  height: 150px;
+  background: #fff;
+}
+table {
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.sidenav {
+  height: 100%;
+  background-color: #158498;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+#main {
+  width: 100%;
+  height: 90vh;
+}
+
+.main {
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .login-form {
+    margin-top: 10%;
+  }
+
+  .register-form {
+    margin-top: 10%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main {
+    margin-left: 40%;
+  }
+
+  .sidenav {
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
+
+  .login-form {
+    margin-top: 80%;
+  }
+}
+
+.login-main-text {
+  margin-top: 20%;
+  padding: 60px;
+  color: #fff;
+  text-align:center;
+}
+
+.login-main-text h1 {
+  font-weight: 300;
+}
+
+.btn-black {
+  background-color: #158498 !important;
+  color: #fff;
+}
+
+/* Home screen */
+
+/* change the link color */
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    height: auto;
+    width: 100%;
+  }
+  .row {
+    width: 100%;
+  }
+  .top-navbar {
+    position: static;
+    float: none;
+  }
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+  color: #3ba8b3 !important;
+}
+.navbar-light .navbar-nav .nav-link {
+  color: #191e30 !important;
+}
+
+.navbar-light .navbar-nav > li > a:hover,
+.navbar-light .navbar-nav > li > a:focus {
+  color: #158498 !important;
+}
+
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: 5px 7px 25px #999;
+}
+.bg-blue-primary {
+  background-color: #158498;
+}
+.bg-light-grey {
+  background-color: #edeef3;
+}
+/* li color #191E30 */
+
+.sidebar-link {
+  background-color: #fff;
+  transition: all 0.4s;
+}
+.active {
+  color: #3ba8b3 !important;
+}
+.profile-img {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+/* cards */
+.card-common {
+  box-shadow: 1px 2px 5px #999;
+  transition: all 0.4s;
+  border: solid 2px #3ba8b3;
+  text-align: center;
+  margin-right: 1rem;
+}
+
+.card-common .card-common:hover {
+  box-shadow: 2px 3px 15px #999;
+  transform: translateY(-1px);
+}
+/* end of cards */
+
+/* .sidebar-link:active {
+  color: #3ba8b3;
+  background-color: #3ba8b3;
+} */
+
+div.d-flex .svg-inline--fa{
+  height:auto;
+}
+
+div.card-body .symptom-note,
+div.card-body .answer-note{
+  text-align:start
+}
+
+.hidden-recurrence{
+  display:none;
+}
+
+.repetition-time{
+  width:70%;
+  text-align:center;
+  height: 1.75rem;
+}
+
+.card-common.answer-card,
+.card-common.symptom-card{
+  margin:0px;
+}
+.card-common.answer-card .card-header,
+.card-common.symptom-card .card-header{
+  padding-bottom:1px;
+}
+.card-common.answer-card .card-body,
+.card-common.symptom-card .card-body{
+  padding-bottom:1px;
+}
+
+.login-main-text img{
+    width:256px;
+    height:256px;
+    
+    
+}
+
+.patient-vitals-expander{
+    background-color : var(--accent);
+    color:white;
+}
+
+.oxygenation-chart,
+.heart-beats-chart,
+.breathing-rate-chart,
+.blood-pressure-chart{
+    width:100%;
+    height:35vh
+}
