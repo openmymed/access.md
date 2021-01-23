@@ -28,8 +28,6 @@ import org.openmymed.accessmd.infra.factory.EntityManagerFactory;
 @Log
 public abstract class AccessMdTest {
 
-    private DoctorService doctorService = DoctorServiceFactory.getInstance().get();
-
     @BeforeClass
     public static final void initTest() throws InterruptedException, Throwable {
         System.setProperty("selenide.browser", "Firefox");
@@ -47,10 +45,13 @@ public abstract class AccessMdTest {
         return new LoginPage();
     }
 
-    public String url(String url){
-        return "http://localhost:" + System.getProperty("testPort", "5313")+url;
+    public String url(String url) {
+        String formattedUrl = url.startsWith("/") ? url : "/" + url;
+        return "http://localhost:" + System.getProperty("testPort", "5313") + formattedUrl;
     }
+
     public User randomDoctor() {
+        DoctorService doctorService = DoctorServiceFactory.getInstance().get();
         User testUser = new User();
         testUser.setUserRole(UserRole.ROLE_DOCTOR);
         testUser.setUsername(RandomStringUtils.randomAlphabetic(10));
