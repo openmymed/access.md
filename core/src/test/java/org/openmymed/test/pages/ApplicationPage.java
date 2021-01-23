@@ -22,4 +22,12 @@ public class ApplicationPage {
     public Sidebar sidebar() {
         return sidebar;
     }
+
+    public ApplicationPage then() {
+        return this;
+    }
+    
+     public ApplicationPage get(){
+        return this;
+    }
 }

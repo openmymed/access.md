@@ -17,12 +17,13 @@ import org.openmymed.accessmd.domain.auth.entity.User;
  */
 public class LoginTest extends AccessMdTest {
 
-
     @Test
     public void testDoctorLogin() {
         User doctor = randomDoctor();
-        LoginPage loginPage = loginPage();
-        ApplicationPage mainPage = loginPage.login(doctor.getUsername(), doctor.getPassword());
-        assertEquals(url("/dashboard"),mainPage.sidebar().activeLink());
+        String activeLink = openLoginPage().then()
+                .login(doctor.getUsername(), doctor.getPassword())
+                .then()
+                .get().sidebar().activeLink();
+        assertEquals(url("/dashboard"), activeLink);
     }
 }

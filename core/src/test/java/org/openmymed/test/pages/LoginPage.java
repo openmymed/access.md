@@ -30,4 +30,12 @@ public class LoginPage {
         this.submitButton.click();
         return new ApplicationPage();
     }
+    
+    public LoginPage then(){
+        return this;
+    }
+    
+    public LoginPage get(){
+        return this;
+    }
 }

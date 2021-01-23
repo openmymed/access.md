@@ -40,7 +40,7 @@ public abstract class AccessMdTest {
         open(url(url));
     }
 
-    public LoginPage loginPage() {
+    public LoginPage openLoginPage() {
         openUrl("");
         return new LoginPage();
     }
