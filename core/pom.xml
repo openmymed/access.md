@@ -10,18 +10,13 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <node.version>v12.15.0</node.version>
+        <test.port>5131</test.port>
     </properties>
     <dependencies>
         <dependency>
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
             <version>3.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.2.0</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -67,7 +62,7 @@
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>0.9.11</version>
+            <version>0.9.12</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.narayana.jta</groupId>
@@ -120,6 +115,12 @@
             <artifactId>font-awesome</artifactId>
             <version>5.14.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>5.18.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -128,6 +129,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M4</version>
+                    <configuration>
+                        <argLine>@{argLine} -DtestPort=${test.port}</argLine>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -204,6 +208,25 @@
                                 <descriptor>src/assembly/bundle.xml</descriptor>
                             </descriptors>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

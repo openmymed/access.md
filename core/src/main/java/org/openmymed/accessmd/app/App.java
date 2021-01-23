@@ -60,12 +60,10 @@ public class App {
             persistenceUnitName = "app_prod_PU";
         }
         EntityManagerFactory.getInstance().setPersistenceUnit(persistenceUnitName);
-        readICPCCodes();
-        registerDomainHandlers();
-        startBackgroundServices();
-        startServer();
+        startServer(7000);
         registerDerbyShutdownHook();
         createAdminIfNotFound();
+
     }
 
     public static UserRole getUserRole(Context ctx) {
@@ -104,8 +102,11 @@ public class App {
         }));
     }
 
-    public static void startServer() {
-        app = Javalin.create().start(7000);
+    public static void startServer(int port) throws Throwable {
+        readICPCCodes();
+        registerDomainHandlers();
+        startBackgroundServices();
+        app = Javalin.create().start(port);
         app.config.enableWebjars();
         // Set the access-manager that Javalin should use
         JavalinVue.optimizeDependencies = true;
@@ -257,6 +258,7 @@ public class App {
         });
         app.config.sessionHandler(() -> fileSessionHandler());
         app.config.addStaticFiles("/web");
+
     }
 
     private static SessionHandler fileSessionHandler() {
@@ -288,7 +290,7 @@ public class App {
     }
 
     private static void createAdminIfNotFound() {
-        try ( UserRepository repo = UserRepositoryFactory.getInstance().get()) {
+        try (UserRepository repo = UserRepositoryFactory.getInstance().get()) {
             if (repo.getUsersByRole(ROLE_ADMIN).isEmpty()) {
                 log.info("No Admins Found; Creating one now");
                 String password = RandomStringUtils.random(16, true, true);
