@@ -19,7 +19,7 @@ public class LoginTest extends AccessMdTest {
 
 
     @Test
-    public void testLogin() {
+    public void testDoctorLogin() {
         User doctor = randomDoctor();
         LoginPage loginPage = loginPage();
         ApplicationPage mainPage = loginPage.login(doctor.getUsername(), doctor.getPassword());
