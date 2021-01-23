@@ -5,14 +5,20 @@
  */
 package org.openmymed.test;
 
+import org.openmymed.test.pages.LoginPage;
 import static com.codeborne.selenide.Selenide.open;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openmymed.accessmd.app.App;
+import org.openmymed.accessmd.domain.auth.entity.User;
+import org.openmymed.accessmd.domain.auth.enums.UserRole;
+import org.openmymed.accessmd.domain.core.service.DoctorService;
+import org.openmymed.accessmd.infra.core.factory.DoctorServiceFactory;
 import org.openmymed.accessmd.infra.factory.EntityManagerFactory;
 
 /**
@@ -21,6 +27,8 @@ import org.openmymed.accessmd.infra.factory.EntityManagerFactory;
  */
 @Log
 public abstract class AccessMdTest {
+
+    private DoctorService doctorService = DoctorServiceFactory.getInstance().get();
 
     @BeforeClass
     public static final void initTest() throws InterruptedException, Throwable {
@@ -31,11 +39,24 @@ public abstract class AccessMdTest {
     }
 
     public final void openUrl(String url) {
-        open("http://localhost:" + System.getProperty("testPort", "5313") + "/" + url);
+        open(url(url));
     }
 
-    public void openHomepage() {
+    public LoginPage loginPage() {
         openUrl("");
+        return new LoginPage();
+    }
+
+    public String url(String url){
+        return "http://localhost:" + System.getProperty("testPort", "5313")+url;
+    }
+    public User randomDoctor() {
+        User testUser = new User();
+        testUser.setUserRole(UserRole.ROLE_DOCTOR);
+        testUser.setUsername(RandomStringUtils.randomAlphabetic(10));
+        testUser.setPassword(RandomStringUtils.randomAlphabetic(10));
+        doctorService.createDoctor(testUser);
+        return testUser;
     }
 
     @AfterClass

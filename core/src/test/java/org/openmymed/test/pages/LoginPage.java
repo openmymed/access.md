@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.openmymed.test;
+package org.openmymed.test.pages;
 
 import static com.codeborne.selenide.Selenide.$;
 import com.codeborne.selenide.SelenideElement;
@@ -24,10 +24,10 @@ public class LoginPage {
         this.submitButton = $(".btn.btn-black");
     }
     
-    public DashboardPage login(String username,String password){
+    public ApplicationPage login(String username,String password){
         this.usernameField.val(username);
         this.passwordField.val(password);
         this.submitButton.click();
-        return new DashboardPage();
+        return new ApplicationPage();
     }
 }
