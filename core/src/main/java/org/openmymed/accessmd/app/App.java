@@ -13,6 +13,7 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 import static io.javalin.apibuilder.ApiBuilder.put;
 import static io.javalin.core.security.SecurityUtil.roles;
 import io.javalin.http.Context;
+import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.rendering.vue.JavalinVue;
 import io.javalin.plugin.rendering.vue.VueComponent;
 import java.io.File;
@@ -110,7 +111,14 @@ public class App {
         app.config.enableWebjars();
         // Set the access-manager that Javalin should use
         JavalinVue.optimizeDependencies = true;
-        //JavalinVue.isDevFunction = (ctx)->{return false;};
+
+        if (Boolean.valueOf(System.getProperty("app.production", "false"))) {
+            JavalinVue.rootDirectory("vue", Location.EXTERNAL);
+            JavalinVue.isDevFunction = (ctx) -> {
+                return false;
+            };
+        }
+
         app.config.accessManager((handler, ctx, permittedRoles) -> {
             if (!permittedRoles.contains(NONE)) {
                 UserRole userRole = getUserRole(ctx);

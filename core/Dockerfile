@@ -5,5 +5,6 @@ FROM adoptopenjdk:11.0.6_10-jre-hotspot
 
 COPY target/access.md-*.jar ./access.md.jar
 COPY target/lib/* ./lib/
+COPY target/classes/vue/* ./vue/
 COPY src/scripts/start.sh ./start.sh
 CMD ./start.sh
