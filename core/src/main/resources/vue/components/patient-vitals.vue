@@ -156,11 +156,11 @@
             let breathingRateData = [];
             window.apiService.getPatientVitals(this.patientId).then((data) => {
                 data.forEach((item) => {
-                    this.oxygenationData.push({x: item.creationDate, y: item.bloodOxygenation, label: item.creationDate});
-                    this.heartBeatsPerMinuteData.push({x: item.creationDate, y: item.heartBeatsPerMinute, label: item.creationDate});
-                    this.systolicData.push({x: item.creationDate, y: item.systolicPressure, label: item.creationDate});
-                    this.diastolicData.push({x: item.creationDate, y: item.diastolicPressure, label: item.creationDate});
-                    this.breathingRateData.push({x: item.creationDate, y: item.breathingRate, label: item.creationDate});
+                    oxygenationData.push({x: item.creationDate, y: item.bloodOxygenation, label: item.creationDate});
+                    heartBeatsPerMinuteData.push({x: item.creationDate, y: item.heartBeatsPerMinute, label: item.creationDate});
+                    systolicData.push({x: item.creationDate, y: item.systolicPressure, label: item.creationDate});
+                    diastolicData.push({x: item.creationDate, y: item.diastolicPressure, label: item.creationDate});
+                    breathingRateData.push({x: item.creationDate, y: item.breathingRate, label: item.creationDate});
                 });
                 this.createGraph(this.$refs.oxygenationChart, oxygenationData, "Blood Oxygenation", "Reading Time", "SpO2");
                 this.createGraph(this.$refs.heartBeatsChart, heartBeatsPerMinuteData, "Beats Per Minute", "Reading Time", "BPM");
