@@ -26,7 +26,7 @@
 </template>
 <script>
     Vue.component("patient-answer", {
-        template: "patient-answer",
+        template: "#patient-answer",
         props: ["answer"],
         methods: {
             dismiss: function () {

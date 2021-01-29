@@ -25,7 +25,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RestClient {
-    static final String BASE_URL = "https://acccessmd-staging.openmymed.org/";
+    static final String BASE_URL = "https://accessmd-staging.openmymed.org/api/";
 
     public static final String LOGIN_URL = BASE_URL + "login";
     public static final String REGISTER_URL = BASE_URL + "patient/signup";
