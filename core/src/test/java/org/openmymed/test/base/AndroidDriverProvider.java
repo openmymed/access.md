@@ -28,23 +28,24 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  * @author tareq
  */
 public class AndroidDriverProvider implements WebDriverProvider {
-  @CheckReturnValue
-  @Nonnull
-  @Override
-  public WebDriver createDriver(DesiredCapabilities capabilities) {
-    capabilities.setCapability(PLATFORM_NAME, "Android");
-    capabilities.setCapability(DEVICE_NAME, "appium-emulator");
-    capabilities.setCapability(VERSION, "9.0");
-    capabilities.setCapability(APPLICATION_NAME, "Access.md");
-    capabilities.setCapability(APP_PACKAGE, "me.kisoft.covid19");
-    capabilities.setCapability(APP_ACTIVITY, "me.kisoft.covid19.LoginActivity");
-    capabilities.setCapability(APP, System.getProperty("android.apk"));
-    capabilities.setCapability(NEW_COMMAND_TIMEOUT, 11);
-    capabilities.setCapability(FULL_RESET, false);
-    try {
-      return new AndroidDriver<>(new URL("http://127.0.0.1:5555/wd/hub"), capabilities);
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
+
+    @CheckReturnValue
+    @Nonnull
+    @Override
+    public WebDriver createDriver(DesiredCapabilities capabilities) {
+        capabilities.setCapability(PLATFORM_NAME, "Android");
+        capabilities.setCapability(DEVICE_NAME, "appium-emulator");
+        capabilities.setCapability(VERSION, "9.0");
+        capabilities.setCapability(APPLICATION_NAME, "Access.md");
+        capabilities.setCapability(APP_PACKAGE, "me.kisoft.covid19");
+        capabilities.setCapability(APP_ACTIVITY, "me.kisoft.covid19.LoginActivity");
+        capabilities.setCapability(APP, System.getProperty("android.apk"));
+        capabilities.setCapability(NEW_COMMAND_TIMEOUT, 11);
+        capabilities.setCapability(FULL_RESET, false);
+        try {
+            return new AndroidDriver<>(new URL("http://127.0.0.1:5555/wd/hub"), capabilities);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
-  }
 }
