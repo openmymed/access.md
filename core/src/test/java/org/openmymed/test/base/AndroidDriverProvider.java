@@ -33,9 +33,9 @@ public class AndroidDriverProvider implements WebDriverProvider {
   @Override
   public WebDriver createDriver(DesiredCapabilities capabilities) {
     capabilities.setCapability(PLATFORM_NAME, "Android");
-    capabilities.setCapability(DEVICE_NAME, "Android Emulator");
+    capabilities.setCapability(DEVICE_NAME, "appium-emulator");
     capabilities.setCapability(VERSION, "9.0");
-    capabilities.setCapability(APPLICATION_NAME, "Appium");
+    capabilities.setCapability(APPLICATION_NAME, "Access.md");
     capabilities.setCapability(APP_PACKAGE, "me.kisoft.covid19");
     capabilities.setCapability(APP_ACTIVITY, "me.kisoft.covid19.LoginActivity");
     capabilities.setCapability(APP, System.getProperty("android.apk"));
