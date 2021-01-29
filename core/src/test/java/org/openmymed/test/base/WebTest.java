@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.openmymed.test;
+package org.openmymed.test.base;
 
+import com.codeborne.selenide.Configuration;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
 import org.openmymed.test.pages.LoginPage;
 import static com.codeborne.selenide.Selenide.open;
+import com.codeborne.selenide.webdriver.FirefoxDriverFactory;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -26,7 +29,7 @@ import org.openmymed.accessmd.infra.factory.EntityManagerFactory;
  * @author tareq
  */
 @Log
-public abstract class AccessMdTest {
+public abstract class WebTest {
 
     @BeforeClass
     public static final void initTest() throws InterruptedException, Throwable {
@@ -34,6 +37,7 @@ public abstract class AccessMdTest {
         App.startServer(Integer.parseInt(System.getProperty("testPort", "5313")));
         EntityManagerFactory.getInstance().setPersistenceUnit("app_test_PU");
         log.log(Level.INFO, "Starting Test on Port {0}", System.getProperty("testPort", "5312"));
+        Configuration.browser = FirefoxDriverFactory.class.getName();
     }
 
     public final void openUrl(String url) {
@@ -69,6 +73,7 @@ public abstract class AccessMdTest {
             log.info("Database Shutdown");
         } finally {
             App.stopServer();
+            closeWebDriver();
         }
     }
 
