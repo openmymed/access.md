@@ -9,6 +9,7 @@ import com.codeborne.selenide.WebDriverProvider;
 import io.appium.java_client.android.AndroidDriver;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.APP_ACTIVITY;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.APP_PACKAGE;
+import static io.appium.java_client.remote.MobileCapabilityType.APP;
 import static io.appium.java_client.remote.MobileCapabilityType.DEVICE_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.FULL_RESET;
 import static io.appium.java_client.remote.MobileCapabilityType.NEW_COMMAND_TIMEOUT;
@@ -37,10 +38,11 @@ public class AndroidDriverProvider implements WebDriverProvider {
     capabilities.setCapability(APPLICATION_NAME, "Appium");
     capabilities.setCapability(APP_PACKAGE, "me.kisoft.covid19");
     capabilities.setCapability(APP_ACTIVITY, "me.kisoft.covid19.LoginActivity");
+    capabilities.setCapability(APP, System.getProperty("android.apk"));
     capabilities.setCapability(NEW_COMMAND_TIMEOUT, 11);
     capabilities.setCapability(FULL_RESET, false);
     try {
-      return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+      return new AndroidDriver<>(new URL("http://127.0.0.1:5555/wd/hub"), capabilities);
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
