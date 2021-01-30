@@ -14,13 +14,13 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
  */
 public class LoginActivity {
 
-    @AndroidFindBy(id = "et_username")
+    @AndroidFindBy(xpath = "//*[contains(@id, 'et_username')]")
     private SelenideElement loginField;
     
-    @AndroidFindBy(id= "tv_password")
+    @AndroidFindBy(xpath= "//*[contains(@id, 'tv_password')]")
     private SelenideElement passwordField;
     
-    @AndroidFindBy(id="btn_sign_in")
+    @AndroidFindBy(xpath="//*[contains(@id, 'btn_sign_in')]")
     private SelenideElement signinButton;
 
     public MainActivity login(String username, String password) {

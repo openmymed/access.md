@@ -33,7 +33,7 @@ public abstract class AccessMdTest {
         System.setProperty("selenide.browser", "Firefox");
         App.startServer(Integer.parseInt(System.getProperty("testPort", "5313")));
         EntityManagerFactory.getInstance().setPersistenceUnit("app_test_PU");
-        log.log(Level.INFO, "Starting Test on Port {0}", System.getProperty("testPort", "5312"));
+        log.log(Level.INFO, "Starting Test on Port {0}", System.getProperty("testPort", "5313"));
         Configuration.browser = FirefoxDriverFactory.class.getName();
     }
     
