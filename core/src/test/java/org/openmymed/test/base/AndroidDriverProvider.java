@@ -43,7 +43,7 @@ public class AndroidDriverProvider implements WebDriverProvider {
         capabilities.setCapability(NEW_COMMAND_TIMEOUT, 60);
         capabilities.setCapability(FULL_RESET, true);
         try {
-            return new AndroidDriver<>(new URL("http://127.0.0.1:5555/wd/hub"), capabilities);
+            return new AndroidDriver<>(new URL("http://127.0.0.1:6060/wd/hub"), capabilities);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
