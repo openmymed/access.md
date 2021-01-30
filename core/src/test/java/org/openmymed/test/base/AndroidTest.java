@@ -20,7 +20,7 @@ import org.openmymed.test.android.page.LoginActivity;
 public abstract class AndroidTest extends AccessMdTest {
 
     @BeforeClass
-    public void setUp() throws Throwable {
+    public static void setUp() throws Throwable {
         AccessMdTest.startServer();
         Configuration.startMaximized = false;
         Configuration.browserSize = null;
@@ -34,7 +34,7 @@ public abstract class AndroidTest extends AccessMdTest {
     }
 
     @AfterClass
-    public void tearDown() {
+    public static void tearDown() {
         AccessMdTest.stopServer();
     }
 }
