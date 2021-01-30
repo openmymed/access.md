@@ -16,11 +16,11 @@ import org.openqa.selenium.By;
  */
 public class LoginActivity {
     
-    private SelenideElement loginField = $(By.xpath("//*[contains(@id, 'et_username')]"));
+    private SelenideElement loginField = $(By.xpath(".//*[contains(@id, 'et_username')]"));
     
-    private SelenideElement passwordField = $(By.xpath("//*[contains(@id, 'tv_password')]"));
+    private SelenideElement passwordField = $(By.xpath(".//*[contains(@id, 'tv_password')]"));
     
-    private SelenideElement signinButton = $(By.xpath("//*[contains(@id, 'btn_sign_in')]"));
+    private SelenideElement signinButton = $(By.xpath(".//*[contains(@id, 'btn_sign_in')]"));
     
     public MainActivity login(String username, String password) {
         loginField.val(username);
