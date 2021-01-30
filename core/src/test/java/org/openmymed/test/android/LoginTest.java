@@ -5,6 +5,8 @@
  */
 package org.openmymed.test.android;
 
+import org.junit.Test;
+import org.openmymed.accessmd.domain.auth.entity.User;
 import org.openmymed.test.base.AndroidTest;
 
 /**
@@ -13,4 +15,11 @@ import org.openmymed.test.base.AndroidTest;
  */
 public class LoginTest extends AndroidTest{
     
+    @Test
+    public void doLogin(){
+        User patient = randomPatient();
+        openLoginActivity().then()
+                .login(patient.getUsername(), patient.getPassword())
+                .then().addSymptomsButton().exists();
+    }
 }

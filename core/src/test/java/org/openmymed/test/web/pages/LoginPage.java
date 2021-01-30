@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.openmymed.test.pages;
+package org.openmymed.test.web.pages;
 
 import static com.codeborne.selenide.Selenide.$;
 import com.codeborne.selenide.SelenideElement;

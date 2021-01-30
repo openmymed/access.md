@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.openmymed.test.pages;
+package org.openmymed.test.web.pages;
 
 /**
  *
  * @author tareq
  */
-public class PatientQuestionsPage extends ApplicationPage {
+public class PatientProfilePage extends ApplicationPage {
     
 }

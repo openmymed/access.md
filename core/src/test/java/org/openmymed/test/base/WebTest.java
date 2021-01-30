@@ -7,7 +7,7 @@ package org.openmymed.test.base;
 
 import com.codeborne.selenide.Configuration;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import org.openmymed.test.pages.LoginPage;
+import org.openmymed.test.web.pages.LoginPage;
 import static com.codeborne.selenide.Selenide.open;
 import com.codeborne.selenide.webdriver.FirefoxDriverFactory;
 import java.sql.DriverManager;
@@ -29,14 +29,11 @@ import org.openmymed.accessmd.infra.factory.EntityManagerFactory;
  * @author tareq
  */
 @Log
-public abstract class WebTest {
+public abstract class WebTest extends AccessMdTest {
 
     @BeforeClass
     public static final void initTest() throws InterruptedException, Throwable {
-        System.setProperty("selenide.browser", "Firefox");
-        App.startServer(Integer.parseInt(System.getProperty("testPort", "5313")));
-        EntityManagerFactory.getInstance().setPersistenceUnit("app_test_PU");
-        log.log(Level.INFO, "Starting Test on Port {0}", System.getProperty("testPort", "5312"));
+        AccessMdTest.startServer();
         Configuration.browser = FirefoxDriverFactory.class.getName();
     }
 
@@ -66,15 +63,8 @@ public abstract class WebTest {
 
     @AfterClass
     public static final void destroyTest() {
-        try {
-            String jdbc = String.valueOf(EntityManagerFactory.getInstance().get().getEntityManagerFactory().getProperties().get("javax.persistence.jdbc.url"));
-            DriverManager.getConnection(jdbc + ";shutdown=true");
-        } catch (SQLException ex) {
-            log.info("Database Shutdown");
-        } finally {
-            App.stopServer();
-            closeWebDriver();
-        }
+        AccessMdTest.stopServer();
+        closeWebDriver();
     }
 
     public static void createTestUsers() {
