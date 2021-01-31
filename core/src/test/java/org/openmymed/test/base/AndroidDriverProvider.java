@@ -10,6 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.ADB_EXEC_TIMEOUT;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.APP_ACTIVITY;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.APP_PACKAGE;
+import static io.appium.java_client.remote.AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS;
 import static io.appium.java_client.remote.MobileCapabilityType.APP;
 import static io.appium.java_client.remote.MobileCapabilityType.DEVICE_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.FULL_RESET;
@@ -18,7 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import static org.openqa.selenium.remote.CapabilityType.APPLICATION_NAME;
 import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
@@ -45,6 +45,7 @@ public class AndroidDriverProvider implements WebDriverProvider {
         capabilities.setCapability(NEW_COMMAND_TIMEOUT, 60);
         capabilities.setCapability(FULL_RESET, true);
         capabilities.setCapability(ADB_EXEC_TIMEOUT, 120000);
+        capabilities.setCapability(AUTO_GRANT_PERMISSIONS, true);
         try {
             return new AndroidDriver<>(new URL("http://127.0.0.1:6060/wd/hub"), capabilities);
         } catch (MalformedURLException e) {
