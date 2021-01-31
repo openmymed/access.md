@@ -14,7 +14,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
  */
 public class MainActivity {
     
-    @AndroidFindBy(id="fab_add_symptoms")
+    @AndroidFindBy(id="@id/fab_add_symptoms")
     private SelenideElement addSymptomsButton;
     
     public SelenideElement addSymptomsButton(){
