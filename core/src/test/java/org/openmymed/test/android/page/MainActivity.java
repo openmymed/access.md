@@ -5,8 +5,9 @@
  */
 package org.openmymed.test.android.page;
 
+import static com.codeborne.selenide.Selenide.$;
 import com.codeborne.selenide.SelenideElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.openqa.selenium.By;
 
 /**
  *
@@ -14,8 +15,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
  */
 public class MainActivity {
     
-    @AndroidFindBy(id="@id/fab_add_symptoms")
-    private SelenideElement addSymptomsButton;
+    private SelenideElement addSymptomsButton = $(By.id("me.kisoft.covid19:id/fab_add_symptoms"));
     
     public SelenideElement addSymptomsButton(){
         return addSymptomsButton;
