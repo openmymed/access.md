@@ -6,6 +6,7 @@
 package org.openmymed.test.base;
 
 import com.codeborne.selenide.Configuration;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 import lombok.extern.java.Log;
 import org.junit.AfterClass;
@@ -25,16 +26,17 @@ public abstract class AndroidTest extends AccessMdTest {
         Configuration.startMaximized = false;
         Configuration.browserSize = null;
         Configuration.browser = AndroidDriverProvider.class.getName();
-       
+
     }
-    
-    public LoginActivity openLoginActivity(){
-         open();
-         return new LoginActivity();
+
+    public LoginActivity openLoginActivity() {
+        open();
+        return new LoginActivity();
     }
 
     @AfterClass
     public static void tearDown() {
         AccessMdTest.stopServer();
+        closeWebDriver();
     }
 }

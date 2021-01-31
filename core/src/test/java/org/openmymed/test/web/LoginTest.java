@@ -19,10 +19,9 @@ public class LoginTest extends WebTest {
     @Test
     public void testDoctorLogin() {
         User doctor = randomDoctor();
-        String activeLink = openLoginPage().then()
+        assertEquals(url("/dashboard"), openLoginPage().then()
                 .login(doctor.getUsername(), doctor.getPassword())
                 .then()
-                .get().sidebar().activeLink();
-        assertEquals(url("/dashboard"), activeLink);
+                .get().sidebar().activeLink());
     }
 }
