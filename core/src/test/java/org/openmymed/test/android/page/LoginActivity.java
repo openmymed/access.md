@@ -7,6 +7,7 @@ package org.openmymed.test.android.page;
 
 import static com.codeborne.selenide.Selenide.$;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 
 /**
  *
@@ -14,11 +15,11 @@ import com.codeborne.selenide.SelenideElement;
  */
 public class LoginActivity {
 
-    private SelenideElement loginField = $("#@id/et_username");
+    private SelenideElement loginField = $(By.id("@id/et_username"));
 
-    private SelenideElement passwordField = $("#@id/et_password");
+    private SelenideElement passwordField = $(By.id("@id/et_password"));
 
-    private SelenideElement signinButton = $("#@id/btn_sign_in");
+    private SelenideElement signinButton = $(By.id("@id/btn_sign_in"));
 
     public MainActivity login(String username, String password) {
         loginField.val(username);
