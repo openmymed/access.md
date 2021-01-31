@@ -15,11 +15,11 @@ import org.openqa.selenium.By;
  */
 public class LoginActivity {
 
-    private SelenideElement loginField = $(By.id("@id/et_username"));
+    private SelenideElement loginField = $(By.id("me.kisoft.covid19:id/et_username"));
 
-    private SelenideElement passwordField = $(By.id("@id/et_password"));
+    private SelenideElement passwordField = $(By.id("me.kisoft.covid19:id/et_password"));
 
-    private SelenideElement signinButton = $(By.id("@id/btn_sign_in"));
+    private SelenideElement signinButton = $(By.id("me.kisoft.covid19:id/btn_sign_in"));
 
     public MainActivity login(String username, String password) {
         loginField.val(username);
